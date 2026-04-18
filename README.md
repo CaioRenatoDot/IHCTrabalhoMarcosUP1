@@ -21,3 +21,4 @@ npm run dev
 - `src/pages/HomePage.jsx`: pagina inicial de exemplo
 - `src/components/Hero.jsx`: componente de destaque
 - `src/components/Section.jsx`: bloco simples de secao
+- `src/components/Indicadores.jsx`: bloco de indicadores
