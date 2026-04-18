@@ -1,6 +1,7 @@
 import Navbar from '../components/Navbar.jsx'
 import SaibaMaisButton from '../components/SaibaMaisButton.jsx'
 import FeatureCard from '../components/FeatureCard.jsx'
+import Indicadores from '../components/Indicadores.jsx'
 
 const ClockIcon = () => (
   <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
@@ -45,15 +46,7 @@ function HomePage() {
         </div>
       </section>
 
-      <section className="wireframe-block stats-block">
-        <div className="wireframe-label">Indicadores</div>
-        <div className="stats-grid">
-          <div className="wireframe-slot">Indicador 1</div>
-          <div className="wireframe-slot">Indicador 2</div>
-          <div className="wireframe-slot">Indicador 3</div>
-          <div className="wireframe-slot">Indicador 4</div>
-        </div>
-      </section>
+      <Indicadores />
 
       <section className="cards-block">
         <div style={{ display: 'flex', flexDirection: 'row', gap: '24px', padding: '40px 32px' }}>
@@ -96,3 +89,4 @@ function HomePage() {
 }
 
 export default HomePage
+
