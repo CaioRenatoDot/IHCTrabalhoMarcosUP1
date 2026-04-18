@@ -1,4 +1,5 @@
 import Navbar from '../components/Navbar.jsx'
+import SaibaMaisButton from '../components/SaibaMaisButton.jsx'
 
 function HomePage() {
   return (
@@ -8,7 +9,14 @@ function HomePage() {
       <section className="wireframe-block hero-block">
         <div className="wireframe-label">Hero Principal</div>
         <div className="hero-grid">
-          <div className="wireframe-slot hero-copy">Area de texto principal</div>
+          <div className="wireframe-slot hero-copy">
+            <div className="hero-copy__content">
+              <div className="hero-copy__label">Area de texto principal</div>
+              <div className="hero-copy__actions">
+                <SaibaMaisButton />
+              </div>
+            </div>
+          </div>
           <div className="wireframe-slot hero-card">Card lateral de risco</div>
         </div>
       </section>

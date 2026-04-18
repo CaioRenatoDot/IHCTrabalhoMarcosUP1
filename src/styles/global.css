@@ -151,6 +151,46 @@ body {
   min-height: 260px;
 }
 
+.hero-copy__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.hero-copy__label {
+  color: #8c4a62;
+  font-weight: 600;
+}
+
+.hero-copy__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  width: 100%;
+}
+
+.hero-copy__secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  min-width: 220px;
+  padding: 0.8rem 1.2rem;
+  border-radius: 12px;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.hero-copy__secondary {
+  border: 1.5px solid #d46a91;
+  background: rgba(255, 255, 255, 0.72);
+  color: #a54972;
+}
+
 .hero-card {
   min-height: 260px;
 }
@@ -195,6 +235,10 @@ body {
   .hero-copy,
   .hero-card {
     min-height: 180px;
+  }
+
+  .hero-copy__secondary {
+    min-width: 180px;
   }
 }
 
