@@ -1,5 +1,6 @@
 import Navbar from '../components/Navbar.jsx'
 import SaibaMaisButton from '../components/SaibaMaisButton.jsx'
+import AvaliacaoGratuitaButton from '../components/AvaliacaoGratuitaButton.jsx'
 import FeatureCard from '../components/FeatureCard.jsx'
 import Indicadores from '../components/Indicadores.jsx'
 
@@ -38,6 +39,7 @@ function HomePage() {
             <div className="hero-copy__content">
               <div className="hero-copy__label">Area de texto principal</div>
               <div className="hero-copy__actions">
+                <AvaliacaoGratuitaButton />
                 <SaibaMaisButton />
               </div>
             </div>

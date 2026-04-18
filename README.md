@@ -22,3 +22,4 @@ npm run dev
 - `src/components/Hero.jsx`: componente de destaque
 - `src/components/Section.jsx`: bloco simples de secao
 - `src/components/Indicadores.jsx`: bloco de indicadores
+- `src/components/AvaliacaoGratuitaButton.jsx`: botão de avaliação gratuita

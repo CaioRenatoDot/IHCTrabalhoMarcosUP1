@@ -168,21 +168,27 @@ body {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 1rem;
-  width: 100%;
+  gap: 80px;
+  width: 672px;
 }
 
+.hero-copy__primary,
 .hero-copy__secondary {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 46px;
-  min-width: 220px;
-  padding: 0.8rem 1.2rem;
-  border-radius: 12px;
+  height: 38px;
+  width: 296px;
+  padding: 5.61px 11.22px;
+  border-radius: 10px;
   text-decoration: none;
   font-size: 0.95rem;
   font-weight: 700;
+}
+
+.hero-copy__primary {
+  background: var(--Rosa-Primrio, #C4517A);
+  color: #ffffff;
 }
 
 .hero-copy__secondary {
