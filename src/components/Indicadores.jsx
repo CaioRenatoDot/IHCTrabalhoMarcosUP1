@@ -1,8 +1,8 @@
 const indicadores = [
-  { value: '+50k', label: 'Avaliações realizadas' },
+  { value: '+50k', label: 'Avalia\u00E7\u00F5es realizadas' },
   { value: '12', label: 'Fatores realizados' },
-  { value: '5 min', label: 'Tempo de avaliação' },
-  { value: '100%', label: 'Gratuito e seguro' }
+  { value: '5 min', label: 'Tempo de avalia\u00E7\u00E3o' },
+  { value: '100%', label: 'Gratuito e seguro' },
 ]
 
 function Indicadores() {
