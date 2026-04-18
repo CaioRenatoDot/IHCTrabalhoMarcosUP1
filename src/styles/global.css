@@ -1,5 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200..800&display=swap');
+
 :root {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Plus Jakarta Sans', sans-serif;
   color: #7b4d5d;
   background-color: #fffdfd;
   line-height: 1.5;
@@ -30,10 +32,69 @@ textarea {
   font: inherit;
 }
 
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
 .wireframe-page {
   width: min(1180px, calc(100% - 2rem));
   margin: 0 auto;
   padding: 1.5rem 0 2rem;
+}
+
+.site-navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+  padding: 0.95rem 1.85rem 1.1rem;
+  border-bottom: 1px solid rgba(212, 106, 145, 0.18);
+  background: transparent;
+}
+
+.site-navbar__brand {
+  color: #91355b;
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+.site-navbar__brand span {
+  color: inherit;
+}
+
+.site-navbar__nav {
+  display: flex;
+  align-items: center;
+  gap: 2.75rem;
+}
+
+.site-navbar__nav a {
+  color: #8a6672;
+  text-decoration: none;
+  font-size: 1.02rem;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.site-navbar__nav a:hover {
+  color: #b64c76;
+}
+
+.site-navbar__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0.75rem 1.35rem;
+  border-radius: 999px;
+  background: #c95a87;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 700;
+  white-space: nowrap;
+  box-shadow: none;
 }
 
 .wireframe-block {
@@ -80,12 +141,6 @@ textarea {
   font-weight: 600;
 }
 
-.nav-grid {
-  display: grid;
-  grid-template-columns: 180px 1fr 240px;
-  gap: 1rem;
-}
-
 .hero-grid {
   display: grid;
   grid-template-columns: 2fr 1fr;
@@ -121,7 +176,16 @@ textarea {
 }
 
 @media (max-width: 900px) {
-  .nav-grid,
+  .site-navbar {
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 1rem 0 1.1rem;
+  }
+
+  .site-navbar__nav {
+    gap: 1.25rem;
+  }
+
   .hero-grid,
   .stats-grid,
   .cards-grid {
@@ -144,10 +208,33 @@ textarea {
     padding: 1.75rem 1rem 1rem;
   }
 
-  .nav-grid,
+  .site-navbar {
+    align-items: stretch;
+  }
+
+  .site-navbar__brand,
+  .site-navbar__nav,
+  .site-navbar__cta {
+    width: 100%;
+    text-align: center;
+  }
+
+  .site-navbar__nav {
+    flex-direction: column;
+    align-items: center;
+  }
+
   .hero-grid,
   .stats-grid,
   .cards-grid {
     grid-template-columns: 1fr;
+  }
+
+  .site-navbar__nav {
+    gap: 0.75rem;
+  }
+
+  .site-navbar__cta {
+    padding: 0.9rem 1rem;
   }
 }

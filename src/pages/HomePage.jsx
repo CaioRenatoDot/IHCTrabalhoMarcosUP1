@@ -1,14 +1,9 @@
+import Navbar from '../components/Navbar.jsx'
+
 function HomePage() {
   return (
     <main className="wireframe-page">
-      <section className="wireframe-block nav-block">
-        <div className="wireframe-label">Navbar</div>
-        <div className="nav-grid">
-          <div className="wireframe-slot">Logo</div>
-          <div className="wireframe-slot">Menu de navegacao</div>
-          <div className="wireframe-slot">Botao CTA</div>
-        </div>
-      </section>
+      <Navbar />
 
       <section className="wireframe-block hero-block">
         <div className="wireframe-label">Hero Principal</div>
