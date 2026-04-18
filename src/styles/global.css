@@ -1,0 +1,153 @@
+:root {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #7b4d5d;
+  background-color: #fffdfd;
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  background:
+    linear-gradient(180deg, #fffdfd 0%, #fff6f9 100%);
+}
+
+#root {
+  min-height: 100vh;
+}
+
+body,
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+.wireframe-page {
+  width: min(1180px, calc(100% - 2rem));
+  margin: 0 auto;
+  padding: 1.5rem 0 2rem;
+}
+
+.wireframe-block {
+  position: relative;
+  margin-bottom: 1.25rem;
+  padding: 2rem 1.5rem 1.5rem;
+  border: 2px dashed #e7a8bc;
+  border-radius: 18px;
+  background: rgba(255, 244, 248, 0.58);
+}
+
+.wireframe-label {
+  position: absolute;
+  top: -0.8rem;
+  left: 1rem;
+  padding: 0.2rem 0.6rem;
+  border: 1px solid #e7a8bc;
+  border-radius: 999px;
+  background: #fff;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.wireframe-slot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 96px;
+  padding: 1rem;
+  border: 2px solid #d46a91;
+  border-radius: 16px;
+  background:
+    repeating-linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.65),
+      rgba(255, 255, 255, 0.65) 10px,
+      rgba(249, 220, 229, 0.65) 10px,
+      rgba(249, 220, 229, 0.65) 20px
+    );
+  color: #8c4a62;
+  text-align: center;
+  font-weight: 600;
+}
+
+.nav-grid {
+  display: grid;
+  grid-template-columns: 180px 1fr 240px;
+  gap: 1rem;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 1rem;
+}
+
+.hero-copy {
+  min-height: 260px;
+}
+
+.hero-card {
+  min-height: 260px;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.feature-card {
+  min-height: 190px;
+}
+
+.footer-note {
+  min-height: 72px;
+}
+
+@media (max-width: 900px) {
+  .nav-grid,
+  .hero-grid,
+  .stats-grid,
+  .cards-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .hero-copy,
+  .hero-card {
+    min-height: 180px;
+  }
+}
+
+@media (max-width: 640px) {
+  .wireframe-page {
+    width: min(100%, calc(100% - 1rem));
+    padding: 1rem 0 1.5rem;
+  }
+
+  .wireframe-block {
+    padding: 1.75rem 1rem 1rem;
+  }
+
+  .nav-grid,
+  .hero-grid,
+  .stats-grid,
+  .cards-grid {
+    grid-template-columns: 1fr;
+  }
+}
