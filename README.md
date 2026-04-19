@@ -12,13 +12,13 @@ Escolher uma tela (página) do projeto em equipe e implementar os componentes pr
 
 O desenvolvimento desta página foi realizado de forma colaborativa, com divisão de tarefas entre os integrantes da equipe:
 
-Caio Gabriel – Implementação dos cards informativos ✅
+Caio Gabriel – Implementação dos cards informativos 
 
-Renato – Desenvolvimento da Navbar e da seção "Saiba Mais", incluindo ajustes visuais para maior fidelidade ao protótipo no Figma ✅
+Renato – Desenvolvimento da Navbar e da seção "Saiba Mais", incluindo ajustes visuais para maior fidelidade ao protótipo no Figma 
 
-Thalita – Criação dos cards de estatística e dos botões interativos da interface ✅
+Thalita – Criação dos cards de estatística e dos botões interativos da interface 
 
-Francisco – Implementação da funcionalidade de Avaliação Gratuita ✅
+Francisco – Implementação da funcionalidade de Avaliação Gratuita 
 
 Todos os botões e styles foram implementados com sucesso.
 
