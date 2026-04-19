@@ -20,7 +20,7 @@ Thalita – Criação dos cards de estatística e dos botões interativos da int
 
 Francisco – Implementação da funcionalidade de Avaliação Gratuita ✅
 
-Todas as funcionalidades propostas foram implementadas com sucesso, e o projeto foi integrado de forma conjunta através do controle de versão.
+Todos os botões e styles foram implementados com sucesso.
 
 ## Tela escolhida
 
