@@ -1,9 +1,8 @@
 import Navbar from '../components/Navbar.jsx'
-import SaibaMaisButton from '../components/SaibaMaisButton.jsx'
-import AvaliacaoGratuitaButton from '../components/AvaliacaoGratuitaButton.jsx'
 import FeatureCard from '../components/FeatureCard.jsx'
 import Indicadores from '../components/Indicadores.jsx'
 import ObservationBanner from '../components/ObservationBanner.jsx'
+import ConscientizacaoPrevencaoSection from '../components/ConscientizacaoPrevencaoSection.jsx'
 
 const ClockIcon = () => (
   <svg
@@ -52,21 +51,7 @@ function HomePage() {
     <main className="wireframe-page">
       <Navbar />
 
-      <section className="wireframe-block hero-block">
-        <div className="wireframe-label">Hero Principal</div>
-        <div className="hero-grid">
-          <div className="wireframe-slot hero-copy">
-            <div className="hero-copy__content">
-              <div className="hero-copy__label">{'\u00C1rea de texto principal'}</div>
-              <div className="hero-copy__actions">
-                <AvaliacaoGratuitaButton />
-                <SaibaMaisButton />
-              </div>
-            </div>
-          </div>
-          <div className="wireframe-slot hero-card">Card lateral de risco</div>
-        </div>
-      </section>
+      <ConscientizacaoPrevencaoSection />
 
       <Indicadores />
 

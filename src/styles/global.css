@@ -240,6 +240,165 @@ body {
   min-height: 260px;
 }
 
+.awareness-section {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 304px;
+  gap: 2rem;
+  align-items: center;
+  width: 100%;
+  min-height: 475px;
+  margin-bottom: 1.25rem;
+  padding: 3.5rem 42px;
+  border-radius: 0;
+  background: rgba(245, 220, 232, 0.27);
+}
+
+.awareness-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 25px;
+  max-width: 745.92px;
+}
+
+.awareness-tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 26px;
+  padding: 5px 14px 5px 12px;
+  border-radius: 20.56px;
+  background: #f5dce8;
+  color: #a73d6e;
+  font-size: 13.7px;
+  font-weight: 700;
+  line-height: 17px;
+  letter-spacing: 0;
+  text-align: center;
+}
+
+.awareness-title {
+  max-width: 745.92px;
+  color: #8a6070;
+  font-size: 44px;
+  font-style: italic;
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: 0.23em;
+}
+
+.awareness-description {
+  max-width: 564px;
+  color: #8a6070;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.28;
+  letter-spacing: 0.06em;
+}
+
+.awareness-actions {
+  justify-content: flex-start;
+  width: auto;
+}
+
+.risk-card {
+  width: 304px;
+  min-height: 321px;
+  padding: 24px 21px;
+  border: 1px solid #f5dce8;
+  border-radius: 24px;
+  background: #fff;
+}
+
+.risk-card__title {
+  margin: 0;
+  color: #8a6070;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 18px;
+  letter-spacing: 0.18em;
+}
+
+.risk-card__ring-wrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 24px;
+}
+
+.risk-card__ring {
+  display: grid;
+  place-items: center;
+  width: 112.07px;
+  height: 112.07px;
+  border-radius: 50%;
+  border: 9.33px solid #f5dce8;
+  background: conic-gradient(#c4517a 0 115deg, transparent 115deg 360deg);
+}
+
+.risk-card__ring::after {
+  content: '';
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  background: #fff;
+}
+
+.risk-card__value {
+  position: absolute;
+  color: #c4517a;
+  font-size: 19.1px;
+  font-weight: 600;
+  line-height: 24px;
+  text-align: center;
+}
+
+.risk-card__level {
+  margin-top: 14px;
+  color: #8a6070;
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 15px;
+  letter-spacing: 0.18em;
+  text-align: center;
+}
+
+.risk-card__rows {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-top: 14px;
+}
+
+.risk-card__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #8a6070;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 13px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.risk-card__row strong {
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 13px;
+}
+
+.risk-high {
+  color: #b83030;
+}
+
+.risk-medium {
+  color: #c47020;
+}
+
+.risk-low {
+  color: #3d8a52;
+}
+
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -359,6 +518,30 @@ body {
     grid-template-columns: 1fr 1fr;
   }
 
+  .awareness-section {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    gap: 1.5rem;
+    padding: 2rem 1.25rem;
+  }
+
+  .awareness-content {
+    max-width: 100%;
+  }
+
+  .awareness-title {
+    font-size: 34px;
+    letter-spacing: 0.11em;
+  }
+
+  .awareness-actions {
+    gap: 1rem;
+  }
+
+  .risk-card {
+    width: min(304px, 100%);
+  }
+
   .hero-copy,
   .hero-card {
     min-height: 180px;
@@ -404,6 +587,36 @@ body {
   .indicator-grid,
   .cards-grid {
     grid-template-columns: 1fr;
+  }
+
+  .awareness-section {
+    padding: 1.5rem 1rem;
+  }
+
+  .awareness-tag {
+    font-size: 12px;
+  }
+
+  .awareness-title {
+    font-size: 28px;
+    letter-spacing: 0.08em;
+  }
+
+  .awareness-description {
+    font-size: 16px;
+    letter-spacing: 0.04em;
+  }
+
+  .awareness-actions {
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+
+  .hero-copy__primary,
+  .hero-copy__secondary {
+    width: 100%;
   }
 
   .site-navbar__nav {
