@@ -1,0 +1,55 @@
+﻿.indicator-row {
+  width: 100%;
+  padding: 0;
+  border: none;
+  background: transparent;
+}
+
+.indicator-list {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 67px;
+  width: min(1361.1982421875px, 100%);
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+.indicator-item {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  min-height: 96px;
+  position: relative;
+}
+
+.indicator-value {
+  color: #7c2d52;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 700;
+  font-size: 33.22px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  text-align: center;
+}
+
+.indicator-label {
+  color: #000000;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 300;
+  font-size: 24.16px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  text-align: center;
+}
+
+.indicator-separator {
+  position: absolute;
+  top: 0;
+  right: -33.5px;
+  width: 1px;
+  height: 96px;
+  background: #d9d9d9;
+}

@@ -1,0 +1,57 @@
+﻿.hero-copy__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 80px;
+  width: 672px;
+}
+
+.hero-copy__primary,
+.hero-copy__secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 38px;
+  width: 296px;
+  padding: 5.61px 11.22px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 700;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.hero-copy__primary {
+  background: var(--Rosa-Primrio, #c4517a);
+  color: #ffffff;
+}
+
+.hero-copy__primary:hover {
+  background: #ad4269;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(196, 81, 122, 0.24);
+}
+
+.hero-copy__secondary {
+  border: 1.5px solid #d46a91;
+  background: rgba(255, 255, 255, 0.72);
+  color: #a54972;
+}
+
+.hero-copy__secondary:hover {
+  border-color: #c4517a;
+  background: #fff3f7;
+  color: #7c2d52;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(196, 81, 122, 0.14);
+}
+
+.hero-copy__primary:active,
+.hero-copy__secondary:active {
+  transform: translateY(0);
+}

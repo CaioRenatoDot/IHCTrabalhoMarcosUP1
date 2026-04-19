@@ -1,25 +1,96 @@
 # IHCTrabalhoMarcosUP1
 
-Base inicial em React com Vite para comecar a desenvolver a pagina.
+Projeto da disciplina de IHC desenvolvido com React + Vite.
 
-## Como iniciar
+## Atividade
+
+A proposta da atividade é:
+
+Escolher uma tela (página) do projeto em equipe e implementar os componentes presentes nessa página.
+
+Entrega esperada:
+
+- print do PR realizado
+- print do merge no GitHub (ou outro sistema de controle de versão)
+
+## Tela escolhida
+
+A tela implementada neste projeto é a `HomePage`, com foco na experiência da página inicial da aplicação **RiskCare**.
+
+## Componentes implementados na página
+
+- `Navbar`: cabeçalho com marca, links e CTA
+- `ConscientizacaoPrevencaoSection`: seção principal com título, descrição, ações e card de risco
+- `AvaliacaoGratuitaButton`: CTA principal
+- `SaibaMaisButton`: CTA secundária
+- `Indicadores`: bloco de métricas em destaque
+- `FeatureCard`: cartões de benefícios/funcionalidades
+- `ObservationBanner`: aviso informativo ao final da página
+
+## Tecnologias
+
+- React 18
+- Vite 5
+- JavaScript (JSX)
+- CSS global
+
+## Como executar
 
 ```bash
 npm install
 npm run dev
 ```
 
-## Estrutura
+Para gerar build de produção:
 
-- `src/components`: componentes reutilizaveis
-- `src/pages`: paginas da aplicacao
-- `src/styles`: estilos globais
+```bash
+npm run build
+npm run preview
+```
+
+## Estrutura do projeto
+
+```text
+.
+- index.html
+- package.json
+- vite.config.js
+- src
+  - main.jsx
+  - pages
+    - HomePage.jsx
+  - components
+    - Navbar.jsx
+    - ConscientizacaoPrevencaoSection.jsx
+    - AvaliacaoGratuitaButton.jsx
+    - SaibaMaisButton.jsx
+    - Indicadores.jsx
+    - FeatureCard.jsx
+    - ObservationBanner.jsx
+    - Hero.jsx
+    - Section.jsx
+  - styles
+    - base.css
+    - layout.css
+    - navbar.css
+    - hero-actions.css
+    - awareness.css
+    - indicators.css
+    - banner.css
+    - responsive.css
+    - global.css
+```
 
 ## Arquivos principais
 
-- `src/App.jsx`: ponto principal da interface
-- `src/pages/HomePage.jsx`: pagina inicial de exemplo
-- `src/components/Hero.jsx`: componente de destaque
-- `src/components/Section.jsx`: bloco simples de secao
-- `src/components/Indicadores.jsx`: bloco de indicadores
-- `src/components/AvaliacaoGratuitaButton.jsx`: botão de avaliação gratuita
+- `src/main.jsx`: ponto de entrada da aplicação e renderização da `HomePage`
+- `src/pages/HomePage.jsx`: composição da página com os componentes principais
+- `src/styles/global.css`: agregador dos módulos de estilo
+- `src/styles/*.css`: estilos divididos por responsabilidade (base, layout, seções e responsividade)
+- `src/components/*.jsx`: componentes reutilizáveis da interface
+
+## Observação
+
+Os componentes `Hero.jsx` e `Section.jsx` permanecem no projeto como apoio/estrutura reutilizável, enquanto a composição atual da tela principal acontece via `HomePage.jsx`.
+
+O `index.html` continua necessário no Vite/React como template base de montagem (container `#root` e carregamento do bundle). O conteúdo de título da página foi movido para o `main.jsx`.

@@ -1,0 +1,137 @@
+﻿@media (max-width: 900px) {
+  .site-navbar {
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 1rem 0 1.1rem;
+  }
+
+  .site-navbar__nav {
+    gap: 1.25rem;
+  }
+
+  .hero-grid,
+  .stats-grid,
+  .indicator-grid,
+  .cards-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .awareness-section {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    gap: 1.5rem;
+    padding: 2rem 1.25rem;
+  }
+
+  .awareness-content {
+    max-width: 100%;
+  }
+
+  .awareness-title {
+    font-size: 34px;
+    letter-spacing: 0.11em;
+  }
+
+  .awareness-actions {
+    gap: 1rem;
+  }
+
+  .risk-card {
+    width: min(304px, 100%);
+  }
+
+  .hero-copy,
+  .hero-card {
+    min-height: 180px;
+  }
+
+  .hero-copy__secondary {
+    min-width: 180px;
+  }
+
+  .observation-banner__text {
+    letter-spacing: 0.18em;
+  }
+}
+
+@media (max-width: 640px) {
+  .wireframe-page {
+    width: min(100%, calc(100% - 1rem));
+    padding: 1rem 0 1.5rem;
+  }
+
+  .wireframe-block {
+    padding: 1.75rem 1rem 1rem;
+  }
+
+  .site-navbar {
+    align-items: stretch;
+  }
+
+  .site-navbar__brand,
+  .site-navbar__nav,
+  .site-navbar__cta {
+    width: 100%;
+    text-align: center;
+  }
+
+  .site-navbar__nav {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hero-grid,
+  .stats-grid,
+  .indicator-grid,
+  .cards-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .awareness-section {
+    padding: 1.5rem 1rem;
+  }
+
+  .awareness-tag {
+    font-size: 12px;
+  }
+
+  .awareness-title {
+    font-size: 28px;
+    letter-spacing: 0.08em;
+  }
+
+  .awareness-description {
+    font-size: 16px;
+    letter-spacing: 0.04em;
+  }
+
+  .awareness-actions {
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+
+  .hero-copy__primary,
+  .hero-copy__secondary {
+    width: 100%;
+  }
+
+  .site-navbar__nav {
+    gap: 0.75rem;
+  }
+
+  .site-navbar__cta {
+    padding: 0.9rem 1rem;
+  }
+
+  .observation-banner {
+    align-items: flex-start;
+    padding: 1rem;
+  }
+
+  .observation-banner__text {
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+  }
+}

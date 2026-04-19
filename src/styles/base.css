@@ -1,0 +1,31 @@
+﻿:root {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  color: #7b4d5d;
+  background-color: #fffdfd;
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: linear-gradient(180deg, #fffdfd 0%, #fff6f9 100%);
+}
+
+#root {
+  min-height: 100vh;
+}
+
+body,
+button,
+input,
+textarea {
+  font: inherit;
+}

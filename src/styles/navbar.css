@@ -1,0 +1,68 @@
+﻿.site-navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+  padding: 0.95rem 1.85rem 1.1rem;
+  background: transparent;
+}
+
+.site-navbar__brand {
+  color: #91355b;
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+.site-navbar__brand span {
+  color: inherit;
+}
+
+.site-navbar__nav {
+  display: flex;
+  align-items: center;
+  gap: 2.75rem;
+}
+
+.site-navbar__nav a {
+  color: #8a6672;
+  text-decoration: none;
+  font-size: 1.02rem;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.site-navbar__nav a:hover {
+  color: #b64c76;
+}
+
+.site-navbar__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0.75rem 1.35rem;
+  border-radius: 999px;
+  background: #c95a87;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 700;
+  white-space: nowrap;
+  box-shadow: none;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.site-navbar__cta:hover {
+  background: #b94673;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(196, 81, 122, 0.24);
+}
+
+.site-navbar__cta:active {
+  transform: translateY(0);
+}
