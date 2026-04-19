@@ -41,6 +41,12 @@ npm install
 npm run dev
 ```
 
+Verificação de qualidade:
+
+```bash
+npm run lint
+```
+
 Para gerar build de produção:
 
 ```bash
@@ -57,6 +63,7 @@ npm run preview
 - vite.config.js
 - src
   - main.jsx
+  - App.jsx
   - pages
     - HomePage.jsx
   - components
@@ -83,7 +90,8 @@ npm run preview
 
 ## Arquivos principais
 
-- `src/main.jsx`: ponto de entrada da aplicação e renderização da `HomePage`
+- `src/main.jsx`: ponto de entrada da aplicação e montagem do React
+- `src/App.jsx`: componente raiz da interface
 - `src/pages/HomePage.jsx`: composição da página com os componentes principais
 - `src/styles/global.css`: agregador dos módulos de estilo
 - `src/styles/*.css`: estilos divididos por responsabilidade (base, layout, seções e responsividade)
@@ -93,4 +101,4 @@ npm run preview
 
 Os componentes `Hero.jsx` e `Section.jsx` permanecem no projeto como apoio/estrutura reutilizável, enquanto a composição atual da tela principal acontece via `HomePage.jsx`.
 
-O `index.html` continua necessário no Vite/React como template base de montagem (container `#root` e carregamento do bundle). O conteúdo de título da página foi movido para o `main.jsx`.
+O `index.html` continua necessário no Vite/React como template base de montagem (container `#root` e carregamento do bundle).
