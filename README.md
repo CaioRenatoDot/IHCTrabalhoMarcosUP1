@@ -8,7 +8,7 @@ A proposta da atividade é:
 
 Escolher uma tela (página) do projeto em equipe e implementar os componentes presentes nessa página.
 
-##👥 Divisão de Responsabilidades
+## 👥 Divisão de Responsabilidades
 
 O desenvolvimento desta página foi realizado de forma colaborativa, com divisão de tarefas entre os integrantes da equipe:
 
