@@ -8,10 +8,16 @@ A proposta da atividade é:
 
 Escolher uma tela (página) do projeto em equipe e implementar os componentes presentes nessa página.
 
-Entrega esperada:
+##👥 Divisão de Responsabilidades
 
-- print do PR realizado
-- print do merge no GitHub (ou outro sistema de controle de versão)
+O desenvolvimento desta página foi realizado de forma colaborativa, com divisão de tarefas entre os integrantes da equipe:
+
+Caio Gabriel – Implementação dos cards informativos ✅
+Renato – Desenvolvimento da Navbar e da seção "Saiba Mais", incluindo ajustes visuais para maior fidelidade ao protótipo no Figma ✅
+Thalita – Criação dos cards de estatística e dos botões interativos da interface ✅
+Francisco – Implementação da funcionalidade de Avaliação Gratuita ✅
+
+Todas as funcionalidades propostas foram implementadas com sucesso, e o projeto foi integrado de forma conjunta através do controle de versão.
 
 ## Tela escolhida
 
