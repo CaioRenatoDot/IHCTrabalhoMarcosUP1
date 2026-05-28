@@ -1,34 +1,55 @@
-﻿.site-navbar {
+.site-navbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: nowrap;
   gap: 1rem;
-  margin-bottom: 1.25rem;
-  padding: 0.95rem 1.85rem 1.1rem;
-  background: transparent;
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  width: 100%;
+  margin-bottom: 0;
+  height: 88px;
+  padding: 0 clamp(0.9rem, 3vw, 2.5rem);
+  box-sizing: border-box;
+  border: 0;
+  border-radius: 0;
+  background: #fffdfd;
+  box-shadow: none;
 }
 
 .site-navbar__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
   color: #91355b;
   font-size: 22px;
   font-weight: 800;
+  line-height: 1;
   letter-spacing: -0.03em;
+  text-decoration: none;
 }
 
-.site-navbar__brand span {
-  color: inherit;
+.site-navbar__brand-logo {
+  display: block;
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  flex: 0 0 auto;
+  transform: translateY(1px);
 }
 
 .site-navbar__nav {
   display: flex;
   align-items: center;
-  gap: 2.75rem;
+  gap: 1.9rem;
+  white-space: nowrap;
 }
 
 .site-navbar__nav a {
   color: #8a6672;
   text-decoration: none;
-  font-size: 1.02rem;
+  font-size: 0.98rem;
   font-weight: 500;
   transition: color 0.2s ease;
 }
@@ -41,7 +62,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 44px;
+  height: 44px;
   padding: 0.75rem 1.35rem;
   border-radius: 999px;
   background: #c95a87;

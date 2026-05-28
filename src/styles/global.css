@@ -2,9 +2,11 @@
 
 @import './base.css';
 @import './layout.css';
+@import './cover.css';
 @import './navbar.css';
 @import './hero-actions.css';
 @import './awareness.css';
 @import './indicators.css';
 @import './banner.css';
+@import './footer.css';
 @import './responsive.css';

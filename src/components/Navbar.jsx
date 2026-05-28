@@ -1,17 +1,34 @@
-function Navbar() {
+function Navbar({ onNavigate }) {
+  const handleNavigate = (event, href) => {
+    if (typeof onNavigate !== 'function') {
+      return
+    }
+
+    event.preventDefault()
+    onNavigate(href)
+  }
+
   return (
     <header className="site-navbar">
-      <div className="site-navbar__brand">
-        Risk<span>Care</span>
-      </div>
+      <a className="site-navbar__brand" href="/" onClick={(event) => handleNavigate(event, '/')}>
+        <img
+          className="site-navbar__brand-logo"
+          src="/riskcare_logo.png"
+          alt="Logo RiskCare"
+        />
+        RiskCare
+      </a>
 
       <nav className="site-navbar__nav" aria-label={'Navega\u00E7\u00E3o principal'}>
-        <a href="#como-funciona">Como funciona</a>
-        <a href="#fatores-de-risco">Fatores de risco</a>
-        <a href="#sobre">Sobre</a>
+        <a href="/#como-funciona" onClick={(event) => handleNavigate(event, '/#como-funciona')}>
+          Como funciona
+        </a>
+        <a href="/sobre-projeto" onClick={(event) => handleNavigate(event, '/sobre-projeto')}>
+          Sobre o projeto
+        </a>
       </nav>
 
-      <a className="site-navbar__cta" href="#avaliacao">
+      <a className="site-navbar__cta" href="/#avaliacao" onClick={(event) => handleNavigate(event, '/#avaliacao')}>
         {'Come\u00E7ar avalia\u00E7\u00E3o'}
       </a>
     </header>

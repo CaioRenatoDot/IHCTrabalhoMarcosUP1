@@ -1,9 +1,10 @@
-﻿.hero-copy__actions {
+.hero-copy__actions {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  gap: 80px;
-  width: 672px;
+  justify-content: flex-start;
+  gap: 1rem;
+  width: 100%;
+  max-width: 760px;
 }
 
 .hero-copy__primary,
@@ -11,12 +12,12 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: 38px;
-  width: 296px;
-  padding: 5.61px 11.22px;
-  border-radius: 10px;
+  height: 46px;
+  min-width: 230px;
+  padding: 0.5rem 1rem;
+  border-radius: 12px;
   text-decoration: none;
-  font-size: 0.95rem;
+  font-size: 1rem;
   font-weight: 700;
   transition:
     background-color 0.2s ease,
@@ -27,7 +28,7 @@
 }
 
 .hero-copy__primary {
-  background: var(--Rosa-Primrio, #c4517a);
+  background: #c4517a;
   color: #ffffff;
 }
 
