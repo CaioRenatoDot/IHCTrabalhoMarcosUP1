@@ -1,4 +1,3 @@
-import Navbar from '../components/Navbar.jsx'
 import FeatureCard from '../components/FeatureCard.jsx'
 import Indicadores from '../components/Indicadores.jsx'
 import ObservationBanner from '../components/ObservationBanner.jsx'
@@ -49,58 +48,67 @@ const ChartIcon = () => (
 function HomePage() {
   return (
     <main className="wireframe-page">
-      <Navbar />
-
-      <ConscientizacaoPrevencaoSection />
-
-      <Indicadores />
-
-      <section className="cards-block">
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
-            gap: '24px',
-            padding: '40px 32px',
-          }}
-        >
-          <div style={{ flex: 1 }}>
-            <FeatureCard
-              icon={<ClockIcon />}
-              title={'An\u00E1lise r\u00E1pida'}
-              description={
-                'Responda um question\u00E1rio curto e receba sua estimativa em minutos, sem burocracia'
-              }
-              iconBg="#fce7f3"
-              iconColor="#e879a0"
-            />
-          </div>
-          <div style={{ flex: 1 }}>
-            <FeatureCard
-              icon={<ShieldIcon />}
-              title={'Question\u00E1rio detalhado'}
-              description={
-                'Perguntas criadas com base em sintomas mais comuns do c\u00E2ncer de mama'
-              }
-              iconBg="#dbeafe"
-              iconColor="#6098f2"
-            />
-          </div>
-          <div style={{ flex: 1 }}>
-            <FeatureCard
-              icon={<ChartIcon />}
-              title={'Estat\u00EDstica de risco'}
-              description={
-                'Ao finalizar receba a estat\u00EDstica detalhada com base nas respostas das perguntas'
-              }
-              iconBg="#d1fae5"
-              iconColor="#34d399"
-            />
+      <section id="avaliacao" className="home-section home-section--hero">
+        <div className="home-section__inner">
+          <div id="como-funciona">
+            <ConscientizacaoPrevencaoSection />
           </div>
         </div>
       </section>
 
-      <ObservationBanner />
+      <section id="fatores-de-risco" className="home-section home-section--metrics">
+        <div className="home-section__inner">
+          <Indicadores />
+        </div>
+      </section>
+
+      <section className="home-section home-section--cards">
+        <div className="home-section__inner">
+          <section className="cards-block">
+            <div className="cards-block__grid">
+              <div>
+                <FeatureCard
+                  icon={<ClockIcon />}
+                  title={'An\u00E1lise r\u00E1pida'}
+                  description={
+                    'Responda um question\u00E1rio curto e receba sua estimativa em minutos, sem burocracia'
+                  }
+                  iconBg="#fce7f3"
+                  iconColor="#e879a0"
+                />
+              </div>
+              <div>
+                <FeatureCard
+                  icon={<ShieldIcon />}
+                  title={'Question\u00E1rio detalhado'}
+                  description={
+                    'Perguntas criadas com base em sintomas mais comuns do c\u00E2ncer de mama'
+                  }
+                  iconBg="#dbeafe"
+                  iconColor="#6098f2"
+                />
+              </div>
+              <div>
+                <FeatureCard
+                  icon={<ChartIcon />}
+                  title={'Estat\u00EDstica de risco'}
+                  description={
+                    'Ao finalizar receba a estat\u00EDstica detalhada com base nas respostas das perguntas'
+                  }
+                  iconBg="#d1fae5"
+                  iconColor="#34d399"
+                />
+              </div>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <section id="sobre" className="home-section home-section--notice">
+        <div className="home-section__inner">
+          <ObservationBanner />
+        </div>
+      </section>
     </main>
   )
 }
