@@ -88,17 +88,10 @@
   color: #8f6073;
 }
 
-.login-logo-icon {
-  width: 54px;
-  height: 54px;
-  border-radius: 50%;
-  background: #c74f7e;
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 34px;
-  line-height: 1;
+.login-logo-image {
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
 }
 
 .login-card h1 {

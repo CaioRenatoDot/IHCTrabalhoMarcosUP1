@@ -2,7 +2,11 @@ function LoginHeader() {
   return (
     <>
       <div className="login-logo">
-        <div className="login-logo-icon">&#9825;</div>
+        <img
+          className="login-logo-image"
+          src="/riskcare_logo.png"
+          alt="Logo RiskCare"
+        />
         <span>RISKCARE</span>
       </div>
 
