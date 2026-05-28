@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import HomePage from './pages/HomePage.jsx'
+import LoginPage from './pages/LoginPage.jsx'
 import CoverPage from './pages/CoverPage.jsx'
 import Navbar from './components/Navbar.jsx'
 import Footer from './components/Footer.jsx'
@@ -81,6 +82,10 @@ function App() {
 
     window.history.pushState({}, '', next)
     setRoute({ path: nextPath, hash: nextHash })
+  }
+
+  if (route.path === '/login') {
+    return <LoginPage />
   }
 
   const page =
