@@ -1,7 +1,7 @@
-﻿.wireframe-page {
-  width: min(1180px, calc(100% - 2rem));
+.wireframe-page {
+  width: 100%;
   margin: 0 auto;
-  padding: 1.5rem 0 2rem;
+  padding: 0;
 }
 
 .wireframe-block {
@@ -88,4 +88,55 @@
 
 .feature-card {
   min-height: 190px;
+}
+
+.cards-block {
+  margin: 0 0 2rem;
+}
+
+.cards-block__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.6rem;
+  width: 100%;
+  max-width: 1380px;
+  margin: 0 auto;
+  padding: 0.4rem 0 0;
+}
+
+.home-section {
+  position: relative;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  border-top: 1px solid rgba(196, 81, 122, 0.14);
+}
+
+.home-section__inner {
+  width: 100%;
+  max-width: 1420px;
+  margin: 0 auto;
+  padding: 1.6rem clamp(0.85rem, 2.4vw, 2.4rem);
+}
+
+.home-section--hero {
+  background: linear-gradient(180deg, rgba(245, 220, 232, 0.42), rgba(245, 220, 232, 0.2));
+}
+
+.home-section--hero .home-section__inner {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.home-section--metrics {
+  background: #fffafc;
+}
+
+.home-section--cards {
+  background: linear-gradient(180deg, rgba(255, 246, 250, 0.9), rgba(255, 244, 248, 0.7));
+}
+
+.home-section--notice {
+  background: #fff8fb;
+  border-bottom: 1px solid rgba(196, 81, 122, 0.14);
 }

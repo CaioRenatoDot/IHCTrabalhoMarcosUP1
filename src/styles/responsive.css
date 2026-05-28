@@ -1,26 +1,24 @@
-﻿@media (max-width: 900px) {
+@media (max-width: 900px) {
   .site-navbar {
     flex-wrap: wrap;
     justify-content: center;
-    padding: 1rem 0 1.1rem;
+    height: auto;
+    min-height: 88px;
+    padding-top: 0.65rem;
+    padding-bottom: 0.65rem;
   }
 
   .site-navbar__nav {
-    gap: 1.25rem;
-  }
-
-  .hero-grid,
-  .stats-grid,
-  .indicator-grid,
-  .cards-grid {
-    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
   }
 
   .awareness-section {
     grid-template-columns: 1fr;
     justify-items: center;
-    gap: 1.5rem;
-    padding: 2rem 1.25rem;
+    gap: 1.3rem;
+    padding: 1.75rem 1.25rem;
   }
 
   .awareness-content {
@@ -28,44 +26,40 @@
   }
 
   .awareness-title {
-    font-size: 34px;
-    letter-spacing: 0.11em;
+    letter-spacing: 0.06em;
   }
 
   .awareness-actions {
-    gap: 1rem;
+    gap: 0.8rem;
   }
 
   .risk-card {
-    width: min(304px, 100%);
+    width: min(360px, 100%);
   }
 
-  .hero-copy,
-  .hero-card {
-    min-height: 180px;
+  .cards-block__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .hero-copy__secondary {
-    min-width: 180px;
+  .indicator-list {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
   }
 
-  .observation-banner__text {
-    letter-spacing: 0.18em;
+  .indicator-separator {
+    display: none;
   }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 700px) {
   .wireframe-page {
-    width: min(100%, calc(100% - 1rem));
-    padding: 1rem 0 1.5rem;
-  }
-
-  .wireframe-block {
-    padding: 1.75rem 1rem 1rem;
+    padding: 0.7rem 0.75rem 1.4rem;
   }
 
   .site-navbar {
     align-items: stretch;
+    top: 0;
   }
 
   .site-navbar__brand,
@@ -78,60 +72,53 @@
   .site-navbar__nav {
     flex-direction: column;
     align-items: center;
-  }
-
-  .hero-grid,
-  .stats-grid,
-  .indicator-grid,
-  .cards-grid {
-    grid-template-columns: 1fr;
+    gap: 0.75rem;
   }
 
   .awareness-section {
-    padding: 1.5rem 1rem;
+    padding: 1.35rem 0.95rem;
+    border-radius: 12px;
   }
 
   .awareness-tag {
-    font-size: 12px;
+    font-size: 0.75rem;
   }
 
   .awareness-title {
-    font-size: 28px;
-    letter-spacing: 0.08em;
+    font-size: 1.8rem;
+    letter-spacing: 0.04em;
   }
 
   .awareness-description {
-    font-size: 16px;
-    letter-spacing: 0.04em;
+    font-size: 1rem;
+    letter-spacing: 0;
   }
 
   .awareness-actions {
     width: 100%;
     flex-direction: column;
     align-items: stretch;
-    gap: 0.75rem;
+    gap: 0.65rem;
   }
 
   .hero-copy__primary,
   .hero-copy__secondary {
     width: 100%;
+    min-width: 0;
   }
 
-  .site-navbar__nav {
-    gap: 0.75rem;
-  }
-
-  .site-navbar__cta {
-    padding: 0.9rem 1rem;
+  .cards-block__grid {
+    grid-template-columns: 1fr;
+    gap: 0.9rem;
   }
 
   .observation-banner {
-    align-items: flex-start;
-    padding: 1rem;
+    align-items: center;
+    padding: 0.85rem;
   }
 
   .observation-banner__text {
-    font-size: 0.68rem;
-    letter-spacing: 0.1em;
+    font-size: 0.8rem;
+    text-align: left;
   }
 }
