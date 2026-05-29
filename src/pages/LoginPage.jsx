@@ -5,6 +5,7 @@ import LoginForm from '../components/login/LoginForm.jsx'
 import LoginHeader from '../components/login/LoginHeader.jsx'
 import LoginWarning from '../components/login/LoginWarning.jsx'
 import SocialLoginButtons from '../components/login/SocialLoginButtons.jsx'
+import SkipLink from '../components/SkipLink.jsx'
 import TextZoomControls from '../components/accessibility/TextZoomControls.jsx'
 
 const MIN_FONT_SCALE = 0.85
@@ -102,11 +103,14 @@ function LoginPage() {
 
   return (
     <main
+      id="main-content"
       className="login-page"
       style={{ '--login-text-scale': fontScale }}
+      tabIndex={-1}
       onMouseMove={handleMagnifierMove}
       onMouseLeave={hideMagnifier}
     >
+      <SkipLink />
       <TextZoomControls
         fontScale={fontScale}
         minFontScale={MIN_FONT_SCALE}
