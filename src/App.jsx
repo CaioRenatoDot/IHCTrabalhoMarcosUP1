@@ -4,6 +4,7 @@ import LoginPage from './pages/LoginPage.jsx'
 import CoverPage from './pages/CoverPage.jsx'
 import Navbar from './components/Navbar.jsx'
 import Footer from './components/Footer.jsx'
+import AccessibilityControls from './components/accessibility/AccessibilityControls.jsx'
 
 function parseLocation() {
   return {
@@ -85,20 +86,24 @@ function App() {
   }
 
   if (route.path === '/login') {
-    return <LoginPage />
+    return (
+      <AccessibilityControls>
+        <LoginPage />
+      </AccessibilityControls>
+    )
   }
 
   const page =
     route.path === '/sobre-projeto' || route.path === '/cover' ? <CoverPage /> : <HomePage />
 
   return (
-    <>
+    <AccessibilityControls>
       <Navbar onNavigate={navigate} />
       <div key={`${route.path}${route.hash}`} className="app-page">
         {page}
       </div>
       <Footer />
-    </>
+    </AccessibilityControls>
   )
 }
 
