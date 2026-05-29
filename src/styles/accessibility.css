@@ -86,7 +86,8 @@
 .text-magnifier {
   position: fixed;
   z-index: 90;
-  max-width: 340px;
+  width: max-content;
+  max-width: min(340px, calc(100vw - 32px));
   padding: 14px 18px;
   border: 2px solid #c74f7e;
   border-radius: 14px;
@@ -97,6 +98,46 @@
   font-weight: 700;
   line-height: 1.3;
   pointer-events: none;
+}
+
+@media (max-width: 640px) {
+  .text-zoom-controls {
+    right: 16px;
+    bottom: 80px;
+  }
+
+  .text-zoom-trigger {
+    width: 50px;
+    height: 50px;
+    font-size: 30px;
+  }
+
+  .text-zoom-menu {
+    width: min(252px, calc(100vw - 86px));
+  }
+
+  .text-zoom-menu button {
+    min-height: 48px;
+    gap: 14px;
+    padding: 0 14px;
+    font-size: 16px;
+  }
+
+  .text-magnifier {
+    padding: 12px 14px;
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 420px) {
+  .text-zoom-controls {
+    right: 12px;
+    bottom: 68px;
+  }
+
+  .text-zoom-menu {
+    width: calc(100vw - 78px);
+  }
 }
 
 .accessibility-root .site-navbar__brand {

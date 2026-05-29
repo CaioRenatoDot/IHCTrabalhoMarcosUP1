@@ -5,6 +5,10 @@ const MIN_FONT_SCALE = 0.85
 const MAX_FONT_SCALE = 1.5
 const FONT_SCALE_STEP = 0.15
 const FONT_SCALE_STORAGE_KEY = 'riskcare:accessibility-font-scale'
+const MAGNIFIER_OFFSET = 18
+const MAGNIFIER_EDGE_GAP = 16
+const MAGNIFIER_MAX_WIDTH = 340
+const MAGNIFIER_ESTIMATED_HEIGHT = 130
 
 function clampFontScale(value) {
   return Math.min(MAX_FONT_SCALE, Math.max(MIN_FONT_SCALE, value))
@@ -56,6 +60,27 @@ function findMagnifierText(target, rootElement) {
   return ''
 }
 
+function getMagnifierPosition(clientX, clientY) {
+  const maxX = Math.max(
+    MAGNIFIER_EDGE_GAP,
+    window.innerWidth - MAGNIFIER_MAX_WIDTH - MAGNIFIER_EDGE_GAP,
+  )
+  const preferredX = clientX + MAGNIFIER_OFFSET
+  const x = Math.min(Math.max(MAGNIFIER_EDGE_GAP, preferredX), maxX)
+
+  const preferredY = clientY + MAGNIFIER_OFFSET
+  const shouldPlaceAbove =
+    preferredY + MAGNIFIER_ESTIMATED_HEIGHT > window.innerHeight
+  const nextY = shouldPlaceAbove
+    ? clientY - MAGNIFIER_ESTIMATED_HEIGHT - MAGNIFIER_OFFSET
+    : preferredY
+
+  return {
+    x,
+    y: Math.max(MAGNIFIER_EDGE_GAP, nextY),
+  }
+}
+
 function AccessibilityControls({ children }) {
   const [fontScale, setFontScale] = useState(getInitialFontScale)
   const [isMagnifierEnabled, setIsMagnifierEnabled] = useState(false)
@@ -86,7 +111,7 @@ function AccessibilityControls({ children }) {
     setMagnifier((currentState) => ({ ...currentState, isVisible: false }))
   }
 
-  const handleMagnifierMove = (event) => {
+  const updateMagnifier = (event) => {
     if (!isMagnifierEnabled) {
       return
     }
@@ -98,20 +123,35 @@ function AccessibilityControls({ children }) {
       return
     }
 
+    const position = getMagnifierPosition(event.clientX, event.clientY)
+
     setMagnifier({
       isVisible: true,
       text: cleanText.slice(0, 120),
-      x: event.clientX + 18,
-      y: event.clientY + 18,
+      x: position.x,
+      y: position.y,
     })
+  }
+
+  const handleMagnifierPointerMove = (event) => {
+    if (event.pointerType === 'mouse') {
+      updateMagnifier(event)
+    }
+  }
+
+  const handleMagnifierPointerDown = (event) => {
+    if (event.pointerType !== 'mouse') {
+      updateMagnifier(event)
+    }
   }
 
   return (
     <div
       className="accessibility-root"
       style={{ '--accessibility-font-scale': fontScale }}
-      onMouseMove={handleMagnifierMove}
-      onMouseLeave={hideMagnifier}
+      onPointerMove={handleMagnifierPointerMove}
+      onPointerDown={handleMagnifierPointerDown}
+      onPointerLeave={hideMagnifier}
     >
       <TextZoomControls
         fontScale={fontScale}
