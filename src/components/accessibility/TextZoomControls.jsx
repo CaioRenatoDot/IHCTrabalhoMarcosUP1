@@ -1,13 +1,15 @@
 import { useState } from 'react'
-import { FaUniversalAccess } from 'react-icons/fa'
+import { FaSearchPlus, FaUniversalAccess } from 'react-icons/fa'
 
 function TextZoomControls({
   fontScale,
   minFontScale,
   maxFontScale,
+  isMagnifierEnabled,
   onDecrease,
   onReset,
   onIncrease,
+  onToggleMagnifier,
 }) {
   const [isOpen, setIsOpen] = useState(false)
 
@@ -46,6 +48,19 @@ function TextZoomControls({
           >
             <span aria-hidden="true">A</span>
             Restaurar fonte
+          </button>
+
+          <button
+            type="button"
+            className={isMagnifierEnabled ? 'is-active' : ''}
+            onClick={onToggleMagnifier}
+            role="menuitem"
+            aria-pressed={isMagnifierEnabled}
+          >
+            <span aria-hidden="true">
+              <FaSearchPlus />
+            </span>
+            {isMagnifierEnabled ? 'Desativar lupa' : 'Ativar lupa'}
           </button>
         </div>
       )}
