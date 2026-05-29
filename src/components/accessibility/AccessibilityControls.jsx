@@ -5,6 +5,7 @@ const MIN_FONT_SCALE = 0.85
 const MAX_FONT_SCALE = 1.5
 const FONT_SCALE_STEP = 0.15
 const FONT_SCALE_STORAGE_KEY = 'riskcare:accessibility-font-scale'
+const HIGH_CONTRAST_STORAGE_KEY = 'riskcare:accessibility-high-contrast'
 const MAGNIFIER_OFFSET = 18
 const MAGNIFIER_EDGE_GAP = 16
 const MAGNIFIER_MAX_WIDTH = 340
@@ -84,6 +85,9 @@ function getMagnifierPosition(clientX, clientY) {
 function AccessibilityControls({ children }) {
   const [fontScale, setFontScale] = useState(getInitialFontScale)
   const [isMagnifierEnabled, setIsMagnifierEnabled] = useState(false)
+  const [isHighContrastEnabled, setIsHighContrastEnabled] = useState(
+    () => localStorage.getItem(HIGH_CONTRAST_STORAGE_KEY) === 'true',
+  )
   const [magnifier, setMagnifier] = useState({
     isVisible: false,
     text: '',
@@ -106,6 +110,10 @@ function AccessibilityControls({ children }) {
   useEffect(() => {
     localStorage.setItem(FONT_SCALE_STORAGE_KEY, String(fontScale))
   }, [fontScale])
+
+  useEffect(() => {
+    localStorage.setItem(HIGH_CONTRAST_STORAGE_KEY, String(isHighContrastEnabled))
+  }, [isHighContrastEnabled])
 
   const hideMagnifier = () => {
     setMagnifier((currentState) => ({ ...currentState, isVisible: false }))
@@ -147,7 +155,7 @@ function AccessibilityControls({ children }) {
 
   return (
     <div
-      className="accessibility-root"
+      className={`accessibility-root${isHighContrastEnabled ? ' is-high-contrast' : ''}`}
       style={{ '--accessibility-font-scale': fontScale }}
       onPointerMove={handleMagnifierPointerMove}
       onPointerDown={handleMagnifierPointerDown}
@@ -158,12 +166,16 @@ function AccessibilityControls({ children }) {
         minFontScale={MIN_FONT_SCALE}
         maxFontScale={MAX_FONT_SCALE}
         isMagnifierEnabled={isMagnifierEnabled}
+        isHighContrastEnabled={isHighContrastEnabled}
         onDecrease={decreaseFontScale}
         onReset={() => setFontScale(1)}
         onIncrease={increaseFontScale}
         onToggleMagnifier={() => {
           setIsMagnifierEnabled((currentValue) => !currentValue)
           hideMagnifier()
+        }}
+        onToggleHighContrast={() => {
+          setIsHighContrastEnabled((currentValue) => !currentValue)
         }}
       />
 

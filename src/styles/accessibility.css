@@ -260,3 +260,164 @@
 .accessibility-root .site-footer {
   font-size: calc(0.78rem * var(--accessibility-font-scale));
 }
+
+.accessibility-root.is-high-contrast {
+  background: #000;
+  color: #fff;
+}
+
+.accessibility-root.is-high-contrast .site-navbar,
+.accessibility-root.is-high-contrast .home-section,
+.accessibility-root.is-high-contrast .home-section--hero,
+.accessibility-root.is-high-contrast .home-section--metrics,
+.accessibility-root.is-high-contrast .home-section--cards,
+.accessibility-root.is-high-contrast .home-section--notice,
+.accessibility-root.is-high-contrast .site-footer {
+  background: #000;
+  border-color: #fff;
+}
+
+.accessibility-root.is-high-contrast .site-navbar__brand,
+.accessibility-root.is-high-contrast .site-navbar__nav a,
+.accessibility-root.is-high-contrast .awareness-title,
+.accessibility-root.is-high-contrast .awareness-description,
+.accessibility-root.is-high-contrast .indicator-label,
+.accessibility-root.is-high-contrast .observation-banner__text,
+.accessibility-root.is-high-contrast .site-footer__left,
+.accessibility-root.is-high-contrast .site-footer__center,
+.accessibility-root.is-high-contrast .site-footer__right {
+  color: #fff;
+}
+
+.accessibility-root.is-high-contrast .site-navbar__cta,
+.accessibility-root.is-high-contrast .awareness-tag,
+.accessibility-root.is-high-contrast .observation-banner {
+  background: #000;
+  color: #ffeb3b;
+  border: 1px solid #fff;
+}
+
+.accessibility-root.is-high-contrast .hero-copy__primary,
+.accessibility-root.is-high-contrast .hero-copy__secondary,
+.accessibility-root.is-high-contrast .hero-action-button {
+  background: #000;
+  color: #ffeb3b;
+  border: 1px solid #fff;
+  box-shadow: none;
+}
+
+.accessibility-root.is-high-contrast .hero-copy__primary:hover,
+.accessibility-root.is-high-contrast .hero-copy__secondary:hover,
+.accessibility-root.is-high-contrast .hero-action-button:hover {
+  background: #1a1a1a;
+  color: #ffeb3b;
+  border-color: #fff;
+  box-shadow: none;
+}
+
+.accessibility-root.is-high-contrast .site-navbar__cta:hover {
+  background: #1a1a1a;
+}
+
+.accessibility-root.is-high-contrast .risk-card {
+  background: #000;
+  border-color: #fff;
+}
+
+.accessibility-root.is-high-contrast .risk-card__title,
+.accessibility-root.is-high-contrast .risk-card__level,
+.accessibility-root.is-high-contrast .risk-card__row,
+.accessibility-root.is-high-contrast .risk-card__row strong {
+  color: #fff;
+}
+
+.accessibility-root.is-high-contrast .risk-card__ring {
+  border-color: #fff;
+  background: conic-gradient(#ffeb3b 0 115deg, transparent 115deg 360deg);
+}
+
+.accessibility-root.is-high-contrast .risk-card__ring::after {
+  background: #000;
+}
+
+.accessibility-root.is-high-contrast .risk-card__value,
+.accessibility-root.is-high-contrast .indicator-value,
+.accessibility-root.is-high-contrast .site-navbar__nav a:hover,
+.accessibility-root.is-high-contrast .login-card a,
+.accessibility-root.is-high-contrast .cards-block h3 {
+  color: #ffeb3b;
+}
+
+.accessibility-root.is-high-contrast .indicator-separator {
+  background: #fff;
+}
+
+.accessibility-root.is-high-contrast .feature-card-panel {
+  background: #000;
+  border-color: #fff;
+  box-shadow: none;
+}
+
+.accessibility-root.is-high-contrast .feature-card-copy h3 {
+  color: #ffeb3b;
+}
+
+.accessibility-root.is-high-contrast .feature-card-copy p {
+  color: #fff;
+}
+
+.accessibility-root.is-high-contrast .feature-card-icon {
+  border: 1px solid #fff;
+}
+
+.accessibility-root.is-high-contrast .cover,
+.accessibility-root.is-high-contrast .cover-page,
+.accessibility-root.is-high-contrast .cover__right {
+  background: #000;
+}
+
+.accessibility-root.is-high-contrast .cover__left {
+  background: #000;
+  border-right: 1px solid #fff;
+}
+
+.accessibility-root.is-high-contrast .cover-brand__icon,
+.accessibility-root.is-high-contrast .cover-chip,
+.accessibility-root.is-high-contrast .cover-tag-list li {
+  border-color: #fff;
+  color: #ffeb3b;
+  background: #000;
+}
+
+.accessibility-root.is-high-contrast .cover-title,
+.accessibility-root.is-high-contrast .cover-subtitle,
+.accessibility-root.is-high-contrast .cover-block__head h2,
+.accessibility-root.is-high-contrast .cover-block p,
+.accessibility-root.is-high-contrast .cover-alert p,
+.accessibility-root.is-high-contrast .cover-audience li,
+.accessibility-root.is-high-contrast .cover-team__list li,
+.accessibility-root.is-high-contrast .cover-brand__text {
+  color: #fff;
+}
+
+.accessibility-root.is-high-contrast .cover-block__head span {
+  background: #fff;
+}
+
+.accessibility-root.is-high-contrast .cover-audience li::before {
+  background: #ffeb3b;
+}
+
+.accessibility-root.is-high-contrast .cover-team__avatar {
+  background: #ffeb3b;
+  color: #000;
+}
+
+.accessibility-root.is-high-contrast .cover-alert {
+  background: #000;
+  border-color: #fff;
+}
+
+.accessibility-root.is-high-contrast .cover-alert__icon {
+  color: #ffeb3b;
+}

@@ -400,6 +400,54 @@
   background: #ffeb3b;
 }
 
+.login-page.is-high-contrast .text-zoom-trigger,
+.login-loading-page.is-high-contrast .text-zoom-trigger {
+  background: #000;
+  color: #ffeb3b;
+  border: 2px solid #fff;
+  box-shadow: none;
+}
+
+.login-page.is-high-contrast .text-zoom-trigger:hover,
+.login-loading-page.is-high-contrast .text-zoom-trigger:hover {
+  background: #111;
+}
+
+.login-page.is-high-contrast .text-zoom-menu,
+.login-loading-page.is-high-contrast .text-zoom-menu {
+  background: #000;
+  border-color: #fff;
+  box-shadow: none;
+}
+
+.login-page.is-high-contrast .text-zoom-menu button,
+.login-loading-page.is-high-contrast .text-zoom-menu button {
+  background: #000;
+  color: #fff;
+}
+
+.login-page.is-high-contrast .text-zoom-menu button span,
+.login-loading-page.is-high-contrast .text-zoom-menu button span {
+  color: #ffeb3b;
+}
+
+.login-page.is-high-contrast .text-zoom-menu button:hover:not(:disabled),
+.login-loading-page.is-high-contrast .text-zoom-menu button:hover:not(:disabled) {
+  background: #1a1a1a;
+  color: #ffeb3b;
+}
+
+.login-page.is-high-contrast .text-zoom-menu button.is-active,
+.login-loading-page.is-high-contrast .text-zoom-menu button.is-active {
+  background: #ffeb3b;
+  color: #000;
+}
+
+.login-page.is-high-contrast .text-zoom-menu button.is-active span,
+.login-loading-page.is-high-contrast .text-zoom-menu button.is-active span {
+  color: #000;
+}
+
 @media (max-width: 560px) {
   .login-page {
     padding: 20px;

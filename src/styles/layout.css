@@ -90,6 +90,50 @@
   min-height: 190px;
 }
 
+.feature-card-panel {
+  width: 100%;
+  min-height: 220px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 24px 22px;
+  border: 1px solid #f3d6e4;
+  border-radius: 16px;
+  background: rgba(167, 61, 110, 0.02);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+}
+
+.feature-card-icon {
+  width: 56px;
+  height: 56px;
+  min-width: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+}
+
+.feature-card-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.feature-card-copy h3 {
+  margin: 0;
+  color: #8a6070;
+  font-size: 1.08rem;
+  font-weight: 700;
+}
+
+.feature-card-copy p {
+  margin: 0;
+  color: #8a6070;
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
 .cards-block {
   margin: 0 0 2rem;
 }
