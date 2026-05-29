@@ -411,6 +411,92 @@
   margin: 0;
 }
 
+.login-page.is-high-contrast {
+  background: #000;
+  color: #fff;
+}
+
+.login-page.is-high-contrast::before,
+.login-page.is-high-contrast::after {
+  background: #1f1f1f;
+}
+
+.login-page.is-high-contrast .login-card {
+  background: #000;
+  border-color: #fff;
+  color: #fff;
+  box-shadow: 0 0 0 2px #fff;
+}
+
+.login-page.is-high-contrast .login-card::before,
+.login-page.is-high-contrast .login-card::after {
+  background: #1f1f1f;
+}
+
+.login-page.is-high-contrast .login-logo,
+.login-page.is-high-contrast .login-card h1,
+.login-page.is-high-contrast .login-subtitle,
+.login-page.is-high-contrast .login-form label,
+.login-page.is-high-contrast .signup-link,
+.login-page.is-high-contrast .forgot-password,
+.login-page.is-high-contrast .login-warning {
+  color: #fff;
+}
+
+.login-page.is-high-contrast .login-card a,
+.login-page.is-high-contrast .social-button {
+  color: #ffeb3b;
+}
+
+.login-page.is-high-contrast .social-button {
+  border-color: #fff;
+  background: #000;
+}
+
+.login-page.is-high-contrast .login-divider {
+  color: #fff;
+}
+
+.login-page.is-high-contrast .login-divider::before,
+.login-page.is-high-contrast .login-divider::after {
+  background: #fff;
+}
+
+.login-page.is-high-contrast .login-form input {
+  border-color: #fff;
+  background: #000;
+  color: #fff;
+}
+
+.login-page.is-high-contrast .login-form input::placeholder {
+  color: #d7d7d7;
+}
+
+.login-page.is-high-contrast .login-form button[type="submit"] {
+  background: #ffeb3b;
+  color: #000;
+  box-shadow: none;
+}
+
+.login-page.is-high-contrast .login-form button[type="submit"]:hover {
+  background: #fff176;
+  color: #000;
+  transform: translateY(-3px);
+  box-shadow: none;
+}
+
+.login-page.is-high-contrast .login-warning {
+  background: #121212;
+}
+
+.login-loading-page.is-high-contrast {
+  background: #000;
+}
+
+.login-loading-page.is-high-contrast .login-loading-dots span {
+  background: #ffeb3b;
+}
+
 @media (max-width: 560px) {
   .login-page {
     padding: 20px;

@@ -1,15 +1,17 @@
 import { useState } from 'react'
-import { FaSearchPlus, FaUniversalAccess } from 'react-icons/fa'
+import { FaAdjust, FaSearchPlus, FaUniversalAccess } from 'react-icons/fa'
 
 function TextZoomControls({
   fontScale,
   minFontScale,
   maxFontScale,
   isMagnifierEnabled,
+  isHighContrastEnabled,
   onDecrease,
   onReset,
   onIncrease,
   onToggleMagnifier,
+  onToggleHighContrast,
 }) {
   const [isOpen, setIsOpen] = useState(false)
 
@@ -61,6 +63,19 @@ function TextZoomControls({
               <FaSearchPlus />
             </span>
             {isMagnifierEnabled ? 'Desativar lupa' : 'Ativar lupa'}
+          </button>
+
+          <button
+            type="button"
+            className={isHighContrastEnabled ? 'is-active' : ''}
+            onClick={onToggleHighContrast}
+            role="menuitem"
+            aria-pressed={isHighContrastEnabled}
+          >
+            <span aria-hidden="true">
+              <FaAdjust />
+            </span>
+            {isHighContrastEnabled ? 'Desativar contraste' : 'Ativar contraste'}
           </button>
         </div>
       )}

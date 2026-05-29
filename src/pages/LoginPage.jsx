@@ -15,6 +15,7 @@ function LoginPage() {
   const [isLoading, setIsLoading] = useState(false)
   const [fontScale, setFontScale] = useState(1)
   const [isMagnifierEnabled, setIsMagnifierEnabled] = useState(false)
+  const [isHighContrastEnabled, setIsHighContrastEnabled] = useState(false)
   const [magnifier, setMagnifier] = useState({
     isVisible: false,
     text: '',
@@ -87,7 +88,7 @@ function LoginPage() {
   if (isLoading) {
     return (
       <main
-        className="login-loading-page"
+        className={`login-loading-page${isHighContrastEnabled ? ' is-high-contrast' : ''}`}
         style={{ '--login-text-scale': fontScale }}
         aria-live="polite"
       >
@@ -102,7 +103,7 @@ function LoginPage() {
 
   return (
     <main
-      className="login-page"
+      className={`login-page${isHighContrastEnabled ? ' is-high-contrast' : ''}`}
       style={{ '--login-text-scale': fontScale }}
       onMouseMove={handleMagnifierMove}
       onMouseLeave={hideMagnifier}
@@ -112,12 +113,16 @@ function LoginPage() {
         minFontScale={MIN_FONT_SCALE}
         maxFontScale={MAX_FONT_SCALE}
         isMagnifierEnabled={isMagnifierEnabled}
+        isHighContrastEnabled={isHighContrastEnabled}
         onDecrease={decreaseFontScale}
         onReset={() => setFontScale(1)}
         onIncrease={increaseFontScale}
         onToggleMagnifier={() => {
           setIsMagnifierEnabled((currentValue) => !currentValue)
           hideMagnifier()
+        }}
+        onToggleHighContrast={() => {
+          setIsHighContrastEnabled((currentValue) => !currentValue)
         }}
       />
 
