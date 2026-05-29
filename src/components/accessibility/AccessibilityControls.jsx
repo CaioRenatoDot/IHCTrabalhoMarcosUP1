@@ -1,9 +1,25 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import TextZoomControls from './TextZoomControls.jsx'
 
 const MIN_FONT_SCALE = 0.85
 const MAX_FONT_SCALE = 1.5
 const FONT_SCALE_STEP = 0.15
+const FONT_SCALE_STORAGE_KEY = 'riskcare:accessibility-font-scale'
+
+function clampFontScale(value) {
+  return Math.min(MAX_FONT_SCALE, Math.max(MIN_FONT_SCALE, value))
+}
+
+function getInitialFontScale() {
+  const savedFontScale = localStorage.getItem(FONT_SCALE_STORAGE_KEY)
+  const parsedFontScale = Number(savedFontScale)
+
+  if (!Number.isFinite(parsedFontScale)) {
+    return 1
+  }
+
+  return clampFontScale(parsedFontScale)
+}
 
 function getElementText(element) {
   if (element instanceof HTMLInputElement) {
@@ -41,7 +57,7 @@ function findMagnifierText(target, rootElement) {
 }
 
 function AccessibilityControls({ children }) {
-  const [fontScale, setFontScale] = useState(1)
+  const [fontScale, setFontScale] = useState(getInitialFontScale)
   const [isMagnifierEnabled, setIsMagnifierEnabled] = useState(false)
   const [magnifier, setMagnifier] = useState({
     isVisible: false,
@@ -52,15 +68,19 @@ function AccessibilityControls({ children }) {
 
   const decreaseFontScale = () => {
     setFontScale((currentScale) =>
-      Math.max(MIN_FONT_SCALE, Number((currentScale - FONT_SCALE_STEP).toFixed(2))),
+      clampFontScale(Number((currentScale - FONT_SCALE_STEP).toFixed(2))),
     )
   }
 
   const increaseFontScale = () => {
     setFontScale((currentScale) =>
-      Math.min(MAX_FONT_SCALE, Number((currentScale + FONT_SCALE_STEP).toFixed(2))),
+      clampFontScale(Number((currentScale + FONT_SCALE_STEP).toFixed(2))),
     )
   }
+
+  useEffect(() => {
+    localStorage.setItem(FONT_SCALE_STORAGE_KEY, String(fontScale))
+  }, [fontScale])
 
   const hideMagnifier = () => {
     setMagnifier((currentState) => ({ ...currentState, isVisible: false }))
