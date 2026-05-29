@@ -47,18 +47,28 @@ const ChartIcon = () => (
 
 function HomePage() {
   return (
-    <main className="wireframe-page">
-      <section id="avaliacao" className="home-section home-section--hero">
+    <main id="main-content" className="wireframe-page" tabIndex={-1}>
+      <section id="avaliacao" className="home-section home-section--hero" tabIndex={-1}>
         <div className="home-section__inner">
-          <div id="como-funciona">
+          <div id="como-funciona" tabIndex={-1}>
             <ConscientizacaoPrevencaoSection />
           </div>
         </div>
       </section>
 
-      <section id="fatores-de-risco" className="home-section home-section--metrics">
+      <section
+        id="saiba-mais"
+        className="home-section home-section--metrics"
+        tabIndex={-1}
+        aria-labelledby="fatores-de-risco-heading"
+      >
         <div className="home-section__inner">
-          <Indicadores />
+          <h2 id="fatores-de-risco-heading" className="visually-hidden">
+            Fatores de risco
+          </h2>
+          <div id="fatores-de-risco">
+            <Indicadores />
+          </div>
         </div>
       </section>
 

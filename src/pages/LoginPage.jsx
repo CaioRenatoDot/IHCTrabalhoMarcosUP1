@@ -50,26 +50,37 @@ function LoginPage() {
     }
 
     if (event.target.closest('.text-zoom-controls')) {
-      setMagnifier((currentState) => ({ ...currentState, isVisible: false }))
+      setMagnifier((currentState) => ({
+        ...currentState,
+        isVisible: false,
+      }))
       return
     }
 
-    const textElement = event.target.closest('h1, p, a, label, button, span, input')
+    const textElement = event.target.closest(
+      'h1, p, a, label, button, span, input',
+    )
 
     if (!textElement || !event.currentTarget.contains(textElement)) {
-      setMagnifier((currentState) => ({ ...currentState, isVisible: false }))
+      setMagnifier((currentState) => ({
+        ...currentState,
+        isVisible: false,
+      }))
       return
     }
 
     const text =
       textElement instanceof HTMLInputElement
-        ? textElement.value || textElement.placeholder
-        : textElement.textContent
+        ? textElement.value || textElement.placeholder || ''
+        : textElement.textContent || ''
 
     const cleanText = text.replace(/\s+/g, ' ').trim()
 
     if (!cleanText) {
-      setMagnifier((currentState) => ({ ...currentState, isVisible: false }))
+      setMagnifier((currentState) => ({
+        ...currentState,
+        isVisible: false,
+      }))
       return
     }
 
@@ -82,7 +93,10 @@ function LoginPage() {
   }
 
   const hideMagnifier = () => {
-    setMagnifier((currentState) => ({ ...currentState, isVisible: false }))
+    setMagnifier((currentState) => ({
+      ...currentState,
+      isVisible: false,
+    }))
   }
 
   if (isLoading) {
@@ -103,6 +117,8 @@ function LoginPage() {
 
   return (
     <main
+      id="main-content"
+      tabIndex={-1}
       className={`login-page${isHighContrastEnabled ? ' is-high-contrast' : ''}`}
       style={{ '--login-text-scale': fontScale }}
       onMouseMove={handleMagnifierMove}
