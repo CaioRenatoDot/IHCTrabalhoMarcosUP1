@@ -70,17 +70,23 @@ body {
 }
 
 .app-page {
-  animation: page-fade 0.22s ease-out;
+  animation: none;
 }
 
-@keyframes page-fade {
+::view-transition-old(root) {
+  animation: none;
+}
+
+::view-transition-new(root) {
+  animation: fade-in 0.16s ease-out;
+}
+
+@keyframes fade-in {
   from {
-    opacity: 0.72;
-    transform: translateY(4px);
+    opacity: 0.9;
   }
   to {
     opacity: 1;
-    transform: translateY(0);
   }
 }
 

@@ -293,6 +293,31 @@
   font-size: calc(16px * var(--accessibility-font-scale));
 }
 
+.signup-form {
+  gap: 14px;
+}
+
+.signup-terms {
+  margin-top: 4px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.signup-terms input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  margin-top: 2px;
+  accent-color: #c74f7e;
+}
+
+.signup-terms span {
+  color: #8a6072;
+  font-size: calc(12px * var(--login-text-scale));
+  line-height: 1.35;
+}
+
 .login-warning {
   min-height: 62px;
   background: #fdf4f8;

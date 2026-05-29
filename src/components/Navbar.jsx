@@ -28,7 +28,7 @@ function Navbar({ onNavigate }) {
         </a>
       </nav>
 
-      <a className="site-navbar__cta" href="/#avaliacao" onClick={(event) => handleNavigate(event, '/#avaliacao')}>
+      <a className="site-navbar__cta" href="/login" onClick={(event) => handleNavigate(event, '/login')}>
         {'Come\u00E7ar avalia\u00E7\u00E3o'}
       </a>
     </header>

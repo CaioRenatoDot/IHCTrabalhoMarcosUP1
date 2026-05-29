@@ -12,7 +12,7 @@ function LoginForm({ onLoginSuccess }) {
     const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)
 
     if (!validEmail) {
-      setErrorMessage('Digite um e-mail valido para entrar.')
+      setErrorMessage('Digite um e-mail v\u00e1lido para entrar.')
       emailInputRef.current?.focus()
       return
     }

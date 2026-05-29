@@ -12,7 +12,7 @@ function LoginHeader() {
 
       <h1>Bem-vinda de volta</h1>
       <p className="login-subtitle">
-        Ainda n&atilde;o possui conta? <a href="#">Cadastre-se gr&aacute;tis</a>
+        Ainda n&atilde;o possui conta? <a href="/cadastro">Cadastre-se gr&aacute;tis</a>
       </p>
     </>
   )

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import HomePage from './pages/HomePage.jsx'
 import LoginPage from './pages/LoginPage.jsx'
+import SignupPage from './pages/SignupPage.jsx'
 import CoverPage from './pages/CoverPage.jsx'
 import Navbar from './components/Navbar.jsx'
 import Footer from './components/Footer.jsx'
@@ -33,6 +34,19 @@ function focusElementById(id) {
 
   requestAnimationFrame(() => {
     target.focus({ preventScroll: true })
+  })
+}
+
+function updateRouteWithTransition(nextRoute, setRoute) {
+  const canUseViewTransition = typeof document.startViewTransition === 'function'
+
+  if (!canUseViewTransition) {
+    setRoute(nextRoute)
+    return
+  }
+
+  document.startViewTransition(() => {
+    setRoute(nextRoute)
   })
 }
 
@@ -106,14 +120,29 @@ function App() {
     }
 
     window.history.pushState({}, '', next)
-    setRoute({ path: nextPath, hash: nextHash })
+    updateRouteWithTransition({ path: nextPath, hash: nextHash }, setRoute)
   }
 
   if (route.path === '/login') {
     return (
       <AccessibilityControls>
         <SkipLink />
-        <LoginPage />
+        <div className="app-page">
+          <LoginPage />
+        </div>
+        <Footer />
+      </AccessibilityControls>
+    )
+  }
+
+  if (route.path === '/cadastro') {
+    return (
+      <AccessibilityControls>
+        <SkipLink />
+        <div className="app-page">
+          <SignupPage />
+        </div>
+        <Footer />
       </AccessibilityControls>
     )
   }
@@ -125,7 +154,7 @@ function App() {
     <AccessibilityControls>
       <SkipLink />
       <Navbar onNavigate={navigate} />
-      <div key={`${route.path}${route.hash}`} className="app-page">
+      <div className="app-page">
         {page}
       </div>
       <Footer />
