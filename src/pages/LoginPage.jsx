@@ -31,7 +31,7 @@ function LoginPage() {
   }
 
   return (
-    <main className="login-page">
+    <main id="main-content" className="login-page" tabIndex={-1}>
       <section className="login-card">
         <LoginHeader />
         <SocialLoginButtons />

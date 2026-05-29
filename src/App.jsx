@@ -5,6 +5,7 @@ import CoverPage from './pages/CoverPage.jsx'
 import Navbar from './components/Navbar.jsx'
 import Footer from './components/Footer.jsx'
 import AccessibilityControls from './components/accessibility/AccessibilityControls.jsx'
+import SkipLink from './components/SkipLink.jsx'
 
 function parseLocation() {
   return {
@@ -17,6 +18,22 @@ function forceScrollTop() {
   window.scrollTo(0, 0)
   document.documentElement.scrollTop = 0
   document.body.scrollTop = 0
+}
+
+function focusElementById(id) {
+  if (!id) {
+    return
+  }
+
+  const target = document.getElementById(id)
+
+  if (!target) {
+    return
+  }
+
+  requestAnimationFrame(() => {
+    target.focus({ preventScroll: true })
+  })
 }
 
 function App() {
@@ -46,14 +63,18 @@ function App() {
       forceScrollTop()
       requestAnimationFrame(() => {
         forceScrollTop()
+        focusElementById('main-content')
       })
       return
     }
 
     if (route.hash && previousPath === '/') {
-      const target = document.getElementById(route.hash.replace('#', ''))
+      const targetId = route.hash.replace('#', '')
+      const target = document.getElementById(targetId)
+
       if (target) {
         target.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        focusElementById(targetId)
         return
       }
     }
@@ -62,6 +83,7 @@ function App() {
       forceScrollTop()
       requestAnimationFrame(() => {
         forceScrollTop()
+        focusElementById('main-content')
       })
     }
   }, [route.path, route.hash])
@@ -75,8 +97,10 @@ function App() {
 
     if (current === next) {
       if (nextHash) {
-        const targetElement = document.getElementById(nextHash.replace('#', ''))
+        const targetId = nextHash.replace('#', '')
+        const targetElement = document.getElementById(targetId)
         targetElement?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        focusElementById(targetId)
       }
       return
     }
@@ -88,6 +112,7 @@ function App() {
   if (route.path === '/login') {
     return (
       <AccessibilityControls>
+        <SkipLink />
         <LoginPage />
       </AccessibilityControls>
     )
@@ -98,6 +123,7 @@ function App() {
 
   return (
     <AccessibilityControls>
+      <SkipLink />
       <Navbar onNavigate={navigate} />
       <div key={`${route.path}${route.hash}`} className="app-page">
         {page}

@@ -244,11 +244,14 @@
   padding: 0 14px;
   color: #6f5d66;
   font-size: calc(16px * var(--accessibility-font-scale));
-  outline: none;
 }
 
-.login-form input:focus {
+.login-form input:focus-visible {
   border-color: #c74f7e;
+}
+
+.login-form input[aria-invalid='true'] {
+  border-color: #b84271;
 }
 
 .login-error {
