@@ -149,8 +149,9 @@
 }
 
 .accessibility-root .site-navbar__cta,
-.accessibility-root .hero-action-button {
-  font-size: calc(1rem * var(--accessibility-font-scale));
+.accessibility-root .hero-copy__primary,
+.accessibility-root .hero-copy__secondary {
+  font-size: calc(0.92rem * var(--accessibility-font-scale));
 }
 
 .accessibility-root .awareness-tag {
@@ -160,7 +161,7 @@
 .accessibility-root .awareness-title {
   font-size: clamp(
     calc(2rem * var(--accessibility-font-scale)),
-    calc(4.2vw * var(--accessibility-font-scale)),
+    calc(4.5vw * var(--accessibility-font-scale)),
     calc(3rem * var(--accessibility-font-scale))
   );
 }
@@ -169,44 +170,40 @@
   font-size: clamp(
     calc(1rem * var(--accessibility-font-scale)),
     calc(1.5vw * var(--accessibility-font-scale)),
-    calc(1.25rem * var(--accessibility-font-scale))
+    calc(1.2rem * var(--accessibility-font-scale))
   );
 }
 
 .accessibility-root .risk-card__title {
-  font-size: calc(13px * var(--accessibility-font-scale));
+  font-size: calc(12px * var(--accessibility-font-scale));
 }
 
 .accessibility-root .risk-card__value {
-  font-size: calc(1.85rem * var(--accessibility-font-scale));
+  font-size: calc(1.9rem * var(--accessibility-font-scale));
 }
 
 .accessibility-root .risk-card__level {
-  font-size: calc(0.9rem * var(--accessibility-font-scale));
+  font-size: calc(0.82rem * var(--accessibility-font-scale));
 }
 
 .accessibility-root .risk-card__row {
-  font-size: calc(0.78rem * var(--accessibility-font-scale));
+  font-size: calc(0.76rem * var(--accessibility-font-scale));
 }
 
 .accessibility-root .risk-card__row strong {
-  font-size: calc(0.84rem * var(--accessibility-font-scale));
+  font-size: calc(0.8rem * var(--accessibility-font-scale));
 }
 
 .accessibility-root .indicator-value {
   font-size: clamp(
-    calc(1.05rem * var(--accessibility-font-scale)),
-    calc(2vw * var(--accessibility-font-scale)),
-    calc(1.9rem * var(--accessibility-font-scale))
+    calc(1.75rem * var(--accessibility-font-scale)),
+    calc(3vw * var(--accessibility-font-scale)),
+    calc(2.5rem * var(--accessibility-font-scale))
   );
 }
 
 .accessibility-root .indicator-label {
-  font-size: clamp(
-    calc(0.58rem * var(--accessibility-font-scale)),
-    calc(0.92vw * var(--accessibility-font-scale)),
-    calc(0.68rem * var(--accessibility-font-scale))
-  );
+  font-size: calc(0.9rem * var(--accessibility-font-scale));
 }
 
 .accessibility-root .cards-block h3 {
@@ -217,8 +214,36 @@
   font-size: calc(0.9rem * var(--accessibility-font-scale)) !important;
 }
 
+.accessibility-root .section-tag {
+  font-size: calc(0.8rem * var(--accessibility-font-scale));
+}
+
+.accessibility-root .section-title {
+  font-size: clamp(
+    calc(1.75rem * var(--accessibility-font-scale)),
+    calc(3.5vw * var(--accessibility-font-scale)),
+    calc(2.5rem * var(--accessibility-font-scale))
+  );
+}
+
+.accessibility-root .section-sub {
+  font-size: calc(1.05rem * var(--accessibility-font-scale));
+}
+
+.accessibility-root .how-step-num {
+  font-size: calc(1rem * var(--accessibility-font-scale));
+}
+
+.accessibility-root .how-step h3 {
+  font-size: calc(1rem * var(--accessibility-font-scale));
+}
+
+.accessibility-root .how-step p {
+  font-size: calc(0.88rem * var(--accessibility-font-scale));
+}
+
 .accessibility-root .observation-banner__text {
-  font-size: calc(0.82rem * var(--accessibility-font-scale));
+  font-size: calc(0.9rem * var(--accessibility-font-scale));
 }
 
 .accessibility-root .cover-brand__text {
@@ -238,27 +263,27 @@
 }
 
 .accessibility-root .cover-block__head h2 {
-  font-size: calc(0.95rem * var(--accessibility-font-scale));
+  font-size: calc(0.85rem * var(--accessibility-font-scale));
 }
 
 .accessibility-root .cover-block p {
-  font-size: calc(0.94rem * var(--accessibility-font-scale));
+  font-size: calc(0.92rem * var(--accessibility-font-scale));
 }
 
 .accessibility-root .cover-alert p {
-  font-size: calc(0.78rem * var(--accessibility-font-scale));
+  font-size: calc(0.82rem * var(--accessibility-font-scale));
 }
 
 .accessibility-root .cover-audience li {
-  font-size: calc(1rem * var(--accessibility-font-scale));
+  font-size: calc(0.88rem * var(--accessibility-font-scale));
 }
 
 .accessibility-root .cover-team__list li {
-  font-size: calc(0.84rem * var(--accessibility-font-scale));
+  font-size: calc(0.82rem * var(--accessibility-font-scale));
 }
 
-.accessibility-root .site-footer {
-  font-size: calc(0.78rem * var(--accessibility-font-scale));
+.accessibility-root .site-footer__text {
+  font-size: calc(11px * var(--accessibility-font-scale));
 }
 
 .accessibility-root.is-high-contrast {
@@ -271,6 +296,7 @@
 .accessibility-root.is-high-contrast .home-section--hero,
 .accessibility-root.is-high-contrast .home-section--metrics,
 .accessibility-root.is-high-contrast .home-section--cards,
+.accessibility-root.is-high-contrast .home-section--how,
 .accessibility-root.is-high-contrast .home-section--notice,
 .accessibility-root.is-high-contrast .site-footer {
   background: #000;
@@ -281,6 +307,8 @@
 .accessibility-root.is-high-contrast .site-navbar__nav a,
 .accessibility-root.is-high-contrast .awareness-title,
 .accessibility-root.is-high-contrast .awareness-description,
+.accessibility-root.is-high-contrast .section-title,
+.accessibility-root.is-high-contrast .section-sub,
 .accessibility-root.is-high-contrast .indicator-label,
 .accessibility-root.is-high-contrast .observation-banner__text,
 .accessibility-root.is-high-contrast .site-footer__left,
@@ -291,6 +319,7 @@
 
 .accessibility-root.is-high-contrast .site-navbar__cta,
 .accessibility-root.is-high-contrast .awareness-tag,
+.accessibility-root.is-high-contrast .section-tag,
 .accessibility-root.is-high-contrast .observation-banner {
   background: #000;
   color: #ffeb3b;
@@ -298,8 +327,7 @@
 }
 
 .accessibility-root.is-high-contrast .hero-copy__primary,
-.accessibility-root.is-high-contrast .hero-copy__secondary,
-.accessibility-root.is-high-contrast .hero-action-button {
+.accessibility-root.is-high-contrast .hero-copy__secondary {
   background: #000;
   color: #ffeb3b;
   border: 1px solid #fff;
@@ -307,8 +335,7 @@
 }
 
 .accessibility-root.is-high-contrast .hero-copy__primary:hover,
-.accessibility-root.is-high-contrast .hero-copy__secondary:hover,
-.accessibility-root.is-high-contrast .hero-action-button:hover {
+.accessibility-root.is-high-contrast .hero-copy__secondary:hover {
   background: #1a1a1a;
   color: #ffeb3b;
   border-color: #fff;
@@ -356,6 +383,33 @@
   background: #000;
   border-color: #fff;
   box-shadow: none;
+}
+
+.accessibility-root.is-high-contrast .how-step {
+  background: #000;
+  border-color: #fff;
+  box-shadow: none;
+}
+
+.accessibility-root.is-high-contrast .how-step h3,
+.accessibility-root.is-high-contrast .how-step p {
+  color: #fff;
+}
+
+.accessibility-root.is-high-contrast .how-step-icon,
+.accessibility-root.is-high-contrast .how-step-num {
+  color: #ffeb3b;
+}
+
+.accessibility-root.is-high-contrast .how-step-num {
+  background: #000;
+  border: 1px solid #fff;
+}
+
+.accessibility-root.is-high-contrast .observation-banner__icon {
+  background: #ffeb3b;
+  color: #000;
+  border: 1px solid #fff;
 }
 
 .accessibility-root.is-high-contrast .feature-card-copy h3 {
@@ -419,5 +473,9 @@
 }
 
 .accessibility-root.is-high-contrast .cover-alert__icon {
+  color: #ffeb3b;
+}
+
+.accessibility-root.is-high-contrast .site-footer__text strong {
   color: #ffeb3b;
 }

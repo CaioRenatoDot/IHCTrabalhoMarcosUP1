@@ -1,14 +1,15 @@
 .indicator-row {
   width: 100%;
-  margin: 0 0 1.5rem;
-  padding: 0.4rem 0;
+  margin: 0;
+  padding: 0;
   border: none;
   background: transparent;
   border-radius: 0;
 }
 
 .indicator-list {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   align-items: center;
   justify-content: center;
   gap: 0;
@@ -27,37 +28,36 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.24rem;
-  min-height: 76px;
-  flex: 1;
+  gap: 0.2rem;
+  min-height: 84px;
   position: relative;
-  padding: 0.6rem 1.25rem;
+  padding: 0 24px;
 }
 
 .indicator-value {
-  color: #7c2d52;
+  color: var(--rc-rose-dark);
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-weight: 700;
-  font-size: clamp(1.05rem, 2vw, 1.9rem);
+  font-weight: 800;
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
   line-height: 1;
   text-align: center;
 }
 
 .indicator-label {
-  color: #1f1720;
+  color: var(--rc-text-dark);
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-weight: 400;
-  font-size: clamp(0.58rem, 0.92vw, 0.68rem);
-  line-height: 1.12;
+  font-weight: 500;
+  font-size: 0.9rem;
+  line-height: 1.3;
   text-align: center;
 }
 
 .indicator-separator {
   position: absolute;
-  top: 10px;
+  top: 50%;
   right: 0;
   width: 1px;
-  height: calc(100% - 20px);
-  background: rgba(138, 96, 112, 0.28);
-  transform: none;
+  height: 48px;
+  background: var(--rc-border);
+  transform: translateY(-50%);
 }

@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
 import TextZoomControls from './TextZoomControls.jsx'
 
-const MIN_FONT_SCALE = 0.85
-const MAX_FONT_SCALE = 1.5
-const FONT_SCALE_STEP = 0.15
+const MIN_FONT_SCALE = 0.95
+const MAX_FONT_SCALE = 1.1
+const FONT_SCALE_STEP = 0.05
 const FONT_SCALE_STORAGE_KEY = 'riskcare:accessibility-font-scale'
 const HIGH_CONTRAST_STORAGE_KEY = 'riskcare:accessibility-high-contrast'
 const MAGNIFIER_OFFSET = 18

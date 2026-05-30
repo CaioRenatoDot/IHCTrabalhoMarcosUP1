@@ -314,7 +314,7 @@
 
 .signup-terms span {
   color: #8a6072;
-  font-size: calc(12px * var(--login-text-scale));
+  font-size: calc(12px * var(--accessibility-font-scale));
   line-height: 1.35;
 }
 
@@ -339,138 +339,90 @@
   margin: 0;
 }
 
-.login-page.is-high-contrast {
+.accessibility-root.is-high-contrast .login-page {
   background: #000;
   color: #fff;
 }
 
-.login-page.is-high-contrast::before,
-.login-page.is-high-contrast::after {
+.accessibility-root.is-high-contrast .login-page::before,
+.accessibility-root.is-high-contrast .login-page::after {
   background: #1f1f1f;
 }
 
-.login-page.is-high-contrast .login-card {
+.accessibility-root.is-high-contrast .login-card {
   background: #000;
   border-color: #fff;
   color: #fff;
   box-shadow: 0 0 0 2px #fff;
 }
 
-.login-page.is-high-contrast .login-card::before,
-.login-page.is-high-contrast .login-card::after {
+.accessibility-root.is-high-contrast .login-card::before,
+.accessibility-root.is-high-contrast .login-card::after {
   background: #1f1f1f;
 }
 
-.login-page.is-high-contrast .login-logo,
-.login-page.is-high-contrast .login-card h1,
-.login-page.is-high-contrast .login-subtitle,
-.login-page.is-high-contrast .login-form label,
-.login-page.is-high-contrast .signup-link,
-.login-page.is-high-contrast .forgot-password,
-.login-page.is-high-contrast .login-warning {
+.accessibility-root.is-high-contrast .login-logo,
+.accessibility-root.is-high-contrast .login-card h1,
+.accessibility-root.is-high-contrast .login-subtitle,
+.accessibility-root.is-high-contrast .login-form label,
+.accessibility-root.is-high-contrast .signup-link,
+.accessibility-root.is-high-contrast .forgot-password,
+.accessibility-root.is-high-contrast .login-warning {
   color: #fff;
 }
 
-.login-page.is-high-contrast .login-card a,
-.login-page.is-high-contrast .social-button {
+.accessibility-root.is-high-contrast .login-card a,
+.accessibility-root.is-high-contrast .social-button {
   color: #ffeb3b;
 }
 
-.login-page.is-high-contrast .social-button {
+.accessibility-root.is-high-contrast .social-button {
   border-color: #fff;
   background: #000;
 }
 
-.login-page.is-high-contrast .login-divider {
+.accessibility-root.is-high-contrast .login-divider {
   color: #fff;
 }
 
-.login-page.is-high-contrast .login-divider::before,
-.login-page.is-high-contrast .login-divider::after {
+.accessibility-root.is-high-contrast .login-divider::before,
+.accessibility-root.is-high-contrast .login-divider::after {
   background: #fff;
 }
 
-.login-page.is-high-contrast .login-form input {
+.accessibility-root.is-high-contrast .login-form input {
   border-color: #fff;
   background: #000;
   color: #fff;
 }
 
-.login-page.is-high-contrast .login-form input::placeholder {
+.accessibility-root.is-high-contrast .login-form input::placeholder {
   color: #d7d7d7;
 }
 
-.login-page.is-high-contrast .login-form button[type="submit"] {
+.accessibility-root.is-high-contrast .login-form button[type="submit"] {
   background: #ffeb3b;
   color: #000;
   box-shadow: none;
 }
 
-.login-page.is-high-contrast .login-form button[type="submit"]:hover {
+.accessibility-root.is-high-contrast .login-form button[type="submit"]:hover {
   background: #fff176;
   color: #000;
   transform: translateY(-3px);
   box-shadow: none;
 }
 
-.login-page.is-high-contrast .login-warning {
+.accessibility-root.is-high-contrast .login-warning {
   background: #121212;
 }
 
-.login-loading-page.is-high-contrast {
+.accessibility-root.is-high-contrast .login-loading-page {
   background: #000;
 }
 
-.login-loading-page.is-high-contrast .login-loading-dots span {
+.accessibility-root.is-high-contrast .login-loading-page .login-loading-dots span {
   background: #ffeb3b;
-}
-
-.login-page.is-high-contrast .text-zoom-trigger,
-.login-loading-page.is-high-contrast .text-zoom-trigger {
-  background: #000;
-  color: #ffeb3b;
-  border: 2px solid #fff;
-  box-shadow: none;
-}
-
-.login-page.is-high-contrast .text-zoom-trigger:hover,
-.login-loading-page.is-high-contrast .text-zoom-trigger:hover {
-  background: #111;
-}
-
-.login-page.is-high-contrast .text-zoom-menu,
-.login-loading-page.is-high-contrast .text-zoom-menu {
-  background: #000;
-  border-color: #fff;
-  box-shadow: none;
-}
-
-.login-page.is-high-contrast .text-zoom-menu button,
-.login-loading-page.is-high-contrast .text-zoom-menu button {
-  background: #000;
-  color: #fff;
-}
-
-.login-page.is-high-contrast .text-zoom-menu button span,
-.login-loading-page.is-high-contrast .text-zoom-menu button span {
-  color: #ffeb3b;
-}
-
-.login-page.is-high-contrast .text-zoom-menu button:hover:not(:disabled),
-.login-loading-page.is-high-contrast .text-zoom-menu button:hover:not(:disabled) {
-  background: #1a1a1a;
-  color: #ffeb3b;
-}
-
-.login-page.is-high-contrast .text-zoom-menu button.is-active,
-.login-loading-page.is-high-contrast .text-zoom-menu button.is-active {
-  background: #ffeb3b;
-  color: #000;
-}
-
-.login-page.is-high-contrast .text-zoom-menu button.is-active span,
-.login-loading-page.is-high-contrast .text-zoom-menu button.is-active span {
-  color: #000;
 }
 
 @media (max-width: 560px) {

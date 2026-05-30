@@ -1,4 +1,10 @@
-function FeatureCard({ icon, title, description, iconBg = '#fce7f3', iconColor = '#ec4899' }) {
+function FeatureCard({
+  icon,
+  title,
+  description,
+  iconBg = 'var(--rc-rose-light)',
+  iconColor = 'var(--rc-rose)',
+}) {
   return (
     <div className="feature-card-panel">
       <div

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useId, useRef, useState } from 'react'
+﻿import { useCallback, useEffect, useId, useRef, useState } from 'react'
 import { FaAdjust, FaSearchPlus, FaUniversalAccess } from 'react-icons/fa'
 
 function TextZoomControls({

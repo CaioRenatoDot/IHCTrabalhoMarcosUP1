@@ -3,9 +3,9 @@ function LoginWarning() {
     <footer className="login-warning">
       <span>&#9888;</span>
       <p>
-        Esta ferramenta n&atilde;o realiza diagn&oacute;stico m&eacute;dico.
+        Esta ferramenta não realiza diagnóstico médico.
         <br />
-        Consulte sempre um profissional de sa&uacute;de qualificado.
+        Consulte sempre um profissional de saúde qualificado.
       </p>
     </footer>
   )

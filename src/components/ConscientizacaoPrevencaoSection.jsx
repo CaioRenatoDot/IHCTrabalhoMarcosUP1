@@ -1,4 +1,4 @@
-import AvaliacaoGratuitaButton from './AvaliacaoGratuitaButton.jsx'
+﻿import AvaliacaoGratuitaButton from './AvaliacaoGratuitaButton.jsx'
 import SaibaMaisButton from './SaibaMaisButton.jsx'
 
 function ConscientizacaoPrevencaoSection() {
@@ -8,13 +8,12 @@ function ConscientizacaoPrevencaoSection() {
         <div className="awareness-tag">CONSCIENTIZAÇÃO E PREVENÇÃO</div>
 
         <h1 className="awareness-title">
-          {'Entenda seu risco antes que ele te surpreenda'}
+          Entenda seu <span className="awareness-title-highlight">risco</span> antes que ele te surpreenda
         </h1>
 
         <p className="awareness-description">
-          {
-            'Uma ferramenta educativa para ajudar você a compreender fatores de risco do câncer de mama, com base em dados e evidências científicas.'
-          }
+          Uma ferramenta educativa para ajudar você a compreender fatores de risco do câncer de
+          mama, com base em dados e evidências científicas.
         </p>
 
         <div className="hero-copy__actions awareness-actions">
