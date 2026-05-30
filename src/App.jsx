@@ -38,25 +38,21 @@ function focusElementById(id) {
 }
 
 function updateRouteWithTransition(nextRoute, setRoute) {
-  const canUseViewTransition = typeof document.startViewTransition === 'function'
-
-  if (!canUseViewTransition) {
-    setRoute(nextRoute)
-    return
-  }
-
-  document.startViewTransition(() => {
-    setRoute(nextRoute)
-  })
+  setRoute(nextRoute)
 }
 
 function App() {
   const [route, setRoute] = useState(parseLocation)
   const previousPathRef = useRef(route.path)
+  const pageKey = route.path
 
   useEffect(() => {
     window.history.scrollRestoration = 'manual'
-    const syncRoute = () => setRoute(parseLocation())
+
+    const syncRoute = () => {
+      const nextRoute = parseLocation()
+      updateRouteWithTransition(nextRoute, setRoute)
+    }
 
     window.addEventListener('popstate', syncRoute)
     window.addEventListener('hashchange', syncRoute)
@@ -127,7 +123,7 @@ function App() {
     return (
       <AccessibilityControls>
         <SkipLink />
-        <div className="app-page">
+        <div className="app-page" key={pageKey}>
           <LoginPage />
         </div>
         <Footer />
@@ -139,7 +135,7 @@ function App() {
     return (
       <AccessibilityControls>
         <SkipLink />
-        <div className="app-page">
+        <div className="app-page" key={pageKey}>
           <SignupPage />
         </div>
         <Footer />
@@ -154,7 +150,7 @@ function App() {
     <AccessibilityControls>
       <SkipLink />
       <Navbar onNavigate={navigate} />
-      <div className="app-page">
+      <div className="app-page" key={pageKey}>
         {page}
       </div>
       <Footer />

@@ -1,3 +1,5 @@
+import { handleSpaLinkClick } from '../../utils/navigation.js'
+
 function LoginHeader() {
   return (
     <>
@@ -12,7 +14,10 @@ function LoginHeader() {
 
       <h1>Bem-vinda de volta</h1>
       <p className="login-subtitle">
-        Ainda n&atilde;o possui conta? <a href="/cadastro">Cadastre-se gr&aacute;tis</a>
+        Ainda não possui conta?{' '}
+        <a href="/cadastro" onClick={(event) => handleSpaLinkClick(event, '/cadastro')}>
+          Cadastre-se grátis
+        </a>
       </p>
     </>
   )

@@ -20,7 +20,7 @@ function Navbar({ onNavigate }) {
       </a>
 
       <nav className="site-navbar__nav" aria-label={'Navega\u00E7\u00E3o principal'}>
-        <a href="/#como-funciona" onClick={(event) => handleNavigate(event, '/#como-funciona')}>
+        <a href="/" onClick={(event) => handleNavigate(event, '/')}>
           Como funciona
         </a>
         <a href="/sobre-projeto" onClick={(event) => handleNavigate(event, '/sobre-projeto')}>
