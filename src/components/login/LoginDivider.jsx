@@ -1,7 +1,7 @@
-function LoginDivider() {
+function LoginDivider({ text = 'Ou entre com e-mail' }) {
   return (
     <div className="login-divider">
-      <span>Ou entre com e-mail</span>
+      <span>{text}</span>
     </div>
   )
 }

@@ -1,85 +1,152 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 
 function SignupForm({ onSignupSuccess }) {
   const [fullName, setFullName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [acceptedTerms, setAcceptedTerms] = useState(false)
-  const [errorMessage, setErrorMessage] = useState('')
+  const [nameError, setNameError] = useState('')
+  const [emailError, setEmailError] = useState('')
+  const [passwordError, setPasswordError] = useState('')
+  const [termsError, setTermsError] = useState('')
+
+  const nameInputRef = useRef(null)
+  const emailInputRef = useRef(null)
+  const passwordInputRef = useRef(null)
 
   const handleSubmit = (event) => {
     event.preventDefault()
 
-    const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)
+    const nextName = fullName.trim()
+    const nextEmail = email.trim()
+    const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(nextEmail)
 
-    if (fullName.trim().length < 3) {
-      setErrorMessage('Digite seu nome completo para continuar.')
-      return
+    setNameError('')
+    setEmailError('')
+    setPasswordError('')
+    setTermsError('')
+
+    let hasError = false
+
+    if (nextName.length < 3) {
+      setNameError('Digite seu nome completo')
+      nameInputRef.current?.focus()
+      hasError = true
     }
 
     if (!validEmail) {
-      setErrorMessage('Digite um e-mail v\u00e1lido para continuar.')
-      return
+      setEmailError('Informe um e-mail válido')
+
+      if (!hasError) {
+        emailInputRef.current?.focus()
+      }
+
+      hasError = true
     }
 
     if (password.length < 6) {
-      setErrorMessage('A senha deve ter no m\u00ednimo 6 caracteres.')
-      return
+      setPasswordError('Mínimo de 6 caracteres')
+
+      if (!hasError) {
+        passwordInputRef.current?.focus()
+      }
+
+      hasError = true
     }
 
     if (!acceptedTerms) {
-      setErrorMessage('Voc\u00ea precisa aceitar os termos para criar sua conta.')
+      setTermsError('Aceite os termos para criar sua conta')
+      hasError = true
+    }
+
+    if (hasError) {
       return
     }
 
-    setErrorMessage('')
     onSignupSuccess()
   }
 
   return (
-    <form className="login-form signup-form" onSubmit={handleSubmit}>
-      <label>
-        Nome completo
+    <form className="login-form signup-form" onSubmit={handleSubmit} noValidate>
+      <div className="field-group">
+        <label htmlFor="signup-name">Nome completo</label>
         <input
+          ref={nameInputRef}
+          id="signup-name"
           type="text"
-          placeholder="Digite seu nome..."
+          placeholder="Seu nome completo"
           value={fullName}
-          onChange={(event) => setFullName(event.target.value)}
+          onChange={(event) => {
+            setFullName(event.target.value)
+            if (nameError) setNameError('')
+          }}
+          className={nameError ? 'error' : ''}
+          aria-invalid={nameError ? 'true' : 'false'}
+          aria-describedby={nameError ? 'signup-name-error' : undefined}
         />
-      </label>
+        <p id="signup-name-error" className={`form-error${nameError ? ' show' : ''}`} role="alert">
+          {nameError}
+        </p>
+      </div>
 
-      <label>
-        E-mail
+      <div className="field-group">
+        <label htmlFor="signup-email">E-mail</label>
         <input
+          ref={emailInputRef}
+          id="signup-email"
           type="email"
-          placeholder="email@email.com"
+          placeholder="seu@email.com"
           value={email}
-          onChange={(event) => setEmail(event.target.value)}
+          onChange={(event) => {
+            setEmail(event.target.value)
+            if (emailError) setEmailError('')
+          }}
+          className={emailError ? 'error' : ''}
+          aria-invalid={emailError ? 'true' : 'false'}
+          aria-describedby={emailError ? 'signup-email-error' : undefined}
         />
-      </label>
+        <p id="signup-email-error" className={`form-error${emailError ? ' show' : ''}`} role="alert">
+          {emailError}
+        </p>
+      </div>
 
-      <label>
-        Senha
+      <div className="field-group">
+        <label htmlFor="signup-password">Senha</label>
         <input
+          ref={passwordInputRef}
+          id="signup-password"
           type="password"
-          placeholder="************"
+          placeholder="Crie uma senha"
           value={password}
-          onChange={(event) => setPassword(event.target.value)}
+          onChange={(event) => {
+            setPassword(event.target.value)
+            if (passwordError) setPasswordError('')
+          }}
+          className={passwordError ? 'error' : ''}
+          aria-invalid={passwordError ? 'true' : 'false'}
+          aria-describedby={passwordError ? 'signup-password-error' : undefined}
         />
-      </label>
+        <p id="signup-password-error" className={`form-error${passwordError ? ' show' : ''}`} role="alert">
+          {passwordError}
+        </p>
+      </div>
 
-      <label className="signup-terms">
+      <label className="signup-terms" htmlFor="signup-terms">
         <input
+          id="signup-terms"
           type="checkbox"
           checked={acceptedTerms}
-          onChange={(event) => setAcceptedTerms(event.target.checked)}
+          onChange={(event) => {
+            setAcceptedTerms(event.target.checked)
+            if (termsError) setTermsError('')
+          }}
         />
-        <span>
-          Concordo com os Termos de uso e Pol\u00edtica de privacidade do RiskCare.
-        </span>
+        <span>Concordo com os Termos de uso e Política de privacidade do RiskCare.</span>
       </label>
 
-      {errorMessage && <p className="login-error">{errorMessage}</p>}
+      <p className={`form-error${termsError ? ' show' : ''}`} role="alert">
+        {termsError}
+      </p>
 
       <button type="submit">Cadastrar</button>
     </form>

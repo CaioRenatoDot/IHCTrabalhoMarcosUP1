@@ -7,13 +7,32 @@ import LoginWarning from '../components/login/LoginWarning.jsx'
 import SocialLoginButtons from '../components/login/SocialLoginButtons.jsx'
 import { handleSpaLinkClick, navigateWithoutReload } from '../utils/navigation.js'
 
-function LoginPage() {
+function LoginBackButton() {
+  return (
+    <button
+      type="button"
+      className="login-back"
+      onClick={(event) => handleSpaLinkClick(event, '/')}
+    >
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M19 12H5m7-7l-7 7 7 7" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+      Voltar ao início
+    </button>
+  )
+}
+
+function LoginPage({ onToast }) {
   const [isLoading, setIsLoading] = useState(false)
 
   const handleLoginSuccess = () => {
     setIsLoading(true)
 
     setTimeout(() => {
+      if (typeof onToast === 'function') {
+        onToast('Bem-vinda de volta!')
+      }
+
       navigateWithoutReload('/')
     }, 1400)
   }
@@ -31,15 +50,12 @@ function LoginPage() {
   }
 
   return (
-    <main
-      id="main-content"
-      tabIndex={-1}
-      className="login-page"
-    >
+    <main id="main-content" tabIndex={-1} className="login-page">
       <section className="login-card">
+        <LoginBackButton />
         <LoginHeader />
         <SocialLoginButtons />
-        <LoginDivider />
+        <LoginDivider text="Ou entre com e-mail" />
         <LoginForm onLoginSuccess={handleLoginSuccess} />
 
         <p className="signup-link">

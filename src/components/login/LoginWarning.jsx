@@ -1,7 +1,7 @@
 function LoginWarning() {
   return (
     <footer className="login-warning">
-      <span>&#9888;</span>
+      <span aria-hidden="true">⚠</span>
       <p>
         Esta ferramenta não realiza diagnóstico médico.
         <br />
