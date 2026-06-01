@@ -2,14 +2,16 @@ function ToastContainer({ toasts, onDismiss }) {
   return (
     <div id="toast-container" aria-live="polite" aria-atomic="true">
       {toasts.map((toast) => (
-        <div
+        <button
+          type="button"
           key={toast.id}
           className={`toast${toast.isLeaving ? ' out' : ''}`}
-          role="status"
+          aria-label="Fechar notificação"
+          title="Fechar notificação"
           onClick={() => onDismiss(toast.id)}
         >
           {toast.message}
-        </div>
+        </button>
       ))}
     </div>
   )
