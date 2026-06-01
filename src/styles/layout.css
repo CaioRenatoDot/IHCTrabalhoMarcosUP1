@@ -27,6 +27,10 @@
   box-shadow: var(--rc-shadow-md);
 }
 
+.feature-card-panel:active {
+  transform: scale(0.97);
+}
+
 .feature-card-icon {
   width: 48px;
   height: 48px;

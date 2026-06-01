@@ -141,6 +141,10 @@
   box-shadow: var(--rc-shadow-sm);
 }
 
+.cover-block:active {
+  transform: scale(0.98);
+}
+
 .cover-block__head {
   display: flex;
   align-items: center;

@@ -55,4 +55,15 @@
 .hero-copy__primary:active,
 .hero-copy__secondary:active {
   transform: translateY(0);
+  animation: btn-press 0.12s ease forwards;
+}
+
+@keyframes btn-press {
+  from {
+    transform: scale(1);
+  }
+
+  to {
+    transform: scale(0.96);
+  }
 }

@@ -55,9 +55,16 @@ const TrendLineIcon = () => (
 )
 
 function HomePage() {
+  const stagger = (index) => ({ '--stagger-index': index })
+
   return (
     <main id="main-content" className="wireframe-page" tabIndex={-1}>
-      <section id="avaliacao" className="home-section home-section--hero" tabIndex={-1}>
+      <section
+        id="avaliacao"
+        className="home-section home-section--hero stagger-fade"
+        tabIndex={-1}
+        style={stagger(0)}
+      >
         <div className="home-section__inner">
           <ConscientizacaoPrevencaoSection />
         </div>
@@ -65,9 +72,10 @@ function HomePage() {
 
       <section
         id="saiba-mais"
-        className="home-section home-section--metrics"
+        className="home-section home-section--metrics stagger-fade"
         tabIndex={-1}
         aria-labelledby="fatores-de-risco-heading"
+        style={stagger(1)}
       >
         <div className="home-section__inner">
           <h2 id="fatores-de-risco-heading" className="visually-hidden">
@@ -79,7 +87,7 @@ function HomePage() {
         </div>
       </section>
 
-      <section className="home-section home-section--cards">
+      <section className="home-section home-section--cards stagger-fade" style={stagger(2)}>
         <div className="home-section__inner">
           <section className="cards-block">
             <div className="cards-block__grid">
@@ -115,13 +123,21 @@ function HomePage() {
         </div>
       </section>
 
-      <section id="como-funciona" className="home-section home-section--how">
+      <section
+        id="como-funciona"
+        className="home-section home-section--how stagger-fade"
+        style={stagger(3)}
+      >
         <div className="home-section__inner">
           <HowItWorksSection />
         </div>
       </section>
 
-      <section id="sobre" className="home-section home-section--notice">
+      <section
+        id="sobre"
+        className="home-section home-section--notice stagger-fade"
+        style={stagger(4)}
+      >
         <div className="home-section__inner">
           <ObservationBanner />
         </div>

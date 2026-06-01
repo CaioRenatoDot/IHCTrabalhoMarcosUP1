@@ -4,8 +4,8 @@ function SaibaMaisButton() {
   return (
     <a
       className="hero-copy__secondary"
-      href="/#saiba-mais"
-      onClick={(event) => handleSpaLinkClick(event, '/#saiba-mais')}
+      href="/login"
+      onClick={(event) => handleSpaLinkClick(event, '/login')}
     >
       Saiba mais
     </a>

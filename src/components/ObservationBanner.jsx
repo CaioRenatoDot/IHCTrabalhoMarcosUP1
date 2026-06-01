@@ -5,7 +5,7 @@
         !
       </div>
       <p className="observation-banner__text">
-        Esta ferramenta <strong>não realiza diagnóstico médico</strong> - os resultados são apenas
+        Esta ferramenta <strong>não realiza diagnóstico médico</strong> — os resultados são apenas
         estimativas informativas.
       </p>
     </section>

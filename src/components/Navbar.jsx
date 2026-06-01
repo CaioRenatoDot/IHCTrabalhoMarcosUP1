@@ -1,4 +1,4 @@
-function Navbar({ onNavigate }) {
+function Navbar({ onNavigate, currentPath }) {
   const handleNavigate = (event, href) => {
     if (typeof onNavigate !== 'function') {
       return
@@ -7,6 +7,9 @@ function Navbar({ onNavigate }) {
     event.preventDefault()
     onNavigate(href)
   }
+
+  const isHomeActive = currentPath === '/'
+  const isCoverActive = currentPath === '/sobre-projeto' || currentPath === '/cover'
 
   return (
     <header className="site-navbar">
@@ -20,10 +23,18 @@ function Navbar({ onNavigate }) {
       </a>
 
       <nav className="site-navbar__nav" aria-label={'Navega\u00E7\u00E3o principal'}>
-        <a href="/" onClick={(event) => handleNavigate(event, '/')}>
+        <a
+          href="/"
+          className={isHomeActive ? 'is-active' : ''}
+          onClick={(event) => handleNavigate(event, '/')}
+        >
           Como funciona
         </a>
-        <a href="/sobre-projeto" onClick={(event) => handleNavigate(event, '/sobre-projeto')}>
+        <a
+          href="/sobre-projeto"
+          className={isCoverActive ? 'is-active' : ''}
+          onClick={(event) => handleNavigate(event, '/sobre-projeto')}
+        >
           Sobre o projeto
         </a>
       </nav>

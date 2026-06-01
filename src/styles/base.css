@@ -106,10 +106,28 @@ body {
   animation: app-page-fade 0.28s ease-out;
 }
 
+.home-section.stagger-fade {
+  opacity: 0;
+  animation: section-stagger-in 0.5s ease forwards;
+  animation-delay: calc((var(--stagger-index, 0) * 0.06s) + 0.03s);
+}
+
 @keyframes app-page-fade {
   from {
     opacity: 0;
     transform: translateY(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes section-stagger-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
   }
 
   to {

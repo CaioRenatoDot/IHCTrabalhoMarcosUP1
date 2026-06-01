@@ -58,6 +58,11 @@
   color: var(--rc-rose);
 }
 
+.site-navbar__nav a.is-active {
+  color: var(--rc-rose);
+  font-weight: 700;
+}
+
 .site-navbar__cta {
   display: inline-flex;
   align-items: center;

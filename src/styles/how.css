@@ -58,6 +58,10 @@
   box-shadow: var(--rc-shadow-md);
 }
 
+.how-step:active {
+  transform: scale(0.97);
+}
+
 .how-step-num {
   width: 40px;
   height: 40px;
