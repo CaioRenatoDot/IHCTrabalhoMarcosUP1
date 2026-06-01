@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import TextZoomControls from './TextZoomControls.jsx'
+import VLibrasWidget from './VLibrasWidget.jsx'
 
 const MIN_FONT_SCALE = 0.95
 const MAX_FONT_SCALE = 1.1
@@ -85,6 +86,8 @@ function getMagnifierPosition(clientX, clientY) {
 function AccessibilityControls({ children }) {
   const [fontScale, setFontScale] = useState(getInitialFontScale)
   const [isMagnifierEnabled, setIsMagnifierEnabled] = useState(false)
+  const [isVLibrasEnabled, setIsVLibrasEnabled] = useState(false)
+  const [isVLibrasPanelOpen, setIsVLibrasPanelOpen] = useState(false)
   const [isHighContrastEnabled, setIsHighContrastEnabled] = useState(
     () => localStorage.getItem(HIGH_CONTRAST_STORAGE_KEY) === 'true',
   )
@@ -161,6 +164,8 @@ function AccessibilityControls({ children }) {
       onPointerDown={handleMagnifierPointerDown}
       onPointerLeave={hideMagnifier}
     >
+      {children}
+
       <TextZoomControls
         fontScale={fontScale}
         minFontScale={MIN_FONT_SCALE}
@@ -177,9 +182,21 @@ function AccessibilityControls({ children }) {
         onToggleHighContrast={() => {
           setIsHighContrastEnabled((currentValue) => !currentValue)
         }}
+        isVLibrasEnabled={isVLibrasEnabled}
+        isVLibrasPanelOpen={isVLibrasPanelOpen}
+        onToggleVLibras={() => {
+          setIsVLibrasEnabled((currentValue) => !currentValue)
+        }}
       />
 
-      {isMagnifierEnabled && magnifier.isVisible && (
+      <VLibrasWidget
+        enabled={isVLibrasEnabled}
+        onPanelOpenChange={(isOpen) => {
+          setIsVLibrasPanelOpen(isOpen)
+        }}
+      />
+
+      {isMagnifierEnabled && magnifier.isVisible ? (
         <div
           className="text-magnifier"
           style={{
@@ -189,9 +206,7 @@ function AccessibilityControls({ children }) {
         >
           {magnifier.text}
         </div>
-      )}
-
-      {children}
+      ) : null}
     </div>
   )
 }

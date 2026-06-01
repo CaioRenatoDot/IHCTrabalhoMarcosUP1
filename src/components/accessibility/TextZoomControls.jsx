@@ -55,6 +55,25 @@ function ContrastIcon() {
   )
 }
 
+function LibrasIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M7 12V7a2 2 0 0 1 4 0v5" />
+      <path d="M11 7V5a2 2 0 0 1 4 0v7" />
+      <path d="M15 10V6a2 2 0 0 1 4 0v6" />
+      <path d="M7 14c0 3 1.5 5 5 5s5-2 5-5" />
+    </svg>
+  )
+}
+
 function ResetIcon() {
   return (
     <svg
@@ -78,11 +97,14 @@ function TextZoomControls({
   maxFontScale,
   isMagnifierEnabled,
   isHighContrastEnabled,
+  isVLibrasEnabled,
+  isVLibrasPanelOpen,
   onDecrease,
   onReset,
   onIncrease,
   onToggleMagnifier,
   onToggleHighContrast,
+  onToggleVLibras,
 }) {
   const [isOpen, setIsOpen] = useState(false)
   const menuId = useId()
@@ -119,28 +141,73 @@ function TextZoomControls({
         return
       }
 
+      if (event.target instanceof Element && event.target.closest('#vlibras-widget-root')) {
+        return
+      }
+
       setIsOpen(false)
     }
 
+    const handleFocusOut = (event) => {
+      const nextTarget = event.relatedTarget
+
+      if (
+        nextTarget instanceof Element &&
+        nextTarget.closest('#vlibras-widget-root')
+      ) {
+        return
+      }
+
+      if (nextTarget && !containerRef.current?.contains(nextTarget)) {
+        setIsOpen(false)
+      }
+    }
+
+    const container = containerRef.current
+
     document.addEventListener('keydown', handleKeyDown)
     document.addEventListener('pointerdown', handlePointerDown)
+    container?.addEventListener('focusout', handleFocusOut)
 
     return () => {
       document.removeEventListener('keydown', handleKeyDown)
       document.removeEventListener('pointerdown', handlePointerDown)
+      container?.removeEventListener('focusout', handleFocusOut)
     }
   }, [isOpen, closeMenu])
 
   const zoomPercent = Math.round(fontScale * 100)
+  const isVlibrasToggleLocked = isVLibrasEnabled && isVLibrasPanelOpen
+  const controlsClassName = [
+    'text-zoom-controls',
+    isOpen ? 'is-open' : '',
+    isVLibrasPanelOpen ? 'is-vlibras-open' : '',
+  ]
+    .filter(Boolean)
+    .join(' ')
+
+  const handleToggleVLibras = () => {
+    if (isVlibrasToggleLocked) {
+      return
+    }
+
+    const willEnable = !isVLibrasEnabled
+    onToggleVLibras()
+
+    if (willEnable) {
+      setIsOpen(false)
+    }
+  }
 
   return (
-    <div ref={containerRef} className="text-zoom-controls" aria-label="Controles de tamanho do texto">
+    <div ref={containerRef} className={controlsClassName} aria-label="Controles de tamanho do texto">
       <div
         ref={menuRef}
         id={menuId}
         className={`text-zoom-menu ${isOpen ? 'is-open' : ''}`}
         role="group"
-        aria-label="Opções de acessibilidade"
+        aria-label="Opcoes de acessibilidade"
+        aria-hidden={!isOpen}
       >
         <div className="zoom-section-label">Texto</div>
 
@@ -152,7 +219,7 @@ function TextZoomControls({
             disabled={fontScale <= minFontScale}
             title="Diminuir fonte"
           >
-            <span aria-hidden="true">−</span>
+            <span aria-hidden="true">-</span>
           </button>
 
           <span className="zoom-scale-value">
@@ -200,9 +267,28 @@ function TextZoomControls({
           <span className="zoom-toggle-pill" aria-hidden="true" />
         </button>
 
+        <button
+          type="button"
+          className={isVLibrasEnabled ? 'is-active' : ''}
+          onClick={handleToggleVLibras}
+          aria-pressed={isVLibrasEnabled}
+          disabled={isVlibrasToggleLocked}
+          title={
+            isVlibrasToggleLocked
+              ? 'Feche o painel do VLibras para desligar por este menu.'
+              : 'Ativar ou desativar VLibras'
+          }
+        >
+          <span className="zoom-btn-icon">
+            <LibrasIcon />
+          </span>
+          VLibras (Libras)
+          <span className="zoom-toggle-pill" aria-hidden="true" />
+        </button>
+
         <button type="button" className="zoom-reset-row" onClick={onReset} disabled={fontScale === 1}>
           <ResetIcon />
-          Restaurar padrão
+          Restaurar padrao
         </button>
       </div>
 

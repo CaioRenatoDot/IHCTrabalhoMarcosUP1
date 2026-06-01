@@ -1,0 +1,50 @@
+#vlibras-widget-root[vw] {
+  z-index: 70;
+}
+
+#vlibras-widget-root[vw].is-hidden {
+  display: none !important;
+}
+
+.vlibras-disabled [vw],
+.vlibras-disabled [vw-access-button],
+.vlibras-disabled [vw-plugin-wrapper],
+.vlibras-disabled .access-button,
+.vlibras-disabled .pop-up,
+.vlibras-disabled .vw-links,
+.vlibras-disabled .vw-tooltip,
+.vlibras-disabled .vw-tooltip__item,
+.vlibras-disabled [class^='vpw-'],
+.vlibras-disabled [class*=' vpw-'] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+[vw-access-button] {
+  left: 16px !important;
+  right: auto !important;
+  bottom: 16px !important;
+  top: auto !important;
+}
+
+[vw-plugin-wrapper] {
+  left: 16px !important;
+  right: auto !important;
+}
+
+#vlibras-widget-root[vw] [vw-access-button] .pop-up {
+  display: none !important;
+}
+
+.is-high-contrast #vlibras-widget-root[vw] {
+  filter: invert(1) hue-rotate(180deg);
+}
+
+@media (max-width: 640px) {
+  [vw-access-button] {
+    left: 12px !important;
+    bottom: 12px !important;
+  }
+}
