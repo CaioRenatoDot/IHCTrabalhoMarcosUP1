@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import HomePage from './pages/HomePage.jsx'
 import LoginPage from './pages/LoginPage.jsx'
 import SignupPage from './pages/SignupPage.jsx'
@@ -6,9 +6,9 @@ import SignupSuccessPage from './pages/SignupSuccessPage.jsx'
 import CoverPage from './pages/CoverPage.jsx'
 import Navbar from './components/Navbar.jsx'
 import Footer from './components/Footer.jsx'
-import ToastContainer from './components/ToastContainer.jsx'
 import AccessibilityControls from './components/accessibility/AccessibilityControls.jsx'
 import SkipLink from './components/SkipLink.jsx'
+import SmoothScrollProvider from './components/smooth-scroll/SmoothScrollProvider.jsx'
 
 function parseLocation() {
   return {
@@ -39,77 +39,13 @@ function focusElementById(id) {
   })
 }
 
-function updateRouteWithTransition(nextRoute, setRoute) {
-  setRoute(nextRoute)
-}
-
 function App() {
   const [route, setRoute] = useState(parseLocation)
-  const [toasts, setToasts] = useState([])
   const previousPathRef = useRef(route.path)
-  const toastTimersRef = useRef(new Map())
-  const pageKey = route.path
-
-  const removeToast = useCallback((id) => {
-    const timers = toastTimersRef.current.get(id)
-
-    if (timers) {
-      clearTimeout(timers.leaveTimer)
-      clearTimeout(timers.removeTimer)
-      toastTimersRef.current.delete(id)
-    }
-
-    setToasts((previousToasts) => previousToasts.filter((toast) => toast.id !== id))
-  }, [])
-
-  const dismissToast = useCallback(
-    (id) => {
-      setToasts((previousToasts) =>
-        previousToasts.map((toast) => (toast.id === id ? { ...toast, isLeaving: true } : toast))
-      )
-
-      const currentTimers = toastTimersRef.current.get(id)
-
-      if (!currentTimers) {
-        const removeTimer = setTimeout(() => removeToast(id), 300)
-        toastTimersRef.current.set(id, { leaveTimer: null, removeTimer })
-        return
-      }
-
-      if (currentTimers.leaveTimer) {
-        clearTimeout(currentTimers.leaveTimer)
-      }
-
-      if (!currentTimers.removeTimer) {
-        currentTimers.removeTimer = setTimeout(() => removeToast(id), 300)
-      }
-
-      toastTimersRef.current.set(id, currentTimers)
-    },
-    [removeToast]
-  )
-
-  const showToast = useCallback(
-    (message) => {
-      const id = `${Date.now()}-${Math.random().toString(16).slice(2)}`
-      setToasts((previousToasts) => [...previousToasts, { id, message, isLeaving: false }])
-
-      const leaveTimer = setTimeout(() => {
-        dismissToast(id)
-      }, 3000)
-
-      toastTimersRef.current.set(id, { leaveTimer, removeTimer: null })
-    },
-    [dismissToast]
-  )
 
   useEffect(() => {
     window.history.scrollRestoration = 'manual'
-
-    const syncRoute = () => {
-      const nextRoute = parseLocation()
-      updateRouteWithTransition(nextRoute, setRoute)
-    }
+    const syncRoute = () => setRoute(parseLocation())
 
     window.addEventListener('popstate', syncRoute)
     window.addEventListener('hashchange', syncRoute)
@@ -119,17 +55,6 @@ function App() {
       window.removeEventListener('hashchange', syncRoute)
     }
   }, [])
-
-  useEffect(
-    () => () => {
-      toastTimersRef.current.forEach((timers) => {
-        clearTimeout(timers.leaveTimer)
-        clearTimeout(timers.removeTimer)
-      })
-      toastTimersRef.current.clear()
-    },
-    []
-  )
 
   useEffect(() => {
     const isHome = route.path === '/'
@@ -184,31 +109,56 @@ function App() {
     }
 
     window.history.pushState({}, '', next)
-    updateRouteWithTransition({ path: nextPath, hash: nextHash }, setRoute)
+    setRoute({ path: nextPath, hash: nextHash })
   }
-
-  const hideNavbar = route.path === '/login' || route.path === '/cadastro' || route.path === '/sucesso-cadastro'
-
-  let page = route.path === '/sobre-projeto' || route.path === '/cover' ? <CoverPage /> : <HomePage />
 
   if (route.path === '/login') {
-    page = <LoginPage onToast={showToast} />
-  } else if (route.path === '/cadastro') {
-    page = <SignupPage onToast={showToast} />
-  } else if (route.path === '/sucesso-cadastro') {
-    page = <SignupSuccessPage onToast={showToast} />
+    return (
+      <SmoothScrollProvider>
+        <AccessibilityControls>
+          <SkipLink />
+          <LoginPage />
+        </AccessibilityControls>
+      </SmoothScrollProvider>
+    )
   }
 
+  if (route.path === '/cadastro') {
+    return (
+      <SmoothScrollProvider>
+        <AccessibilityControls>
+          <SkipLink />
+          <SignupPage />
+        </AccessibilityControls>
+      </SmoothScrollProvider>
+    )
+  }
+
+  if (route.path === '/sucesso-cadastro') {
+    return (
+      <SmoothScrollProvider>
+        <AccessibilityControls>
+          <SkipLink />
+          <SignupSuccessPage />
+        </AccessibilityControls>
+      </SmoothScrollProvider>
+    )
+  }
+
+  const page =
+    route.path === '/sobre-projeto' || route.path === '/cover' ? <CoverPage /> : <HomePage />
+
   return (
-    <AccessibilityControls>
-      <SkipLink />
-      {!hideNavbar ? <Navbar onNavigate={navigate} currentPath={route.path} /> : null}
-      <div className="app-page" key={pageKey}>
-        {page}
-      </div>
-      <Footer />
-      <ToastContainer toasts={toasts} onDismiss={dismissToast} />
-    </AccessibilityControls>
+    <SmoothScrollProvider>
+      <AccessibilityControls>
+        <SkipLink />
+        <Navbar onNavigate={navigate} />
+        <div key={`${route.path}${route.hash}`} className="app-page">
+          {page}
+        </div>
+        <Footer />
+      </AccessibilityControls>
+    </SmoothScrollProvider>
   )
 }
 
