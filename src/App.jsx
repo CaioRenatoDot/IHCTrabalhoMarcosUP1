@@ -1,9 +1,11 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import HomePage from './pages/HomePage.jsx'
 import LoginPage from './pages/LoginPage.jsx'
 import SignupPage from './pages/SignupPage.jsx'
 import SignupSuccessPage from './pages/SignupSuccessPage.jsx'
 import CoverPage from './pages/CoverPage.jsx'
+import TermsPage from './pages/TermsPage.jsx'
+import PrivacyPage from './pages/PrivacyPage.jsx'
 import Navbar from './components/Navbar.jsx'
 import Footer from './components/Footer.jsx'
 import AccessibilityControls from './components/accessibility/AccessibilityControls.jsx'
@@ -56,7 +58,7 @@ function App() {
     }
   }, [])
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const isHome = route.path === '/'
     const cameFromOtherPage = previousPathRef.current !== route.path
     const previousPath = previousPathRef.current
@@ -112,51 +114,45 @@ function App() {
     setRoute({ path: nextPath, hash: nextHash })
   }
 
+  let page
+  let showNavbar = true
+  let showFooter = true
+
   if (route.path === '/login') {
-    return (
-      <SmoothScrollProvider>
-        <AccessibilityControls>
-          <SkipLink />
-          <LoginPage />
-        </AccessibilityControls>
-      </SmoothScrollProvider>
-    )
+    page = <LoginPage />
+    showNavbar = false
+    showFooter = false
+  } else if (route.path === '/cadastro') {
+    page = <SignupPage />
+    showNavbar = false
+    showFooter = false
+  } else if (route.path === '/sucesso-cadastro') {
+    page = <SignupSuccessPage />
+    showNavbar = false
+    showFooter = false
+  } else if (route.path === '/termos-de-uso') {
+    page = <TermsPage />
+    showNavbar = false
+  } else if (route.path === '/politica-de-privacidade') {
+    page = <PrivacyPage />
+    showNavbar = false
+  } else if (route.path === '/sobre-projeto' || route.path === '/cover') {
+    page = <CoverPage />
+  } else {
+    page = <HomePage />
   }
-
-  if (route.path === '/cadastro') {
-    return (
-      <SmoothScrollProvider>
-        <AccessibilityControls>
-          <SkipLink />
-          <SignupPage />
-        </AccessibilityControls>
-      </SmoothScrollProvider>
-    )
-  }
-
-  if (route.path === '/sucesso-cadastro') {
-    return (
-      <SmoothScrollProvider>
-        <AccessibilityControls>
-          <SkipLink />
-          <SignupSuccessPage />
-        </AccessibilityControls>
-      </SmoothScrollProvider>
-    )
-  }
-
-  const page =
-    route.path === '/sobre-projeto' || route.path === '/cover' ? <CoverPage /> : <HomePage />
 
   return (
     <SmoothScrollProvider>
       <AccessibilityControls>
         <SkipLink />
-        <Navbar onNavigate={navigate} />
-        <div key={`${route.path}${route.hash}`} className="app-page">
-          {page}
+        <div className="app-page">
+          {showNavbar ? <Navbar onNavigate={navigate} /> : null}
+          <div key={`${route.path}${route.hash}`} className="page-shell">
+            {page}
+          </div>
+          {showFooter ? <Footer /> : null}
         </div>
-        <Footer />
       </AccessibilityControls>
     </SmoothScrollProvider>
   )

@@ -491,23 +491,48 @@
 
 .signup-terms {
   margin-top: 4px;
-  display: flex;
+  display: grid;
+  gap: 8px;
+}
+
+.signup-terms__check {
+  display: inline-flex;
   align-items: flex-start;
   gap: 10px;
   cursor: pointer;
 }
 
-.signup-terms input[type="checkbox"] {
+.signup-terms__check input[type="checkbox"] {
   width: 16px;
   height: 16px;
   margin-top: 2px;
   accent-color: #c74f7e;
 }
 
-.signup-terms span {
+.signup-terms__check span,
+.signup-terms__text {
   color: #8a6072;
   font-size: calc(12px * var(--accessibility-font-scale));
-  line-height: 1.35;
+  line-height: 1.45;
+  margin: 0;
+}
+
+.signup-terms a {
+  color: #c74f7e;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+  transition: color 0.2s ease, opacity 0.2s ease;
+}
+
+.signup-terms a:hover {
+  color: #b84271;
+}
+
+.signup-terms a:focus-visible {
+  outline: 2px solid #c74f7e;
+  outline-offset: 3px;
+  border-radius: 4px;
 }
 
 .login-warning {

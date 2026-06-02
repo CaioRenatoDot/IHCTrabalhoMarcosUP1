@@ -102,7 +102,7 @@ body {
   min-height: 100vh;
 }
 
-.app-page {
+.page-shell {
   animation: app-page-fade 0.28s ease-out;
 }
 

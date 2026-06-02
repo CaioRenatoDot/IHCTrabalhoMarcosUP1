@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+﻿import { useRef, useState } from 'react'
 
 function SignupForm({ onSignupSuccess }) {
   const [fullName, setFullName] = useState('')
@@ -131,18 +131,32 @@ function SignupForm({ onSignupSuccess }) {
         </p>
       </div>
 
-      <label className="signup-terms" htmlFor="signup-terms">
-        <input
-          id="signup-terms"
-          type="checkbox"
-          checked={acceptedTerms}
-          onChange={(event) => {
-            setAcceptedTerms(event.target.checked)
-            if (termsError) setTermsError('')
-          }}
-        />
-        <span>Concordo com os Termos de uso e Política de privacidade do RiskCare.</span>
-      </label>
+      <div className="signup-terms">
+        <label className="signup-terms__check" htmlFor="signup-terms">
+          <input
+            id="signup-terms"
+            type="checkbox"
+            checked={acceptedTerms}
+            onChange={(event) => {
+              setAcceptedTerms(event.target.checked)
+              if (termsError) setTermsError('')
+            }}
+          />
+          <span>Eu li e concordo</span>
+        </label>
+
+        <p className="signup-terms__text">
+          com os{' '}
+          <a href="/termos-de-uso" target="_blank" rel="noopener noreferrer">
+            Termos de uso
+          </a>{' '}
+          e com a{' '}
+          <a href="/politica-de-privacidade" target="_blank" rel="noopener noreferrer">
+            Política de privacidade
+          </a>{' '}
+          do RiskCare.
+        </p>
+      </div>
 
       <p className={`form-error${termsError ? ' show' : ''}`} role="alert">
         {termsError}
