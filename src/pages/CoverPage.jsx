@@ -2,7 +2,7 @@ import Cover from '../components/Cover.jsx'
 
 function CoverPage() {
   return (
-    <main className="cover-page">
+    <main id="main-content" className="cover-page" tabIndex={-1}>
       <Cover />
     </main>
   )

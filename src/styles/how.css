@@ -1,0 +1,124 @@
+.how-section-content {
+  max-width: var(--rc-max-width);
+  margin: 0 auto;
+}
+
+.how-header {
+  text-align: center;
+  margin-bottom: 56px;
+}
+
+.section-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--rc-rose-light);
+  color: var(--rc-rose-dark);
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.section-title {
+  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+  font-weight: 800;
+  color: var(--rc-text-dark);
+  margin-bottom: 12px;
+  line-height: 1.2;
+}
+
+.section-sub {
+  font-size: 1.05rem;
+  color: var(--rc-text);
+  max-width: 600px;
+  line-height: 1.6;
+  margin: 0 auto;
+}
+
+.how-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.how-step {
+  background: var(--rc-white);
+  border-radius: var(--rc-radius-card);
+  padding: 32px 24px;
+  border: 1px solid var(--rc-border);
+  text-align: center;
+  transition: transform var(--rc-transition), box-shadow var(--rc-transition);
+  position: relative;
+}
+
+.how-step:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--rc-shadow-md);
+}
+
+.how-step:active {
+  transform: scale(0.97);
+}
+
+.how-step-num {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--rc-rose);
+  color: var(--rc-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 1rem;
+  margin: 0 auto 16px;
+}
+
+.how-step-icon {
+  color: var(--rc-rose);
+  margin-bottom: 12px;
+}
+
+.how-step-icon svg {
+  width: 32px;
+  height: 32px;
+}
+
+.how-step h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--rc-text-dark);
+  margin-bottom: 8px;
+}
+
+.how-step p {
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: var(--rc-text);
+}
+
+.how-step-arrow {
+  position: absolute;
+  right: -16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--rc-rose-light);
+  width: 24px;
+  height: 24px;
+}
+
+.how-step:last-child .how-step-arrow {
+  display: none;
+}
+
+@media (max-width: 1200px) {
+  .how-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .how-step-arrow {
+    display: none;
+  }
+}

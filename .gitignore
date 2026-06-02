@@ -2,6 +2,8 @@ node_modules
 dist
 .DS_Store
 *.local
+.env
+server/data/
 
 
 # Others
@@ -11,3 +13,7 @@ cover.txt
 styleguide.txt
 tela_de_cadastro.txt
 tela_de_login.txt
+alteracoes.txt
+contexto.txt
+preview.html
+estetica-app-v3.html

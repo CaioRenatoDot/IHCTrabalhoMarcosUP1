@@ -1,12 +1,15 @@
-﻿@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200..800&display=swap');
 
 @import './base.css';
+@import './accessibility.css';
 @import './layout.css';
 @import './cover.css';
 @import './navbar.css';
 @import './hero-actions.css';
 @import './awareness.css';
 @import './indicators.css';
+@import './how.css';
 @import './banner.css';
 @import './footer.css';
+@import './toast.css';
+@import './vlibras.css';
 @import './responsive.css';

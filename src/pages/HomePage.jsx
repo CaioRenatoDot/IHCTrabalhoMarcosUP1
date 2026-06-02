@@ -2,101 +2,120 @@ import FeatureCard from '../components/FeatureCard.jsx'
 import Indicadores from '../components/Indicadores.jsx'
 import ObservationBanner from '../components/ObservationBanner.jsx'
 import ConscientizacaoPrevencaoSection from '../components/ConscientizacaoPrevencaoSection.jsx'
+import HowItWorksSection from '../components/HowItWorksSection.jsx'
 
-const ClockIcon = () => (
+const ClipboardCheckIcon = () => (
   <svg
     width="30"
     height="30"
     viewBox="0 0 24 24"
     fill="none"
     stroke="currentColor"
-    strokeWidth={1.8}
+    strokeWidth={2}
     strokeLinecap="round"
     strokeLinejoin="round"
   >
-    <circle cx="12" cy="12" r="9" />
-    <polyline points="12 7 12 12 15 15" />
+    <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2" />
+    <rect x="9" y="3" width="6" height="4" rx="1" />
+    <path d="M9 14l2 2 4-4" />
   </svg>
 )
 
-const ShieldIcon = () => (
-  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-    <rect x="8" y="2" width="8" height="4" rx="1" ry="1" />
-    <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
-    <line x1="9" y1="12" x2="15" y2="12" />
-    <line x1="9" y1="16" x2="13" y2="16" />
-  </svg>
-)
-
-const ChartIcon = () => (
+const QuestionIcon = () => (
   <svg
     width="30"
     height="30"
     viewBox="0 0 24 24"
     fill="none"
     stroke="currentColor"
-    strokeWidth={1.8}
+    strokeWidth={2}
     strokeLinecap="round"
     strokeLinejoin="round"
   >
-    <line x1="18" y1="20" x2="18" y2="10" />
-    <line x1="12" y1="20" x2="12" y2="4" />
-    <line x1="6" y1="20" x2="6" y2="14" />
+    <circle cx="12" cy="12" r="10" />
+    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+    <line x1="12" y1="17" x2="12.01" y2="17" />
+  </svg>
+)
+
+const TrendLineIcon = () => (
+  <svg
+    width="30"
+    height="30"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth={2}
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="M3 3v18h18" />
+    <path d="M7 16l4-8 4 4 4-6" />
   </svg>
 )
 
 function HomePage() {
+  const stagger = (index) => ({ '--stagger-index': index })
+
   return (
-    <main className="wireframe-page">
-      <section id="avaliacao" className="home-section home-section--hero">
+    <main id="main-content" className="wireframe-page" tabIndex={-1}>
+      <section
+        id="avaliacao"
+        className="home-section home-section--hero stagger-fade"
+        tabIndex={-1}
+        style={stagger(0)}
+      >
         <div className="home-section__inner">
-          <div id="como-funciona">
-            <ConscientizacaoPrevencaoSection />
+          <ConscientizacaoPrevencaoSection />
+        </div>
+      </section>
+
+      <section
+        id="saiba-mais"
+        className="home-section home-section--metrics stagger-fade"
+        tabIndex={-1}
+        aria-labelledby="fatores-de-risco-heading"
+        style={stagger(1)}
+      >
+        <div className="home-section__inner">
+          <h2 id="fatores-de-risco-heading" className="visually-hidden">
+            Fatores de risco
+          </h2>
+          <div id="fatores-de-risco">
+            <Indicadores />
           </div>
         </div>
       </section>
 
-      <section id="fatores-de-risco" className="home-section home-section--metrics">
-        <div className="home-section__inner">
-          <Indicadores />
-        </div>
-      </section>
-
-      <section className="home-section home-section--cards">
+      <section className="home-section home-section--cards stagger-fade" style={stagger(2)}>
         <div className="home-section__inner">
           <section className="cards-block">
             <div className="cards-block__grid">
               <div>
                 <FeatureCard
-                  icon={<ClockIcon />}
+                  icon={<ClipboardCheckIcon />}
                   title={'An\u00E1lise r\u00E1pida'}
                   description={
-                    'Responda um question\u00E1rio curto e receba sua estimativa em minutos, sem burocracia'
+                    'Responda um breve question\u00E1rio e receba uma estimativa preliminar sobre seus fatores de risco.'
                   }
-                  iconBg="#fce7f3"
-                  iconColor="#e879a0"
                 />
               </div>
               <div>
                 <FeatureCard
-                  icon={<ShieldIcon />}
+                  icon={<QuestionIcon />}
                   title={'Question\u00E1rio detalhado'}
                   description={
-                    'Perguntas criadas com base em sintomas mais comuns do c\u00E2ncer de mama'
+                    'An\u00E1lise aprofundada considerando hist\u00F3rico familiar, h\u00E1bitos e caracter\u00EDsticas pessoais.'
                   }
-                  iconBg="#dbeafe"
-                  iconColor="#6098f2"
                 />
               </div>
               <div>
                 <FeatureCard
-                  icon={<ChartIcon />}
-                  title={'Estat\u00EDstica de risco'}
+                  icon={<TrendLineIcon />}
+                  title={'Estat\u00EDsticas de risco'}
                   description={
-                    'Ao finalizar receba a estat\u00EDstica detalhada com base nas respostas das perguntas'
+                    'Visualize seus resultados com gr\u00E1ficos claros e orienta\u00E7\u00F5es personalizadas para cada perfil.'
                   }
-                  iconBg="#d1fae5"
-                  iconColor="#34d399"
                 />
               </div>
             </div>
@@ -104,7 +123,21 @@ function HomePage() {
         </div>
       </section>
 
-      <section id="sobre" className="home-section home-section--notice">
+      <section
+        id="como-funciona"
+        className="home-section home-section--how stagger-fade"
+        style={stagger(3)}
+      >
+        <div className="home-section__inner">
+          <HowItWorksSection />
+        </div>
+      </section>
+
+      <section
+        id="sobre"
+        className="home-section home-section--notice stagger-fade"
+        style={stagger(4)}
+      >
         <div className="home-section__inner">
           <ObservationBanner />
         </div>

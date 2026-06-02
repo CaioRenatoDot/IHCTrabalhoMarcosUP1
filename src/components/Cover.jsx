@@ -1,14 +1,14 @@
-const publicoAlvo = [
-  'Mulheres adultas',
-  'Pessoas com histórico familiar',
-  'Estudantes de saúde',
-  'Usuários interessados em prevenção',
+﻿const publicoAlvo = [
+  'Mulheres acima de 18 anos',
+  'Homens interessados em preven\u00e7\u00e3o',
+  'Pessoas com ou sem hist\u00f3rico familiar',
+  'Quem busca informa\u00e7\u00e3o inicial antes da consulta',
 ]
 
 const integrantes = [
   { initials: 'CG', name: 'Caio Gabriel Pereira de Menezes Correia' },
   { initials: 'CR', name: 'Caio Renato dos Santos Claudino' },
-  { initials: 'JF', name: 'José Francisco de Araujo Neto' },
+  { initials: 'JF', name: 'Jos\u00e9 Francisco de Araujo Neto' },
   { initials: 'TP', name: 'Thalita Pereira de Andrade' },
 ]
 
@@ -24,9 +24,9 @@ function WarningIcon() {
       strokeLinecap="round"
       strokeLinejoin="round"
     >
-      <path d="M12 4 3.5 19h17L12 4Z" />
-      <path d="M12 9v5" />
-      <path d="M12 17h.01" />
+      <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+      <line x1="12" y1="9" x2="12" y2="13" />
+      <line x1="12" y1="17" x2="12.01" y2="17" />
     </svg>
   )
 }
@@ -39,11 +39,11 @@ function BrandIcon() {
       className="cover-brand__icon-svg"
       fill="none"
       stroke="currentColor"
-      strokeWidth="2.2"
+      strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
     >
-      <path d="M12 20s-7-4.35-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.65-7 10-7 10Z" />
+      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
     </svg>
   )
 }
@@ -59,51 +59,53 @@ function Cover() {
           <span className="cover-brand__text">RiskCare</span>
         </div>
 
-        <span className="cover-chip">PROJETO ACADÊMICO - 2026</span>
+        <span className="cover-chip">Sobre o projeto</span>
 
         <h1 className="cover-title">
-          Plataforma de análise
-          <br />
-          de risco de câncer de mama
+          {'Informa\u00e7\u00e3o que protege, conhecimento que acolhe'}
         </h1>
 
         <p className="cover-subtitle">
-          Uma ferramenta educativa e acessível para apoio à conscientização e
-          prevenção do câncer de mama.
+          {
+            'Uma plataforma educativa criada para conscientizar e informar sobre fatores de risco do c\u00e2ncer de mama, promovendo preven\u00e7\u00e3o atrav\u00e9s da informa\u00e7\u00e3o acess\u00edvel.'
+          }
         </p>
 
         <ul className="cover-tag-list" aria-label="Temas do projeto">
-          <li>Saúde</li>
-          <li>Prevenção</li>
-          <li>UI Design</li>
-          <li>Figma</li>
+          <li>Educativo</li>
+          <li>{'Preven\u00e7\u00e3o'}</li>
+          <li>{'Sa\u00fade da mulher'}</li>
+          <li>IHC</li>
         </ul>
       </aside>
 
       <div className="cover__right">
         <section className="cover-block">
           <div className="cover-block__head">
-            <h2>CONCEITO DO PRODUTO</h2>
+            <h2>CONCEITO</h2>
             <span />
           </div>
           <p>
-            Desenvolver uma plataforma web de análise de risco do câncer de
-            mama, utilizando dados reais como referência para promover
-            conscientização e incentivar a busca por acompanhamento médico.
+            {
+              'O RiskCare nasce da necessidade de tornar a informa\u00e7\u00e3o sobre preven\u00e7\u00e3o do c\u00e2ncer de mama mais acess\u00edvel, clara e acolhedora. Atrav\u00e9s de question\u00e1rios intuitivos e feedback visual, ajudamos usu\u00e1rios a entenderem melhor seus fatores de risco e a tomarem decis\u00f5es informadas sobre sua sa\u00fade.'
+            }
           </p>
-        </section>
 
-        <section className="cover-alert" aria-label="Aviso">
-          <WarningIcon />
-          <p>
-            O sistema não realiza diagnóstico médico, apenas apresenta
-            estimativas baseadas em dados para fins educativos.
-          </p>
+          <section className="cover-alert" aria-label="Aviso">
+            <WarningIcon />
+            <p>
+              {'Esta ferramenta '}
+              <strong>{'n\u00e3o realiza diagn\u00f3stico m\u00e9dico'}</strong>
+              {
+                '. Os resultados s\u00e3o estimativas baseadas em fatores de risco gerais e n\u00e3o substituem consulta com profissional de sa\u00fade.'
+              }
+            </p>
+          </section>
         </section>
 
         <section className="cover-block">
           <div className="cover-block__head">
-            <h2>PÚBLICO-ALVO</h2>
+            <h2>{'P\u00daBLICO-ALVO'}</h2>
             <span />
           </div>
           <ul className="cover-audience">
@@ -115,19 +117,19 @@ function Cover() {
 
         <section className="cover-block">
           <div className="cover-block__head">
-            <h2>PROBLEMA QUE RESOLVE</h2>
+            <h2>PROBLEMA</h2>
             <span />
           </div>
           <p>
-            Muitas pessoas não conhecem os fatores de risco do câncer de mama,
-            o que atrasa a busca por avaliação médica. A proposta oferece uma
-            ferramenta acessível e informativa para conscientização.
+            {
+              'O acesso \u00e0 informa\u00e7\u00e3o clara sobre preven\u00e7\u00e3o do c\u00e2ncer de mama ainda \u00e9 um desafio. Muitas pessoas desconhecem fatores de risco b\u00e1sicos ou adiam a busca por orienta\u00e7\u00e3o m\u00e9dica por falta de informa\u00e7\u00e3o acess\u00edvel. O RiskCare preenche essa lacuna com uma ferramenta educativa gratuita, emp\u00e1tica e respaldada por dados.'
+            }
           </p>
         </section>
 
         <section className="cover-block cover-team">
           <div className="cover-block__head">
-            <h2>INTEGRANTES</h2>
+            <h2>EQUIPE</h2>
             <span />
           </div>
           <ul className="cover-team__list">
