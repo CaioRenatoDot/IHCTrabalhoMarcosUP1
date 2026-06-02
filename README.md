@@ -1,147 +1,147 @@
-# IHCTrabalhoMarcosUP1
+# RiskCare — IHCTrabalhoMarcosUP1
 
-Projeto da disciplina de IHC desenvolvido com React + Vite.
+Plataforma web de conscientização e triagem educativa de risco de câncer de mama, desenvolvida na disciplina de IHC (React + Vite + API Node.js).
 
-## Atividade
+## Sobre o projeto
 
-A proposta da atividade é:
+O **RiskCare** oferece uma página inicial informativa, fluxo de cadastro/login e uma API para persistir respostas de questionário e resultados de avaliação. A estimativa de risco é **informativa** e não substitui diagnóstico médico.
 
-Escolher uma tela (página) do projeto em equipe e implementar os componentes presentes nessa página.
+## Equipe e responsabilidades
 
-## Divisão de Responsabilidades
-
-O desenvolvimento desta página foi realizado de forma colaborativa, com divisão de tarefas entre os integrantes da equipe:
-
-Caio Gabriel – Implementação dos cards informativos 
-
-Renato – Desenvolvimento da Navbar e da seção "Saiba Mais", incluindo ajustes visuais para maior fidelidade ao protótipo no Figma 
-
-Thalita – Criação dos cards de estatística e dos botões interativos da interface 
-
-Francisco – Implementação da funcionalidade de Avaliação Gratuita 
-
-Todos os botões e styles foram implementados com sucesso.
-
-## Tela escolhida
-
-A tela implementada neste projeto é a `HomePage`, com foco na experiência da página inicial da aplicação **RiskCare**.
-
-## Componentes implementados na página
-
-- `Navbar`: cabeçalho com marca, links e CTA
-- `ConscientizacaoPrevencaoSection`: seção principal com título, descrição, ações e card de risco
-- `AvaliacaoGratuitaButton`: CTA principal
-- `SaibaMaisButton`: CTA secundária
-- `Indicadores`: bloco de métricas em destaque
-- `FeatureCard`: cartões de benefícios/funcionalidades
-- `ObservationBanner`: aviso informativo ao final da página
+| Integrante | Entrega |
+|------------|---------|
+| Caio Gabriel | Cards informativos |
+| Renato | Navbar e seção "Saiba Mais" |
+| Thalita | Indicadores, botões interativos e API/backend |
+| Francisco | Avaliação gratuita (fluxo na interface) |
 
 ## Tecnologias
 
-- React 18
-- Vite 5
-- Node.js + Express (API REST)
-- SQLite nativo do Node (`node:sqlite`, requer Node 22.5+)
-- JWT + bcrypt (autenticação)
-- JavaScript (JSX)
-- CSS global
+| Camada | Stack |
+|--------|--------|
+| Frontend | React 18, Vite 5, JavaScript (JSX), CSS |
+| Animação / UX | GSAP, Lenis (scroll suave) |
+| Acessibilidade | Controles de zoom, VLibras, navegação por teclado |
+| Backend | Node.js, Express 5 |
+| Banco | SQLite (`node:sqlite` — requer **Node.js 22.5+**) |
+| Auth | JWT + bcrypt |
+
+## Pré-requisitos
+
+- [Node.js](https://nodejs.org/) 22.5 ou superior
+- npm
 
 ## Como executar
 
-Em dois terminais:
+### 1. Instalar dependências
 
 ```bash
 npm install
+```
+
+### 2. Configurar variáveis de ambiente
+
+```bash
+cp .env.example .env
+```
+
+Ajuste `JWT_SECRET` antes de publicar em produção. O banco SQLite é criado automaticamente em `server/data/riskcare.db` na primeira execução da API.
+
+### 3. Subir API e frontend (dois terminais)
+
+**Terminal 1 — API (porta 3001):**
+
+```bash
 npm run dev:server
 ```
+
+**Terminal 2 — site (porta 5173):**
 
 ```bash
 npm run dev
 ```
 
-Copie `.env.example` para `.env` e ajuste `JWT_SECRET` em produção.
+O Vite encaminha `/api` para `http://localhost:3001` em desenvolvimento.
 
-Verificação de qualidade:
+### 4. Acessar no navegador
+
+| URL | Conteúdo |
+|-----|----------|
+| http://localhost:5173 | Página inicial |
+| http://localhost:5173/login | Login |
+| http://localhost:5173/cadastro | Cadastro |
+| http://localhost:5173/sobre-projeto | Sobre o projeto |
+| http://localhost:3001/api/health | Status da API |
+
+### Outros comandos
 
 ```bash
-npm run lint
-```
-
-Para gerar build de produção:
-
-```bash
-npm run build
-npm run preview
+npm run lint      # ESLint (src + server)
+npm run build     # Build de produção do frontend
+npm run preview   # Preview do build
 ```
 
 ## Estrutura do projeto
 
 ```text
 .
-- index.html
-- package.json
-- vite.config.js
-- src
-  - main.jsx
-  - App.jsx
-  - pages
-    - HomePage.jsx
-  - components
-    - Navbar.jsx
-    - ConscientizacaoPrevencaoSection.jsx
-    - AvaliacaoGratuitaButton.jsx
-    - SaibaMaisButton.jsx
-    - Indicadores.jsx
-    - FeatureCard.jsx
-    - ObservationBanner.jsx
-    - Hero.jsx
-    - Section.jsx
-  - styles
-    - base.css
-    - layout.css
-    - navbar.css
-    - hero-actions.css
-    - awareness.css
-    - indicators.css
-    - banner.css
-    - responsive.css
-    - global.css
+├── server/                 # API REST
+│   ├── index.js            # Entrada do servidor
+│   ├── app.js              # Express + rotas
+│   ├── db.js               # SQLite e schema
+│   ├── routes/             # auth, questionnaire, evaluations
+│   ├── services/           # Motor de cálculo de risco
+│   ├── middleware/         # Auth JWT e erros
+│   └── validators/         # Validação (Zod)
+├── src/
+│   ├── App.jsx             # Rotas da SPA
+│   ├── pages/              # Home, Login, Cadastro, Cover…
+│   ├── components/         # UI, login, acessibilidade
+│   ├── services/           # Cliente HTTP (api.js)
+│   ├── styles/             # CSS por seção
+│   └── utils/              # Navegação SPA
+├── docs/                   # Documentação auxiliar
+├── .env.example
+├── vite.config.js
+└── package.json
 ```
 
-## Arquivos principais
+## Frontend — páginas e componentes
 
-- `src/main.jsx`: ponto de entrada da aplicação e montagem do React
-- `src/App.jsx`: componente raiz da interface
-- `src/pages/HomePage.jsx`: composição da página com os componentes principais
-- `src/styles/global.css`: agregador dos módulos de estilo
-- `src/styles/*.css`: estilos divididos por responsabilidade (base, layout, seções e responsividade)
-- `src/components/*.jsx`: componentes reutilizáveis da interface
+**Páginas:** `HomePage`, `LoginPage`, `SignupPage`, `SignupSuccessPage`, `CoverPage`
 
-## Observação
+**Destaques na home:** `Navbar`, `ConscientizacaoPrevencaoSection`, `HowItWorksSection`, `Indicadores`, `FeatureCard`, `ObservationBanner`, `AvaliacaoGratuitaButton`, `SaibaMaisButton`
 
-Os componentes `Hero.jsx` e `Section.jsx` permanecem no projeto como apoio/estrutura reutilizável, enquanto a composição atual da tela principal acontece via `HomePage.jsx`.
+**Acessibilidade:** `AccessibilityControls`, `TextZoomControls`, `VLibrasWidget`, `SkipLink`
 
-O `index.html` continua necessário no Vite/React como template base de montagem (container `#root` e carregamento do bundle).
+## API REST
 
-## API REST (`/api`)
+Base: `http://localhost:3001/api` (ou `/api` via proxy do Vite)
 
-Todas as rotas autenticadas exigem header `Authorization: Bearer <token>`.
+Rotas autenticadas exigem:
+
+```http
+Authorization: Bearer <token>
+```
 
 | Método | Rota | Descrição |
 |--------|------|-----------|
-| GET | `/api/health` | Status da API |
-| POST | `/api/auth/register` | Cadastro (`name`, `email`, `password`) |
-| POST | `/api/auth/login` | Login (`email`, `password`) |
-| GET | `/api/auth/profile` | Perfil do usuário logado |
-| PUT | `/api/auth/profile` | Atualizar `name` e/ou `email` |
-| POST | `/api/questionnaire/responses` | Salvar respostas (`answers[]`) |
-| GET | `/api/questionnaire/responses` | Listar respostas do usuário |
-| POST | `/api/evaluations` | Gerar e salvar avaliação (`questionnaireResponseId` ou `answers[]`) |
-| GET | `/api/evaluations` | Listar avaliações do usuário |
+| GET | `/health` | Status da API |
+| POST | `/auth/register` | Cadastro — body: `{ name, email, password }` |
+| POST | `/auth/login` | Login — body: `{ email, password }` |
+| GET | `/auth/profile` | Perfil do usuário logado |
+| PUT | `/auth/profile` | Atualizar `name` e/ou `email` |
+| POST | `/questionnaire/responses` | Salvar respostas do questionário |
+| GET | `/questionnaire/responses` | Listar respostas do usuário |
+| GET | `/questionnaire/responses/:id` | Uma resposta por ID |
+| POST | `/evaluations` | Gerar e salvar avaliação |
+| GET | `/evaluations` | Listar avaliações do usuário |
+| GET | `/evaluations/:id` | Uma avaliação por ID |
 
-Exemplo de respostas do questionário:
+### Exemplo — salvar questionário
 
 ```json
+POST /api/questionnaire/responses
 {
   "answers": [
     { "questionId": "idade", "value": "50_59" },
@@ -151,4 +151,31 @@ Exemplo de respostas do questionário:
 }
 ```
 
-IDs de pergunta suportados pelo motor de risco: `idade` (`under_40`, `40_49`, `50_59`, `60_plus`) e fatores booleanos como `historico_familiar`, `nodulo_mama`, `alteracao_pele`, entre outros definidos em `server/services/evaluationEngine.js`.
+### Exemplo — gerar avaliação
+
+```json
+POST /api/evaluations
+{ "questionnaireResponseId": 1 }
+```
+
+Ou envie `answers` diretamente (a API salva o questionário e gera a avaliação em uma chamada).
+
+### Fatores de risco (motor de avaliação)
+
+- `idade`: `under_40`, `40_49`, `50_59`, `60_plus`
+- Booleanos: `historico_familiar`, `nodulo_mama`, `alteracao_pele`, `secrecao_mamilar`, entre outros — ver `server/services/evaluationEngine.js`
+
+Níveis retornados: `baixo`, `moderado`, `alto` (pontuação 0–100).
+
+## Banco de dados
+
+- **Desenvolvimento:** SQLite em arquivo (`DB_PATH` no `.env`)
+- **Produção:** para deploy público, recomenda-se migrar para PostgreSQL ou similar; a API pode ser adaptada trocando a camada em `server/db.js`
+
+O arquivo `server/data/` está no `.gitignore` (dados locais não vão para o repositório).
+
+## Observações
+
+- Senha mínima na API: **8 caracteres**
+- O token JWT é armazenado no `localStorage` (`riskcare_token`) após login/cadastro
+- Componentes `Hero.jsx` e `Section.jsx` permanecem como estrutura reutilizável; a home é montada em `HomePage.jsx`
