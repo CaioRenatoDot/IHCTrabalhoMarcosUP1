@@ -64,6 +64,8 @@
 }
 
 .risk-card {
+  --risk-progress: 0%;
+
   width: 100%;
   min-height: 321px;
   padding: 24px 21px;
@@ -96,7 +98,10 @@
   height: 116px;
   border-radius: 50%;
   border: 0;
-  background: conic-gradient(var(--rc-rose) 0 115deg, var(--rc-rose-light) 115deg 360deg);
+  background: conic-gradient(
+    var(--rc-rose) 0 var(--risk-progress),
+    var(--rc-rose-light) var(--risk-progress) 100%
+  );
   position: relative;
 }
 
