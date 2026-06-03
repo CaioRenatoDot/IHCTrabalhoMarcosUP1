@@ -541,9 +541,19 @@
   color: #000;
 }
 
-.accessibility-root.is-high-contrast .assessment-progress span,
-.accessibility-root.is-high-contrast .assessment-brand__icon,
+.accessibility-root.is-high-contrast .assessment-brand__icon {
+  background: transparent;
+}
+
+.accessibility-root.is-high-contrast .assessment-step__marker,
 .accessibility-root.is-high-contrast .assessment-step--complete .assessment-step__marker,
+.accessibility-root.is-high-contrast .assessment-step--current .assessment-step__marker {
+  border-color: #fff;
+  background: #fff;
+  color: #000;
+}
+
+.accessibility-root.is-high-contrast .assessment-progress span,
 .accessibility-root.is-high-contrast .assessment-option.is-selected .assessment-option__control::after,
 .accessibility-root.is-high-contrast .assessment-scale__item.is-selected,
 .accessibility-root.is-high-contrast .assessment-action--primary {
