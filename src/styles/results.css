@@ -1,0 +1,284 @@
+.results-page {
+  min-height: 100vh;
+  padding: clamp(1rem, 3vw, 2.5rem);
+  background: var(--rc-rose-bg-soft);
+}
+
+.results-card {
+  width: min(100%, 980px);
+  margin: 0 auto;
+  overflow: hidden;
+  border: 1px solid var(--rc-border);
+  border-radius: 14px;
+  background: var(--rc-white);
+  box-shadow: var(--rc-shadow-md);
+}
+
+.results-card__header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 1.5rem;
+  padding: clamp(1.15rem, 3vw, 2rem) clamp(1rem, 3vw, 2rem);
+  border-bottom: 1px solid var(--rc-border);
+}
+
+.results-card__summary {
+  min-width: 0;
+}
+
+.results-pill {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  margin-bottom: 0.7rem;
+  padding: 0.32rem 0.7rem;
+  border-radius: 999px;
+  background: var(--rc-rose-bg);
+  color: var(--rc-rose);
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.results-card h1,
+.results-risk-section h2,
+.results-population-section h2,
+.results-placeholder h2 {
+  margin: 0;
+  color: var(--rc-text-dark);
+}
+
+.results-card h1 {
+  font-size: clamp(1.55rem, 4vw, 2.35rem);
+  line-height: 1.1;
+}
+
+.results-card__summary p,
+.results-risk-section__heading p,
+.results-population-section p,
+.results-placeholder p {
+  margin: 0.45rem 0 0;
+  color: var(--rc-text);
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+
+.results-risk-index {
+  display: grid;
+  justify-items: center;
+  gap: 0.45rem;
+  min-width: 124px;
+  color: var(--rc-text);
+  font-size: 0.75rem;
+}
+
+.results-risk-index__chart {
+  width: 78px;
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, var(--rc-white) 57%, transparent 58%),
+    conic-gradient(var(--rc-rose) 0 34%, var(--rc-rose-light) 34% 100%);
+}
+
+.results-risk-index__chart span {
+  color: var(--rc-rose-dark);
+  font-size: 1.15rem;
+  font-weight: 900;
+}
+
+.results-risk-index strong {
+  color: var(--rc-text);
+  font-size: 0.78rem;
+  text-align: center;
+}
+
+.results-tabs {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  overflow-x: auto;
+  border-bottom: 1px solid var(--rc-border);
+  scrollbar-width: thin;
+}
+
+.results-tabs a {
+  flex: 0 0 auto;
+  padding: 0.85rem clamp(0.9rem, 3vw, 1.45rem);
+  border-bottom: 3px solid transparent;
+  color: var(--rc-text);
+  font-size: 0.86rem;
+  font-weight: 800;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.results-tabs a.is-active {
+  border-bottom-color: var(--rc-rose);
+  color: var(--rc-rose);
+}
+
+.results-risk-section {
+  padding: clamp(1rem, 3vw, 1.75rem) clamp(1rem, 3vw, 2rem) 2rem;
+}
+
+.results-population-section {
+  padding: clamp(1rem, 3vw, 1.75rem) clamp(1rem, 3vw, 2rem) 2rem;
+  border-top: 1px solid var(--rc-border);
+}
+
+.results-risk-section__heading h2,
+.results-population-section h2 {
+  font-size: clamp(1rem, 3vw, 1.32rem);
+}
+
+.results-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem 1rem;
+  margin-top: 1rem;
+  color: var(--rc-text);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.results-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.results-legend i {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+}
+
+.results-legend .is-user i {
+  background: var(--rc-rose);
+}
+
+.results-legend .is-average i {
+  background: #f2a7c0;
+}
+
+.results-legend .is-reference i {
+  background: #f8d5df;
+}
+
+.results-legend .is-low i {
+  background: #b8d996;
+}
+
+.results-legend .is-moderate i {
+  background: #f3c66f;
+}
+
+.results-legend .is-high i {
+  background: #ef7c7f;
+}
+
+.results-legend .is-you i {
+  background: #e87486;
+}
+
+.results-factor-chart-wrap {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding-top: 1.2rem;
+}
+
+.results-factor-chart {
+  width: min(100%, 760px);
+  height: 430px;
+  min-height: 320px;
+}
+
+.results-factor-chart__tick {
+  fill: var(--rc-text);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.results-population-chart {
+  width: 100%;
+  height: 340px;
+  margin-top: 1.2rem;
+}
+
+.results-chart-tooltip {
+  display: grid;
+  gap: 0.35rem;
+  min-width: 190px;
+  padding: 0.8rem 0.9rem;
+  border: 1px solid var(--rc-border);
+  border-radius: 12px;
+  background: var(--rc-white);
+  box-shadow: var(--rc-shadow-md);
+}
+
+.results-chart-tooltip strong {
+  color: var(--rc-text-dark);
+  font-size: 0.86rem;
+}
+
+.results-chart-tooltip span {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: var(--rc-text);
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+
+.results-chart-tooltip span::before {
+  content: '';
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+  background: var(--tooltip-color);
+}
+
+.results-placeholder {
+  padding: 2rem;
+  border-top: 1px solid var(--rc-border);
+  background: var(--rc-rose-bg-soft);
+}
+
+.results-placeholder h2 {
+  font-size: 1.1rem;
+}
+
+@media (max-width: 700px) {
+  .results-card__header {
+    grid-template-columns: 1fr;
+  }
+
+  .results-risk-index {
+    justify-items: start;
+  }
+
+  .results-factor-chart {
+    height: 390px;
+  }
+
+  .results-factor-chart__tick {
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .results-page {
+    padding: 0.75rem;
+  }
+
+  .results-risk-section {
+    padding-left: 0.8rem;
+    padding-right: 0.8rem;
+  }
+}
