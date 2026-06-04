@@ -511,6 +511,8 @@
 .accessibility-root.is-high-contrast .assessment-status,
 .accessibility-root.is-high-contrast .assessment-copy h1,
 .accessibility-root.is-high-contrast .assessment-copy p,
+.accessibility-root.is-high-contrast .assessment-step,
+.accessibility-root.is-high-contrast .assessment-step__label,
 .accessibility-root.is-high-contrast .assessment-fieldset legend,
 .accessibility-root.is-high-contrast .assessment-option,
 .accessibility-root.is-high-contrast .assessment-pill,
