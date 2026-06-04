@@ -6,6 +6,7 @@ import SignupSuccessPage from './pages/SignupSuccessPage.jsx'
 import CoverPage from './pages/CoverPage.jsx'
 import TermsPage from './pages/TermsPage.jsx'
 import PrivacyPage from './pages/PrivacyPage.jsx'
+import ResultsPage from './pages/ResultsPage.jsx'
 import AssessmentFormPage from './pages/AssessmentFormPage.jsx'
 import Navbar from './components/Navbar.jsx'
 import Footer from './components/Footer.jsx'
@@ -143,6 +144,8 @@ function App() {
     showFooter = false
   } else if (route.path === '/sobre-projeto' || route.path === '/cover') {
     page = <CoverPage />
+  } else if (route.path === '/resultados') {
+    page = <ResultsPage />
   } else {
     page = <HomePage />
   }
@@ -152,7 +155,7 @@ function App() {
       <AccessibilityControls>
         <SkipLink />
         <div className="app-page">
-          {showNavbar ? <Navbar onNavigate={navigate} /> : null}
+          {showNavbar ? <Navbar onNavigate={navigate} currentPath={route.path} /> : null}
           <div key={`${route.path}${route.hash}`} className="page-shell">
             {page}
           </div>
