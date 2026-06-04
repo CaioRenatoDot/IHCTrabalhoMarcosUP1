@@ -10,6 +10,7 @@ import {
   XAxis,
   YAxis,
 } from 'recharts'
+import { useEffect, useState } from 'react'
 
 const legendItems = [
   { label: 'Você', className: 'is-user' },
@@ -61,6 +62,12 @@ const projectionData = [
   { age: 55, noIntervention: 61, prevention: 30, population: 32 },
   { age: 60, noIntervention: 68, prevention: 33, population: 35 },
   { age: 65, noIntervention: 72, prevention: 35, population: 38 },
+]
+
+const resultTabs = [
+  { id: 'fatores-risco', label: 'Fatores de risco' },
+  { id: 'comparativo-populacional', label: 'Comparativo populacional' },
+  { id: 'detalhamento-fator', label: 'Detalhamento por fator' },
 ]
 
 function ResultsComparisonTooltip({ active, payload, label }) {
@@ -129,6 +136,39 @@ function ResultsFactorTick({ payload, x, y }) {
 }
 
 function ResultsPage() {
+  const getActiveTabFromHash = () => {
+    const hash = window.location.hash.replace('#', '')
+    return resultTabs.some((tab) => tab.id === hash) ? hash : resultTabs[0].id
+  }
+
+  const [activeTab, setActiveTab] = useState(getActiveTabFromHash)
+
+  useEffect(() => {
+    const syncActiveTab = () => setActiveTab(getActiveTabFromHash())
+
+    window.addEventListener('popstate', syncActiveTab)
+    window.addEventListener('hashchange', syncActiveTab)
+
+    return () => {
+      window.removeEventListener('popstate', syncActiveTab)
+      window.removeEventListener('hashchange', syncActiveTab)
+    }
+  }, [])
+
+  const handleTabClick = (event, tabId) => {
+    event.preventDefault()
+    setActiveTab(tabId)
+
+    const target = document.getElementById(tabId)
+
+    if (!target) {
+      return
+    }
+
+    window.history.pushState({}, '', `#${tabId}`)
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
+
   return (
     <main id="main-content" className="results-page" tabIndex={-1}>
       <section className="results-card" aria-labelledby="results-title">
@@ -148,11 +188,16 @@ function ResultsPage() {
         </header>
 
         <nav className="results-tabs" aria-label="Visualizações dos resultados">
-          <a className="is-active" href="#fatores-risco">
-            Fatores de risco
-          </a>
-          <a href="#comparativo-populacional">Comparativo populacional</a>
-          <a href="#detalhamento-fator">Detalhamento por fator</a>
+          {resultTabs.map((tab) => (
+            <a
+              className={activeTab === tab.id ? 'is-active' : ''}
+              href={`#${tab.id}`}
+              key={tab.id}
+              onClick={(event) => handleTabClick(event, tab.id)}
+            >
+              {tab.label}
+            </a>
+          ))}
         </nav>
 
         <section
