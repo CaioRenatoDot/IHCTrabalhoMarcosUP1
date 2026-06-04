@@ -71,10 +71,10 @@
 ### Etapa 5 - Tela De Resultado
 
 [ ] - Criar o resumo de risco com classificação baixa, moderada ou alta.
-[ ] - Exibir comparativos e fatores com maior impacto.
-[ ] - Adicionar tabelas e gráficos, como radar, barras e rosca.
+[X] - Exibir comparativos e fatores com maior impacto.
+[X] - Adicionar tabelas e gráficos, como radar, barras e rosca.
 [ ] - Mostrar recomendações educativas e próximos passos.
-[ ] - Garantir visualização clara para usuário leigo.
+[X] - Garantir visualização clara para usuário leigo.
 
 ### Etapa 6 - Legal, Privacidade E Acessibilidade
 
