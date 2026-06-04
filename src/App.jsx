@@ -7,6 +7,7 @@ import CoverPage from './pages/CoverPage.jsx'
 import TermsPage from './pages/TermsPage.jsx'
 import PrivacyPage from './pages/PrivacyPage.jsx'
 import ResultsPage from './pages/ResultsPage.jsx'
+import AssessmentFormPage from './pages/AssessmentFormPage.jsx'
 import Navbar from './components/Navbar.jsx'
 import Footer from './components/Footer.jsx'
 import AccessibilityControls from './components/accessibility/AccessibilityControls.jsx'
@@ -137,6 +138,10 @@ function App() {
   } else if (route.path === '/politica-de-privacidade') {
     page = <PrivacyPage />
     showNavbar = false
+  } else if (route.path === '/formulario') {
+    page = <AssessmentFormPage />
+    showNavbar = false
+    showFooter = false
   } else if (route.path === '/sobre-projeto' || route.path === '/cover') {
     page = <CoverPage />
   } else if (route.path === '/resultados') {
