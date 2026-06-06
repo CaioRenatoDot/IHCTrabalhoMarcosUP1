@@ -2,17 +2,14 @@ node_modules
 dist
 .DS_Store
 *.local
-documentation/
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+!.env.example
 
 
 # Others
 
-components.txt
-cover.txt
-styleguide.txt
-tela_de_cadastro.txt
-tela_de_login.txt
-alteracoes.txt
-contexto.txt
-preview.html
-estetica-app-v3.html
+documentation/
