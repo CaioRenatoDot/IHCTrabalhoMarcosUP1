@@ -71,6 +71,18 @@
     display: none;
   }
 
+  .site-navbar__actions {
+    gap: 0.5rem;
+  }
+
+  .site-navbar__logout,
+  .site-navbar__cta {
+    height: 40px;
+    padding-left: 0.95rem;
+    padding-right: 0.95rem;
+    font-size: 0.82rem;
+  }
+
   .awareness-section {
     gap: 1.2rem;
     padding: 1.35rem 1rem;

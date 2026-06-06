@@ -5,6 +5,7 @@ import LoginForm from '../components/login/LoginForm.jsx'
 import LoginHeader from '../components/login/LoginHeader.jsx'
 import LoginWarning from '../components/login/LoginWarning.jsx'
 import SocialLoginButtons from '../components/login/SocialLoginButtons.jsx'
+import { useAuth } from '../contexts/AuthContext.jsx'
 import { handleSpaLinkClick, navigateWithoutReload } from '../utils/navigation.js'
 
 function LoginBackButton() {
@@ -24,6 +25,9 @@ function LoginBackButton() {
 
 function LoginPage({ onToast }) {
   const [isLoading, setIsLoading] = useState(false)
+  const { signIn } = useAuth()
+
+  const handleLogin = async ({ email, password }) => signIn({ email, password })
 
   const handleLoginSuccess = () => {
     setIsLoading(true)
@@ -33,7 +37,7 @@ function LoginPage({ onToast }) {
         onToast('Bem-vinda de volta!')
       }
 
-      navigateWithoutReload('/')
+      navigateWithoutReload('/formulario')
     }, 1400)
   }
 
@@ -56,7 +60,7 @@ function LoginPage({ onToast }) {
         <LoginHeader />
         <SocialLoginButtons />
         <LoginDivider text="Ou entre com e-mail" />
-        <LoginForm onLoginSuccess={handleLoginSuccess} />
+        <LoginForm onLogin={handleLogin} onLoginSuccess={handleLoginSuccess} />
 
         <p className="signup-link">
           Não possui conta?{' '}

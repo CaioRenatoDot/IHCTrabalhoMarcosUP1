@@ -11,6 +11,7 @@ import {
   YAxis,
 } from 'recharts'
 import { useEffect, useState } from 'react'
+import { useAuth } from '../contexts/AuthContext.jsx'
 
 const legendItems = [
   { label: 'Você', className: 'is-user' },
@@ -136,6 +137,8 @@ function ResultsFactorTick({ payload, x, y }) {
 }
 
 function ResultsPage() {
+  const { session } = useAuth()
+
   const getActiveTabFromHash = () => {
     const hash = window.location.hash.replace('#', '')
     return resultTabs.some((tab) => tab.id === hash) ? hash : resultTabs[0].id
@@ -513,7 +516,7 @@ function ResultsPage() {
             <button type="button" className="results-action-button">
               Exportar PDF
             </button>
-            <a className="results-action-button" href="/login">
+            <a className="results-action-button" href={session ? '/formulario' : '/login'}>
               Nova avaliação
             </a>
           </div>

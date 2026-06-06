@@ -1,6 +1,6 @@
-﻿import { useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 
-function SignupForm({ onSignupSuccess }) {
+function SignupForm({ onSignup, onSignupSuccess }) {
   const [fullName, setFullName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -9,12 +9,14 @@ function SignupForm({ onSignupSuccess }) {
   const [emailError, setEmailError] = useState('')
   const [passwordError, setPasswordError] = useState('')
   const [termsError, setTermsError] = useState('')
+  const [authError, setAuthError] = useState('')
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const nameInputRef = useRef(null)
   const emailInputRef = useRef(null)
   const passwordInputRef = useRef(null)
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault()
 
     const nextName = fullName.trim()
@@ -25,6 +27,7 @@ function SignupForm({ onSignupSuccess }) {
     setEmailError('')
     setPasswordError('')
     setTermsError('')
+    setAuthError('')
 
     let hasError = false
 
@@ -59,15 +62,30 @@ function SignupForm({ onSignupSuccess }) {
       hasError = true
     }
 
-    if (hasError) {
+    if (hasError || typeof onSignup !== 'function') {
       return
     }
 
-    onSignupSuccess()
+    setIsSubmitting(true)
+
+    try {
+      const result = await onSignup({ fullName: nextName, email: nextEmail, password })
+
+      if (result?.ok) {
+        if (typeof onSignupSuccess === 'function') {
+          onSignupSuccess(result)
+        }
+        return
+      }
+
+      setAuthError(result?.error ?? 'Não foi possível criar a conta. Tente novamente.')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
-    <form className="login-form signup-form" onSubmit={handleSubmit} noValidate>
+    <form className="login-form signup-form" onSubmit={handleSubmit} noValidate aria-busy={isSubmitting}>
       <div className="field-group">
         <label htmlFor="signup-name">Nome completo</label>
         <input
@@ -79,10 +97,12 @@ function SignupForm({ onSignupSuccess }) {
           onChange={(event) => {
             setFullName(event.target.value)
             if (nameError) setNameError('')
+            if (authError) setAuthError('')
           }}
           className={nameError ? 'error' : ''}
           aria-invalid={nameError ? 'true' : 'false'}
           aria-describedby={nameError ? 'signup-name-error' : undefined}
+          disabled={isSubmitting}
         />
         <p id="signup-name-error" className={`form-error${nameError ? ' show' : ''}`} role="alert">
           {nameError}
@@ -100,10 +120,12 @@ function SignupForm({ onSignupSuccess }) {
           onChange={(event) => {
             setEmail(event.target.value)
             if (emailError) setEmailError('')
+            if (authError) setAuthError('')
           }}
           className={emailError ? 'error' : ''}
           aria-invalid={emailError ? 'true' : 'false'}
           aria-describedby={emailError ? 'signup-email-error' : undefined}
+          disabled={isSubmitting}
         />
         <p id="signup-email-error" className={`form-error${emailError ? ' show' : ''}`} role="alert">
           {emailError}
@@ -121,10 +143,12 @@ function SignupForm({ onSignupSuccess }) {
           onChange={(event) => {
             setPassword(event.target.value)
             if (passwordError) setPasswordError('')
+            if (authError) setAuthError('')
           }}
           className={passwordError ? 'error' : ''}
           aria-invalid={passwordError ? 'true' : 'false'}
           aria-describedby={passwordError ? 'signup-password-error' : undefined}
+          disabled={isSubmitting}
         />
         <p id="signup-password-error" className={`form-error${passwordError ? ' show' : ''}`} role="alert">
           {passwordError}
@@ -140,7 +164,9 @@ function SignupForm({ onSignupSuccess }) {
             onChange={(event) => {
               setAcceptedTerms(event.target.checked)
               if (termsError) setTermsError('')
+              if (authError) setAuthError('')
             }}
+            disabled={isSubmitting}
           />
           <span>Eu li e concordo</span>
         </label>
@@ -162,7 +188,13 @@ function SignupForm({ onSignupSuccess }) {
         {termsError}
       </p>
 
-      <button type="submit">Cadastrar</button>
+      <p className={`form-error login-error${authError ? ' show' : ''}`} role="alert">
+        {authError}
+      </p>
+
+      <button type="submit" disabled={isSubmitting}>
+        {isSubmitting ? 'Cadastrando...' : 'Cadastrar'}
+      </button>
     </form>
   )
 }
