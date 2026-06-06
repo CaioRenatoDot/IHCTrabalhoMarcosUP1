@@ -1,30 +1,40 @@
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
-import { isSupabaseConfigured, supabase } from '../lib/supabaseClient.js'
+import {
+  getAuthSession,
+  loginWithBackend,
+  logoutWithBackend,
+  signupWithBackend,
+} from '../lib/authApi.js'
 
 const AuthContext = createContext(null)
 
-function formatAuthError(error) {
-  const message = error?.message?.toLowerCase() ?? ''
+function normalizeAuthError(error) {
+  const message = typeof error === 'string' ? error : error?.message ?? ''
+  const lowerMessage = message.toLowerCase()
 
-  if (message.includes('invalid login credentials')) {
+  if (lowerMessage.includes('invalid') || lowerMessage.includes('inválid')) {
     return 'E-mail ou senha inválidos'
   }
 
-  if (message.includes('user already registered')) {
+  if (lowerMessage.includes('already') || lowerMessage.includes('cadastrado')) {
     return 'Este e-mail já está cadastrado'
   }
 
-  if (message.includes('email')) {
+  if (lowerMessage.includes('email')) {
     return 'Verifique o e-mail informado'
   }
 
-  if (message.includes('password')) {
+  if (lowerMessage.includes('password') || lowerMessage.includes('senha')) {
     return 'A senha não atendeu aos requisitos'
   }
 
-  if (message.includes('network')) {
-    return 'Não foi possível conectar ao Supabase'
+  if (lowerMessage.includes('csrf')) {
+    return 'Não foi possível validar a sessão. Recarregue a página e tente novamente'
+  }
+
+  if (lowerMessage.includes('network') || lowerMessage.includes('fetch')) {
+    return 'Não foi possível conectar ao backend'
   }
 
   return 'Não foi possível concluir a autenticação. Tente novamente'
@@ -32,118 +42,91 @@ function formatAuthError(error) {
 
 export function AuthProvider({ children }) {
   const [session, setSession] = useState(null)
-  const [loading, setLoading] = useState(Boolean(isSupabaseConfigured))
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    if (!supabase) {
-      setLoading(false)
-      return undefined
-    }
-
     let isMounted = true
 
     const loadSession = async () => {
-      const { data, error } = await supabase.auth.getSession()
+      try {
+        const data = await getAuthSession()
 
-      if (!isMounted) {
-        return
-      }
+        if (!isMounted) {
+          return
+        }
 
-      if (!error) {
         setSession(data.session ?? null)
+      } catch {
+        if (isMounted) {
+          setSession(null)
+        }
+      } finally {
+        if (isMounted) {
+          setLoading(false)
+        }
       }
-
-      setLoading(false)
     }
 
     loadSession()
 
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, nextSession) => {
-      if (!isMounted) {
-        return
-      }
-
-      setSession(nextSession ?? null)
-      setLoading(false)
-    })
-
     return () => {
       isMounted = false
-      subscription.unsubscribe()
     }
   }, [])
 
   const value = useMemo(
     () => ({
-      isConfigured: isSupabaseConfigured,
+      isConfigured: true,
       loading,
       session,
       user: session?.user ?? null,
       signIn: async ({ email, password }) => {
-        if (!supabase) {
-          return { ok: false, error: 'Configure o Supabase no arquivo .env antes de entrar' }
-        }
+        try {
+          const data = await loginWithBackend({
+            email,
+            password,
+          })
 
-        const { data, error } = await supabase.auth.signInWithPassword({
-          email: email.trim(),
-          password,
-        })
+          setSession(data.session ?? null)
 
-        if (error) {
-          return { ok: false, error: formatAuthError(error) }
-        }
-
-        setSession(data.session ?? null)
-
-        return {
-          ok: true,
-          session: data.session ?? null,
-          user: data.user ?? data.session?.user ?? null,
+          return {
+            ok: true,
+            session: data.session ?? null,
+            user: data.user ?? data.session?.user ?? null,
+          }
+        } catch (error) {
+          return { ok: false, error: normalizeAuthError(error) }
         }
       },
       signOut: async () => {
-        if (!supabase) {
-          return { ok: false, error: 'Configure o Supabase no arquivo .env antes de sair' }
+        try {
+          await logoutWithBackend()
+          setSession(null)
+
+          return { ok: true }
+        } catch (error) {
+          return { ok: false, error: normalizeAuthError(error) }
         }
-
-        const { error } = await supabase.auth.signOut()
-
-        if (error) {
-          return { ok: false, error: formatAuthError(error) }
-        }
-
-        setSession(null)
-
-        return { ok: true }
       },
       signUp: async ({ fullName, email, password }) => {
-        if (!supabase) {
-          return { ok: false, error: 'Configure o Supabase no arquivo .env antes de criar a conta' }
-        }
+        try {
+          const data = await signupWithBackend({
+            fullName,
+            email,
+            password,
+            acceptedTerms: true,
+          })
 
-        const { data, error } = await supabase.auth.signUp({
-          email: email.trim(),
-          password,
-          options: {
-            data: {
-              full_name: fullName.trim(),
-            },
-          },
-        })
+          setSession(data.session ?? null)
 
-        if (error) {
-          return { ok: false, error: formatAuthError(error) }
-        }
-
-        setSession(data.session ?? null)
-
-        return {
-          ok: true,
-          requiresConfirmation: !data.session,
-          session: data.session ?? null,
-          user: data.user ?? data.session?.user ?? null,
+          return {
+            ok: true,
+            requiresConfirmation: Boolean(data.requiresConfirmation),
+            session: data.session ?? null,
+            user: data.user ?? data.session?.user ?? null,
+          }
+        } catch (error) {
+          return { ok: false, error: normalizeAuthError(error) }
         }
       },
     }),
