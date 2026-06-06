@@ -96,31 +96,12 @@ export function validateRiskAssessmentPayload(payload) {
   }
 }
 
-export function buildTemporaryAssessmentResponse() {
+export function buildMappingSummary() {
   return {
-    status: 'accepted',
-    message: 'Payload validado com sucesso. O motor de risco ainda nao foi implementado.',
-    score: null,
-    classification: null,
-    groupScores: {
-      profile: null,
-      familyHistory: null,
-      symptomsExams: null,
-      hormonalReproductive: null,
-      lifestyle: null,
-    },
-    factorBreakdown: [],
-    warnings: [
-      'Resposta temporaria: a logica de avaliacao sera implementada nas proximas etapas.',
-      'Esta ferramenta nao realiza diagnostico medico.',
-    ],
-    sourcesUsed: ['INCA', 'SEER'],
-    mappingSummary: {
-      totalFields: ALL_FIELDS.length,
-      scoredFields: getScoredFields().map((field) => field.key),
-      metadataFields: getMetadataFields().map((field) => field.key),
-      requiredFields: getMappedFieldsByRequirement(true).map((field) => field.key),
-      groups: getFieldGroupSummary(),
-    },
+    totalFields: ALL_FIELDS.length,
+    scoredFields: getScoredFields().map((field) => field.key),
+    metadataFields: getMetadataFields().map((field) => field.key),
+    requiredFields: getMappedFieldsByRequirement(true).map((field) => field.key),
+    groups: getFieldGroupSummary(),
   }
 }

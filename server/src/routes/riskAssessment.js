@@ -1,8 +1,6 @@
 import { Router } from 'express'
-import {
-  buildTemporaryAssessmentResponse,
-  validateRiskAssessmentPayload,
-} from '../domain/riskAssessmentPayload.js'
+import { buildMappingSummary, validateRiskAssessmentPayload } from '../domain/riskAssessmentPayload.js'
+import { evaluateRiskAssessment } from '../domain/score.js'
 
 const riskAssessmentRouter = Router()
 
@@ -17,8 +15,11 @@ riskAssessmentRouter.post('/risk-assessment', (request, response) => {
     })
   }
 
+  const assessmentResult = evaluateRiskAssessment(request.body)
+
   return response.status(200).json({
-    ...buildTemporaryAssessmentResponse(),
+    ...assessmentResult,
+    mappingSummary: buildMappingSummary(),
     meta: {
       receivedFields: Object.keys(request.body).length,
       extraFields: validation.extraFields,
