@@ -48,12 +48,22 @@
 [X] - Criar um documento de fontes de dados.
 [ ] - Disponibilizar um serviço inicial de avaliação local.
 
-### Etapa 3 - Backend Core + Autenticação
+### Etapa 3 - Backend Core + Autenticação Segura
 
-[X] - Configurar autenticação de cadastro, login e sessão via Supabase Auth no frontend.
-[X] - Implementar hash e sessão de autenticação pelo próprio Supabase.
+[X] - Configurar autenticação de cadastro, login e sessão via Supabase Auth no frontend como base inicial.
+[X] - Implementar hash e sessão inicial de autenticação pelo próprio Supabase.
 [X] - Criar estados de loading, erro e sucesso para o fluxo de autenticação.
 [X] - Proteger o acesso ao questionário e à área de resultados por sessão.
+[X] - Criar a estrutura inicial do backend em Node.js e Express.
+[X] - Adicionar cookies seguros, CSRF, rate limit e endpoints base de auth.
+[ ] - Criar um backend próprio para endurecer a camada de autenticação e segurança.
+[X] - Migrar a sessão para cookie HttpOnly, Secure e SameSite controlado pelo backend.
+[X] - Proteger login, logout e rotas sensíveis com CSRF.
+[X] - Aplicar rate limit por IP e por credencial nas rotas de autenticação.
+[X] - Implementar revogação de sessão no servidor.
+[X] - Registrar eventos de autenticação e expor endpoint de diagnóstico de auth.
+[ ] - Configurar SMTP customizado/Brevo para e-mails transacionais.
+[ ] - Definir a estratégia de acesso: signup público com confirmação de e-mail ou allowlist restrita.
 [ ] - Criar a camada de persistência via Prisma para respostas do questionário e resultados.
 [ ] - Criar a camada de persistência via Prisma para usuários e histórico de avaliações.
 [ ] - Adicionar validações básicas e tratamento de erros na integração com banco.
@@ -98,7 +108,11 @@
 
 ## 5. Requisitos Mínimos de Backend
 
-[X] - Cadastro e login de usuários via Supabase Auth.
+[X] - Cadastro e login de usuários via Supabase Auth como ponto de partida.
+[X] - Sessão segura no backend com cookie HttpOnly.
+[X] - Proteção CSRF, rate limit e revogação de sessão.
+[X] - Auditoria de eventos de autenticação.
+[X] - Endpoint de diagnóstico/saúde da autenticação.
 [ ] - Persistência de respostas de questionário.
 [ ] - Geração de avaliação por usuário.
 [ ] - Histórico simples de avaliações.
@@ -107,6 +121,8 @@
 ## 6. Estrutura Recomendada de Entidades
 
 [ ] - User: id, nome, email, senha_hash, criado_em.
+[ ] - Session: id, user_id, session_id, revoked_at, created_at.
+[ ] - AuthEvent: id, user_id, event_type, ip, user_agent, criado_em.
 [ ] - QuestionnaireResponse: id, user_id, respostas_json, criado_em.
 [ ] - RiskAssessment: id, user_id, response_id, score, classificação, detalhes_json, criado_em.
 [ ] - DatasetReference: id, nome, fonte, versão, descrição.
@@ -115,12 +131,14 @@
 
 [ ] - Prazo curto: focar em MVP funcional e reduzir escopo secundário.
 [ ] - Complexidade da avaliação: começar com regra de score transparente antes de um modelo mais complexo.
+[ ] - Segurança da autenticação: backend, cookie seguro, CSRF e rate limit precisam ser implementados sem quebrar a jornada do usuário.
 [ ] - Dados sensíveis: coletar o mínimo necessário e anonimizar quando possível.
 [ ] - Confiança do usuário: reforçar textos educativos e o aviso de não diagnóstico.
 
 ## 8. MVP Obrigatório Para Conclusão
 
 [X] - Login e cadastro funcionando.
+[ ] - Autenticação endurecida com backend e sessão segura.
 [X] - Questionário funcionando.
 [X] - Resultado com score, classificação e ao menos um gráfico.
 [ ] - Uso de ao menos duas referências de base de dados.
@@ -199,4 +217,5 @@
 [X] - Manter o planejamento em formato de checklist para facilitar o acompanhamento.
 [X] - Atualizar os itens concluídos com `[X]` conforme as entregas forem finalizadas.
 [X] - Considerar a autenticação de frontend como implementada, mas manter validação end-to-end, Prisma e SMTP como etapas pendentes.
+[X] - Centralizar neste documento o planejamento principal do projeto.
 [ ] - Revisar o planejamento sempre que novas etapas forem adicionadas.
