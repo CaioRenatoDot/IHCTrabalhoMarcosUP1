@@ -9,7 +9,7 @@
 ## 2. Escopo Final Esperado
 
 [ ] - Entregar um sistema web completo com frontend e backend.
-[ ] - Implementar autenticação de usuário com cadastro, login e sessão integrada ao Supabase.
+[X] - Implementar autenticação de usuário com cadastro, login e sessão integrada ao Supabase.
 [X] - Criar uma tela de questionário para coleta de dados.
 [ ] - Implementar um motor de avaliação de risco baseado em mais de uma base de dados.
 [X] - Criar uma tela de resultados com indicadores, tabelas, comparativos e gráficos.
@@ -50,12 +50,13 @@
 
 ### Etapa 3 - Backend Core + Autenticação
 
-[ ] - Criar endpoints de cadastro, login e perfil usando Supabase Auth.
-[ ] - Implementar hash de senha via Supabase.
-[ ] - Implementar autenticação por token ou sessão via Supabase.
-[ ] - Criar endpoints para salvar respostas do questionário.
-[ ] - Criar endpoint para gerar e salvar o resultado da avaliação.
-[ ] - Adicionar validações básicas e tratamento de erros.
+[X] - Configurar autenticação de cadastro, login e sessão via Supabase Auth no frontend.
+[X] - Implementar hash e sessão de autenticação pelo próprio Supabase.
+[X] - Criar estados de loading, erro e sucesso para o fluxo de autenticação.
+[X] - Proteger o acesso ao questionário e à área de resultados por sessão.
+[ ] - Criar a camada de persistência via Prisma para respostas do questionário e resultados.
+[ ] - Criar a camada de persistência via Prisma para usuários e histórico de avaliações.
+[ ] - Adicionar validações básicas e tratamento de erros na integração com banco.
 [ ] - Persistir usuários e avaliações no banco.
 
 ### Etapa 4 - Frontend do Fluxo Principal
@@ -63,7 +64,7 @@
 [X] - Integrar o frontend atual com o fluxo de login e cadastro.
 [X] - Criar as telas de login, cadastro e sucesso de cadastro.
 [X] - Criar a tela de preenchimento de dados/questionário.
-[ ] - Criar estados de loading, erro e sucesso.
+[X] - Criar estados de loading, erro e sucesso.
 [X] - Garantir navegação clara entre Home, Login, Cadastro, Questionário e Resultado.
 [X] - Integrar Lenis no fluxo principal para suavidade de navegação e transições de rolagem.
 [X] - Manter a navegação suave sem quebrar a acessibilidade.
@@ -97,7 +98,7 @@
 
 ## 5. Requisitos Mínimos de Backend
 
-[ ] - Cadastro e login de usuários via Supabase Auth.
+[X] - Cadastro e login de usuários via Supabase Auth.
 [ ] - Persistência de respostas de questionário.
 [ ] - Geração de avaliação por usuário.
 [ ] - Histórico simples de avaliações.
@@ -197,4 +198,5 @@
 
 [X] - Manter o planejamento em formato de checklist para facilitar o acompanhamento.
 [X] - Atualizar os itens concluídos com `[X]` conforme as entregas forem finalizadas.
+[X] - Considerar a autenticação de frontend como implementada, mas manter validação end-to-end, Prisma e SMTP como etapas pendentes.
 [ ] - Revisar o planejamento sempre que novas etapas forem adicionadas.
