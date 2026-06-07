@@ -56,7 +56,7 @@
 [X] - Proteger o acesso ao questionário e à área de resultados por sessão.
 [X] - Criar a estrutura inicial do backend em Node.js e Express.
 [X] - Adicionar cookies seguros, CSRF, rate limit e endpoints base de auth.
-[ ] - Criar um backend próprio para endurecer a camada de autenticação e segurança.
+[X] - Criar um backend próprio para endurecer a camada de autenticação e segurança.
 [X] - Migrar a sessão para cookie HttpOnly, Secure e SameSite controlado pelo backend.
 [X] - Proteger login, logout e rotas sensíveis com CSRF.
 [X] - Aplicar rate limit por IP e por credencial nas rotas de autenticação.
@@ -120,14 +120,65 @@
 
 ## 6. Estrutura Recomendada de Entidades
 
-[ ] - User: id, nome, email, senha_hash, criado_em.
-[ ] - Session: id, user_id, session_id, revoked_at, created_at.
-[ ] - AuthEvent: id, user_id, event_type, ip, user_agent, criado_em.
-[ ] - QuestionnaireResponse: id, user_id, respostas_json, criado_em.
-[ ] - RiskAssessment: id, user_id, response_id, score, classificação, detalhes_json, criado_em.
-[ ] - DatasetReference: id, nome, fonte, versão, descrição.
+[ ] - Profile: id, user_id, full_name, created_at, updated_at.
+[ ] - QuestionnaireResponse: id, user_id, form_version, payload_json, normalized_snapshot_json, submitted_at.
+[ ] - RiskAssessment: id, user_id, response_id, model_version_id, score, raw_score, classification, group_scores_json, factor_breakdown_json, warnings_json, sources_json, created_at.
+[ ] - ConsentRecord: id, user_id, consent_type, consent_version, accepted_at, ip, user_agent.
+[ ] - DatasetReference: id, slug, name, source_type, source_url, description, use_case, version, active.
+[ ] - DatasetFeatureMapping: id, dataset_reference_id, project_field_key, dataset_field_name, mapping_type, evidence_strength, notes.
+[ ] - RiskModelVersion: id, version, name, description, thresholds_json, weights_json, active, created_at.
+[ ] - AuthEvent: id, user_id, event_type, ip, user_agent, details_json, created_at.
+[ ] - AssessmentFactorDetail: id, assessment_id, factor_key, label, group_key, original_value, normalized_value, contribution, impact.
+[ ] - Definir quais tabelas armazenam JSONB, quais ficam normalizadas e quais serão apenas catálogos de leitura.
 
-## 7. Riscos do Projeto e Mitigação
+## 7. Fase Inicial de Dados, Prisma e RLS
+
+### 7.1 Frente do Francisco - Dados do Usuário, Questionário e Avaliação
+
+[X] - Fechar o mapeamento dos campos do formulário para as entidades do banco.
+[X] - Separar os dados em quatro grupos: identidade do usuário, submissão do questionário, resultado da avaliação e consentimentos.
+[X] - Definir quais campos entram como colunas para filtro e quais entram como snapshot JSONB.
+[X] - Definir o contrato mínimo do perfil do usuário com `user_id`, `full_name`, `state` e timestamps.
+[X] - Definir o contrato da resposta do questionário com `form_version`, `payload_json` e `normalized_snapshot_json`.
+[X] - Definir o contrato do resultado com `score`, `raw_score`, `classification`, `group_scores_json`, `warnings_json` e `sources_json`.
+[X] - Definir o contrato de consentimento com `consent_type`, `consent_version`, `accepted_at`, `ip` e `user_agent`.
+[X] - Criar os modelos Prisma para `Profile`, `QuestionnaireResponse`, `RiskAssessment` e `ConsentRecord`.
+[X] - Preparar a camada de persistência via Prisma para a sua frente no backend.
+[X] - Criar a migration inicial da sua frente com tabelas e policies RLS.
+[X] - Definir a política de RLS dessas tabelas usando `auth.uid()` como isolador principal.
+[X] - Garantir que as tabelas do usuário aceitem apenas linhas pertencentes ao dono autenticado.
+[X] - Validar que nenhum usuário consiga ler, atualizar ou excluir dados de outro usuário.
+[X] - Validar que a persistência da avaliação fique vinculada ao usuário autenticado e ao versionamento do modelo.
+[X] - Garantir que os dados do questionário sejam gravados como payload bruto e também como snapshot normalizado para análise posterior.
+[X] - Garantir que a leitura da avaliação sempre respeite o dono do registro.
+[ ] - Aplicar e testar as policies RLS no Supabase quando a migration for enviada.
+
+### 7.2 Frente do Gabriel - Catálogo de Bases, Versionamento e Auditoria
+
+[ ] - Mapear cada campo do questionário para pelo menos uma base de referência.
+[ ] - Classificar cada base por papel: clínica, imagem, genômica, epidemiológica ou contextual.
+[ ] - Priorizar as bases com melhor encaixe inicial para o comparativo do projeto.
+[ ] - Criar os modelos Prisma para `DatasetReference`, `DatasetFeatureMapping`, `RiskModelVersion`, `AuthEvent` e `AssessmentFactorDetail`.
+[ ] - Definir a política de RLS dessas tabelas conforme o nível de acesso de cada uma.
+[ ] - Garantir que as tabelas de catálogo tenham leitura aberta ou autenticada e escrita apenas do backend.
+[ ] - Garantir que as tabelas de auditoria e segurança sejam acessíveis somente pelo backend/service role.
+[ ] - Considerar que o role do Prisma pode ser privilegiado; manter filtro explícito por `user_id` no backend como defesa em profundidade.
+[ ] - Políticas com `USING` e `WITH CHECK` em todas as tabelas expostas.
+[ ] - Consolidar a modelagem de dados para permitir comparativos mais precisos entre bases.
+
+### 7.3 Integração Entre as Duas Frentes
+
+[ ] - Validar a separação entre dados de usuário, catálogo e auditoria.
+[ ] - Definir quais tabelas serão normalizadas e quais usarão snapshot JSONB.
+[ ] - Fechar o esquema Prisma completo sem conflitos entre tabelas de usuário e tabelas de catálogo.
+[ ] - Validar o relacionamento entre `QuestionnaireResponse`, `RiskAssessment` e `RiskModelVersion`.
+[ ] - Validar o relacionamento entre `DatasetReference` e `DatasetFeatureMapping`.
+[ ] - Garantir que o backend respeite a separação entre dados do usuário e dados de referência.
+[ ] - Garantir que as migrations reflitam a divisão de responsabilidade do time.
+[ ] - Aplicar tabelas e policies RLS a partir do repositório, versionando tudo no projeto antes de enviar ao Supabase.
+[ ] - Evitar configuração manual das tabelas e policies no painel, mantendo o fluxo oficial via migrations e SQL do projeto.
+
+## 8. Riscos do Projeto e Mitigação
 
 [ ] - Prazo curto: focar em MVP funcional e reduzir escopo secundário.
 [ ] - Complexidade da avaliação: começar com regra de score transparente antes de um modelo mais complexo.
@@ -135,24 +186,24 @@
 [ ] - Dados sensíveis: coletar o mínimo necessário e anonimizar quando possível.
 [ ] - Confiança do usuário: reforçar textos educativos e o aviso de não diagnóstico.
 
-## 8. MVP Obrigatório Para Conclusão
+## 9. MVP Obrigatório Para Conclusão
 
 [X] - Login e cadastro funcionando.
-[ ] - Autenticação endurecida com backend e sessão segura.
+[X] - Autenticação endurecida com backend e sessão segura.
 [X] - Questionário funcionando.
 [X] - Resultado com score, classificação e ao menos um gráfico.
 [ ] - Uso de ao menos duas referências de base de dados.
 [X] - Termos de uso e política de privacidade publicados.
 [X] - Aviso médico e acessibilidade básica ativos.
 
-## 9. Pós-MVP
+## 10. Pós-MVP
 
 [ ] - Histórico detalhado de avaliações por usuário.
 [ ] - Exportação de relatório em PDF.
 [ ] - Comparativos mais avançados entre perfis.
 [ ] - Melhorias de UX e microinterações.
 
-## 10. Bases de Dados Recomendadas
+## 11. Bases de Dados Recomendadas
 
 ### Bases Clínicas
 
@@ -212,7 +263,48 @@
 [ ] - OMS - Ficha Técnica de Câncer de Mama  
   https://www.who.int/news-room/fact-sheets/detail/breast-cancer
 
-## 11. Observação Geral
+## 12. Planejamento Detalhado da Próxima Fase de Dados
+
+### 12.1 Leitura do questionário atual
+
+[ ] - Perfil: nome, idade, estado e diagnóstico prévio.
+[ ] - Histórico familiar e genético: câncer de mama, BRCA1/BRCA2 e câncer de ovário/endométrio.
+[ ] - Sintomas e exames: sintomas observados, última mamografia e dor mamária.
+[ ] - Fatores hormonais e reprodutivos: anticoncepcional, terapia hormonal, menarca, menopausa e amamentação.
+[ ] - Estilo de vida: atividade física, álcool, tabagismo, dieta e IMC.
+
+### 12.2 Bases com melhor encaixe inicial
+
+[ ] - Breast Cancer Coimbra: melhor encaixe para idade, IMC e marcadores metabólicos.
+[ ] - Mammographic Mass: melhor encaixe para idade, BI-RADS e contexto mamográfico.
+[ ] - Breast Cancer (recurrence/non-recurrence): melhor encaixe para idade, menopausa e desfecho prognóstico.
+[ ] - Breast Cancer Wisconsin Diagnostic/Original/Prognostic: referência clínica e de validação, sem correspondência direta ao questionário.
+[ ] - GDC/TCGA-BRCA, METABRIC e GSE96058: biomarcadores, prognóstico e contexto clínico/genômico.
+[ ] - BreaKHis e CBIS-DDSM: referência de imagem e lesão, útil caso a evolução inclua análise visual.
+[ ] - SEER, INCA e OMS: contexto epidemiológico, incidência, faixa etária e comparativos populacionais.
+
+### 12.3 Regras de RLS por categoria
+
+[ ] - Tabelas do usuário: `Profile`, `QuestionnaireResponse`, `RiskAssessment` e `ConsentRecord`.
+[ ] - Leitura e escrita apenas do dono da linha com `auth.uid() = user_id`.
+[ ] - Tabelas de catálogo: `DatasetReference`, `DatasetFeatureMapping` e `RiskModelVersion`.
+[ ] - Leitura pública ou autenticada e escrita apenas do backend/service role.
+[ ] - Tabelas de auditoria: `AuthEvent` e registros de segurança.
+[ ] - Acesso exclusivo do backend/service role.
+[ ] - Considerar que o role do Prisma pode ser privilegiado; manter filtro explícito por `user_id` no backend como defesa em profundidade.
+[ ] - Políticas com `USING` e `WITH CHECK` em todas as tabelas expostas.
+
+### 12.4 Ordem recomendada de implementação
+
+[ ] - Fechar o mapeamento dos campos do formulário.
+[ ] - Definir o modelo Prisma.
+[ ] - Criar tabelas e migrations.
+[ ] - Aplicar RLS por tabela.
+[ ] - Popular o catálogo de datasets.
+[ ] - Validar o isolamento entre usuários.
+[ ] - Validar o fluxo de gravação e leitura das avaliações.
+
+## 13. Observação Geral
 
 [X] - Manter o planejamento em formato de checklist para facilitar o acompanhamento.
 [X] - Atualizar os itens concluídos com `[X]` conforme as entregas forem finalizadas.
