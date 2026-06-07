@@ -1,10 +1,11 @@
 import { Router } from 'express'
 import { buildMappingSummary, validateRiskAssessmentPayload } from '../lib/riskAssessment/riskAssessmentPayload.js'
 import { evaluateRiskAssessment } from '../lib/riskAssessment/score.js'
+import { requireAuthSession } from '../middleware/requireAuthSession.js'
 
 export const riskAssessmentRouter = Router()
 
-riskAssessmentRouter.post('/', (request, response) => {
+riskAssessmentRouter.post('/', requireAuthSession, (request, response) => {
   const validation = validateRiskAssessmentPayload(request.body)
 
   if (!validation.isValid) {
@@ -31,5 +32,6 @@ riskAssessmentRouter.post('/', (request, response) => {
       extraFields: validation.extraFields ?? [],
       unmappedFields: validation.extraFields ?? [],
     },
+    userId: request.authUser?.id ?? null,
   })
 })

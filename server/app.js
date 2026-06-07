@@ -32,7 +32,7 @@ export function createApp() {
   app.use('/api/health', healthRouter)
   app.use('/api/security', securityRouter)
   app.use('/api/auth', authRateLimit, verifyCsrfToken, authRouter)
-  app.use('/api/risk-assessment', riskAssessmentRouter)
+  app.use('/api/risk-assessment', authRateLimit, verifyCsrfToken, riskAssessmentRouter)
 
   app.use((_req, res) => {
     res.status(404).json({

@@ -24,7 +24,7 @@ export function verifyCsrfToken(req, res, next) {
     return next()
   }
 
-  if (!req.path.startsWith('/auth')) {
+  if (!req.path.startsWith('/auth') && !req.path.startsWith('/risk-assessment')) {
     return next()
   }
 

@@ -34,7 +34,7 @@ async function fetchJson(path, options = {}) {
   return data
 }
 
-async function getCsrfToken() {
+export async function getCsrfToken() {
   if (csrfTokenCache) {
     return csrfTokenCache
   }
