@@ -1,3 +1,4 @@
+import { useEffect, useMemo, useState } from 'react'
 import {
   Bar,
   BarChart,
@@ -10,8 +11,15 @@ import {
   XAxis,
   YAxis,
 } from 'recharts'
-import { useEffect, useState } from 'react'
 import { useAuth } from '../contexts/AuthContext.jsx'
+
+const STORAGE_KEY = 'riskcare:latest-assessment'
+
+const resultTabs = [
+  { id: 'fatores-risco', label: 'Fatores de risco' },
+  { id: 'comparativo-populacional', label: 'Comparativo populacional' },
+  { id: 'detalhamento-fator', label: 'Detalhamento por fator' },
+]
 
 const legendItems = [
   { label: 'Você', className: 'is-user' },
@@ -19,7 +27,13 @@ const legendItems = [
   { label: 'Alto risco referência', className: 'is-reference' },
 ]
 
-const radarData = [
+const populationLegendBase = [
+  { label: 'Baixo risco (0 - 20%)', className: 'is-low' },
+  { label: 'Moderado (21 - 50%)', className: 'is-moderate' },
+  { label: 'Alto (51 - 100%)', className: 'is-high' },
+]
+
+const fallbackComparisonData = [
   { factor: 'Histórico familiar', user: 72, average: 42, reference: 86 },
   { factor: 'Fator hormonal', user: 55, average: 38, reference: 78 },
   { factor: 'Última mamografia', user: 36, average: 46, reference: 74 },
@@ -28,7 +42,7 @@ const radarData = [
   { factor: 'Idade (faixa)', user: 68, average: 34, reference: 82 },
 ]
 
-const populationRiskData = [
+const fallbackPopulationRiskData = [
   { range: '0-10', percent: 12, group: 'Baixo risco', color: 'var(--results-low)' },
   { range: '10-20', percent: 26, group: 'Baixo risco', color: 'var(--results-low)' },
   { range: '20-30', percent: 18, group: 'Moderado', color: 'var(--results-moderate)' },
@@ -41,21 +55,14 @@ const populationRiskData = [
   { range: '90-100', percent: 0.5, group: 'Alto', color: 'var(--results-high)' },
 ]
 
-const populationLegendItems = [
-  { label: 'Baixo risco (0 - 20%)', className: 'is-low' },
-  { label: 'Moderado (21 - 50%)', className: 'is-moderate' },
-  { label: 'Alto (51 - 100%)', className: 'is-high' },
-  { label: 'Você (32%)', className: 'is-you' },
-]
-
-const factorDetailData = [
+const fallbackFactorDetailData = [
   { factor: 'Histórico familiar', user: 78, average: 22 },
   { factor: 'Fator hormonal', user: 65, average: 38 },
   { factor: 'Estilo de vida', user: 58, average: 42 },
   { factor: 'Última mamografia', user: 45, average: 35 },
 ]
 
-const projectionData = [
+const fallbackProjectionData = [
   { age: 35, noIntervention: 25, prevention: 25, population: 22 },
   { age: 40, noIntervention: 32, prevention: 26, population: 24 },
   { age: 45, noIntervention: 42, prevention: 27, population: 26 },
@@ -65,11 +72,149 @@ const projectionData = [
   { age: 65, noIntervention: 72, prevention: 35, population: 38 },
 ]
 
-const resultTabs = [
-  { id: 'fatores-risco', label: 'Fatores de risco' },
-  { id: 'comparativo-populacional', label: 'Comparativo populacional' },
-  { id: 'detalhamento-fator', label: 'Detalhamento por fator' },
-]
+function clamp(value, min, max) {
+  return Math.min(max, Math.max(min, value))
+}
+
+function toNumber(value, fallback = 0) {
+  const parsed = Number(value)
+  return Number.isFinite(parsed) ? parsed : fallback
+}
+
+function safeReadStoredAssessment() {
+  if (typeof window === 'undefined') {
+    return null
+  }
+
+  const raw = window.sessionStorage.getItem(STORAGE_KEY)
+  if (!raw) {
+    return null
+  }
+
+  try {
+    const parsed = JSON.parse(raw)
+    return parsed && typeof parsed === 'object' ? parsed : null
+  } catch {
+    return null
+  }
+}
+
+function normalizeClassification(classification) {
+  const value = String(classification ?? '').toLowerCase()
+
+  if (value.includes('alto')) {
+    return 'alto'
+  }
+
+  if (value.includes('baixo')) {
+    return 'baixo'
+  }
+
+  return 'moderado'
+}
+
+function formatClassificationLabel(classification) {
+  if (classification === 'alto') {
+    return 'Alto'
+  }
+
+  if (classification === 'baixo') {
+    return 'Baixo'
+  }
+
+  return 'Moderado'
+}
+
+function countFieldEntries(value, fallback = 0) {
+  if (Array.isArray(value)) {
+    return value.length
+  }
+
+  const parsed = Number(value)
+  return Number.isFinite(parsed) ? parsed : fallback
+}
+
+function getAssessmentGroupScore(assessment, key, fallback = 0) {
+  return clamp(toNumber(assessment?.groupScores?.[key], fallback), 0, 100)
+}
+
+function getPopulationLegendItems(score) {
+  return [
+    ...populationLegendBase,
+    { label: `Você (${score}%)`, className: 'is-you' },
+  ]
+}
+
+function getAssessmentComparisonData(assessment, score) {
+  if (!assessment) {
+    return fallbackComparisonData
+  }
+
+  const familyHistory = getAssessmentGroupScore(assessment, 'familyHistory', 42)
+  const hormonalReproductive = getAssessmentGroupScore(assessment, 'hormonalReproductive', 38)
+  const symptomsExams = getAssessmentGroupScore(assessment, 'symptomsExams', 46)
+  const lifestyle = getAssessmentGroupScore(assessment, 'lifestyle', 32)
+  const profile = getAssessmentGroupScore(assessment, 'profile', 34)
+  const imc = clamp(Math.round(lifestyle * 0.9 + 8), 0, 100)
+
+  return [
+    { factor: 'Histórico familiar', user: familyHistory, average: 42, reference: 86 },
+    { factor: 'Fator hormonal', user: hormonalReproductive, average: 38, reference: 78 },
+    { factor: 'Última mamografia', user: symptomsExams, average: 46, reference: 74 },
+    { factor: 'Estilo de vida', user: lifestyle, average: 32, reference: 70 },
+    { factor: 'IMC', user: imc, average: 36, reference: 76 },
+    { factor: 'Idade (faixa)', user: profile || score, average: 34, reference: 82 },
+  ]
+}
+
+function getAssessmentPopulationData(score) {
+  if (typeof score !== 'number' || Number.isNaN(score)) {
+    return fallbackPopulationRiskData
+  }
+
+  const bucketIndex = fallbackPopulationRiskData.findIndex((item) => {
+    const [start, end] = item.range.split('-').map((part) => Number(part))
+    return score >= start && score < (end ?? 100)
+  })
+
+  return fallbackPopulationRiskData.map((entry, index) => ({
+    ...entry,
+    color: index === bucketIndex ? 'var(--results-you)' : entry.color,
+    group: index === bucketIndex ? 'Você' : entry.group,
+  }))
+}
+
+function getFactorDetailData(assessment) {
+  if (!assessment?.factorBreakdown?.length) {
+    return fallbackFactorDetailData
+  }
+
+  return assessment.factorBreakdown.slice(0, 4).map((factor, index) => ({
+    factor: factor.label || factor.key || `Fator ${index + 1}`,
+    user: clamp(toNumber(factor.contribution, 0), 0, 100),
+    average: clamp(Math.round(toNumber(factor.contribution, 0) * 0.62), 0, 100),
+  }))
+}
+
+function getProjectionData(score) {
+  if (typeof score !== 'number' || Number.isNaN(score)) {
+    return fallbackProjectionData
+  }
+
+  return fallbackProjectionData.map((entry, index) => ({
+    ...entry,
+    noIntervention: clamp(Math.round(score + index * 7 - 8), 0, 100),
+    prevention: clamp(Math.round(score + index * 3 - 10), 0, 100),
+  }))
+}
+
+function getMainLabel(assessment) {
+  if (!assessment) {
+    return 'Risco moderado estimado'
+  }
+
+  return `Risco ${formatClassificationLabel(normalizeClassification(assessment.classification)).toLowerCase()} estimado`
+}
 
 function ResultsComparisonTooltip({ active, payload, label }) {
   if (!active || !payload?.length) {
@@ -124,13 +269,7 @@ function ResultsProjectionTooltip({ active, payload, label }) {
 
 function ResultsFactorTick({ payload, x, y }) {
   return (
-    <text
-      className="results-factor-chart__tick"
-      x={x}
-      y={y}
-      dy={4}
-      textAnchor="end"
-    >
+    <text className="results-factor-chart__tick" x={x} y={y} dy={4} textAnchor="end">
       {payload.value}
     </text>
   )
@@ -139,15 +278,29 @@ function ResultsFactorTick({ payload, x, y }) {
 function ResultsPage() {
   const { session } = useAuth()
 
-  const getActiveTabFromHash = () => {
-    const hash = window.location.hash.replace('#', '')
+  const [storedAssessment, setStoredAssessment] = useState(() => safeReadStoredAssessment())
+  const [activeTab, setActiveTab] = useState(() => {
+    const hash = typeof window !== 'undefined' ? window.location.hash.replace('#', '') : ''
     return resultTabs.some((tab) => tab.id === hash) ? hash : resultTabs[0].id
-  }
-
-  const [activeTab, setActiveTab] = useState(getActiveTabFromHash)
+  })
 
   useEffect(() => {
-    const syncActiveTab = () => setActiveTab(getActiveTabFromHash())
+    const syncStoredAssessment = () => setStoredAssessment(safeReadStoredAssessment())
+    syncStoredAssessment()
+    window.addEventListener('storage', syncStoredAssessment)
+
+    return () => {
+      window.removeEventListener('storage', syncStoredAssessment)
+    }
+  }, [])
+
+  useEffect(() => {
+    const syncActiveTab = () => {
+      const hash = window.location.hash.replace('#', '')
+      if (resultTabs.some((tab) => tab.id === hash)) {
+        setActiveTab(hash)
+      }
+    }
 
     window.addEventListener('popstate', syncActiveTab)
     window.addEventListener('hashchange', syncActiveTab)
@@ -158,13 +311,38 @@ function ResultsPage() {
     }
   }, [])
 
+  const assessment = storedAssessment
+  const score = clamp(toNumber(assessment?.score ?? assessment?.rawScore, 34), 0, 100)
+  const rawScore = clamp(toNumber(assessment?.rawScore ?? assessment?.score, score), 0, 100)
+  const classification = normalizeClassification(assessment?.classification)
+  const classificationLabel = formatClassificationLabel(classification)
+  const factorCount = countFieldEntries(assessment?.mappingSummary?.totalFields, 12)
+  const scoredCount = countFieldEntries(assessment?.mappingSummary?.scoredFields, 12)
+  const metadataCount = countFieldEntries(assessment?.mappingSummary?.metadataFields, 0)
+  const warnings = Array.isArray(assessment?.warnings) && assessment.warnings.length
+    ? assessment.warnings
+    : [
+        'Esta ferramenta não realiza diagnóstico médico.',
+        'Os resultados são estimativas educativas e devem ser interpretados com orientação profissional.',
+      ]
+  const sourcesUsed = Array.isArray(assessment?.sourcesUsed) && assessment.sourcesUsed.length
+    ? assessment.sourcesUsed
+    : ['INCA', 'SEER']
+  const factorDetailData = useMemo(() => getFactorDetailData(assessment), [assessment])
+  const comparisonData = useMemo(() => getAssessmentComparisonData(assessment, score), [assessment, score])
+  const populationRiskData = useMemo(() => getAssessmentPopulationData(score), [score])
+  const populationLegendItems = useMemo(() => getPopulationLegendItems(score), [score])
+  const projectionData = useMemo(() => getProjectionData(score), [score])
+  const hasStoredAssessment = Boolean(assessment)
+  const adjustedByDiagnosis = rawScore !== score && Boolean(assessment)
+
   const handleTabClick = (event, tabId) => {
     event.preventDefault()
     setActiveTab(tabId)
 
     const target = document.getElementById(tabId)
-
     if (!target) {
+      window.history.pushState({}, '', `#${tabId}`)
       return
     }
 
@@ -177,14 +355,25 @@ function ResultsPage() {
       <section className="results-card" aria-labelledby="results-title">
         <header className="results-card__header">
           <div className="results-card__summary">
-            <span className="results-pill">Sua estimativa de risco</span>
-            <h1 id="results-title">Risco moderado estimado</h1>
-            <p>Baseado em 12 fatores analisados com dados de +50k casos no Brasil</p>
+            <span className="results-pill">{hasStoredAssessment ? 'Sua estimativa de risco' : 'Visualização demonstrativa'}</span>
+            <h1 id="results-title">{getMainLabel(assessment)}</h1>
+            <p>
+              Baseado em {factorCount} fatores analisados, com {scoredCount} considerados no score
+              e {metadataCount} tratados como metadados.
+              {hasStoredAssessment ? ' Resultado carregado da última avaliação enviada.' : ' Abra o formulário para gerar um novo resultado.'}
+              {' '}
+              Classificação atual: {classificationLabel}.
+            </p>
           </div>
 
-          <div className="results-risk-index" aria-label="Índice estimado de 34%">
-            <div className="results-risk-index__chart">
-              <span>34%</span>
+          <div className="results-risk-index" aria-label={`Índice estimado de ${score}%`}>
+            <div
+              className="results-risk-index__chart"
+              style={{
+                background: `conic-gradient(from 180deg, var(--results-you, #d85a89) 0deg, var(--results-you, #d85a89) ${score * 3.6}deg, rgba(216, 90, 137, 0.16) ${score * 3.6}deg 360deg)`,
+              }}
+            >
+              <span>{score}%</span>
             </div>
             <strong>Índice estimado</strong>
           </div>
@@ -203,16 +392,12 @@ function ResultsPage() {
           ))}
         </nav>
 
-        <section
-          id="fatores-risco"
-          className="results-risk-section"
-          aria-labelledby="risk-factors-title"
-        >
+        <section id="fatores-risco" className="results-risk-section" aria-labelledby="risk-factors-title">
           <div className="results-risk-section__heading">
             <h2 id="risk-factors-title">Seus fatores vs. média da população</h2>
             <p>
-              Comparação entre seu perfil e mulheres na mesma faixa etária
-              (35 - 44 anos) no banco de dados nacional
+              Comparação entre seu perfil e mulheres na mesma faixa etária (35 - 44 anos) no banco
+              de dados nacional.
             </p>
           </div>
 
@@ -233,7 +418,7 @@ function ResultsPage() {
             >
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart
-                  data={radarData}
+                  data={comparisonData}
                   layout="vertical"
                   margin={{ top: 10, right: 28, bottom: 8, left: 118 }}
                   barCategoryGap="24%"
@@ -294,19 +479,14 @@ function ResultsPage() {
           aria-labelledby="population-title"
         >
           <div className="results-risk-section__heading">
-            <h2 id="population-title">
-              Distribuição de risco - sua posição na base de dados
-            </h2>
+            <h2 id="population-title">Distribuição de risco - sua posição na base de dados</h2>
             <p>
-              Onde você se encontra em relação às +500.000 pacientes cadastradas. Sua posição
-              está destacada.
+              Onde você se encontra em relação às +500.000 pacientes cadastradas. Sua posição está
+              destacada.
             </p>
           </div>
 
-          <div
-            className="results-legend results-legend--population"
-            aria-label="Legenda da distribuição de risco"
-          >
+          <div className="results-legend results-legend--population" aria-label="Legenda da distribuição de risco">
             {populationLegendItems.map((item) => (
               <span key={item.className} className={item.className}>
                 <i aria-hidden="true" />
@@ -359,11 +539,7 @@ function ResultsPage() {
           </div>
         </section>
 
-        <section
-          id="detalhamento-fator"
-          className="results-detail-section"
-          aria-labelledby="factor-detail-title"
-        >
+        <section id="detalhamento-fator" className="results-detail-section" aria-labelledby="factor-detail-title">
           <div className="results-risk-section__heading">
             <h2 id="factor-detail-title">Detalhamento por fator</h2>
             <p>
@@ -397,11 +573,7 @@ function ResultsPage() {
           </div>
         </section>
 
-        <section
-          id="projecao-tempo"
-          className="results-projection-section"
-          aria-labelledby="projection-title"
-        >
+        <section id="projecao-tempo" className="results-projection-section" aria-labelledby="projection-title">
           <div className="results-risk-section__heading">
             <h2 id="projection-title">Projeção ao longo do tempo</h2>
             <p>
@@ -507,6 +679,17 @@ function ResultsPage() {
             <strong>Nota educativa:</strong> Os gráficos utilizam dados populacionais de referência
             e não constituem diagnóstico médico. Este ferramental é educativo. Consulte sempre um
             profissional de saúde para avaliação individualizada.
+            {adjustedByDiagnosis ? (
+              <div style={{ marginTop: 8 }}>
+                A pontuação foi ajustada para refletir diagnóstico prévio informado.
+              </div>
+            ) : null}
+            {warnings.length ? (
+              <div style={{ marginTop: 8 }}>
+                {warnings.map((warning) => warning).join(' ')}
+              </div>
+            ) : null}
+            <div style={{ marginTop: 8 }}>Fontes utilizadas: {sourcesUsed.join(', ')}.</div>
           </div>
 
           <div className="results-actions">

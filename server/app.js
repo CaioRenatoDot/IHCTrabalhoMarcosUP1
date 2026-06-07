@@ -8,6 +8,7 @@ import { verifyCsrfToken } from './middleware/csrf.js'
 import { healthRouter } from './routes/health.js'
 import { securityRouter } from './routes/security.js'
 import { authRouter } from './routes/auth.js'
+import { riskAssessmentRouter } from './routes/riskAssessment.js'
 
 export function createApp() {
   const app = express()
@@ -31,6 +32,7 @@ export function createApp() {
   app.use('/api/health', healthRouter)
   app.use('/api/security', securityRouter)
   app.use('/api/auth', authRateLimit, verifyCsrfToken, authRouter)
+  app.use('/api/risk-assessment', riskAssessmentRouter)
 
   app.use((_req, res) => {
     res.status(404).json({
