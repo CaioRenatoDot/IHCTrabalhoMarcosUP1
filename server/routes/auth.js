@@ -3,6 +3,12 @@ import { z } from 'zod'
 import { env, hasSupabaseConfig } from '../config/env.js'
 import { createSupabaseServerClient } from '../lib/supabase.js'
 import { getAuthDiagnostics, recordAuthEvent } from '../lib/audit.js'
+import {
+  recordConsentAcceptance,
+  upsertUserProfile,
+  USER_DATA_CONSENT_TYPE,
+  USER_DATA_CONSENT_VERSION,
+} from '../lib/userData.js'
 
 export const authRouter = Router()
 
@@ -92,6 +98,15 @@ authRouter.get('/session', async (req, res) => {
 
   recordAuthEvent('session_checked', req, { userId: data.user.id })
 
+  try {
+    await upsertUserProfile({
+      userId: data.user.id,
+      fullName: data.user.user_metadata?.full_name ?? data.user.user_metadata?.name ?? '',
+    })
+  } catch (profileError) {
+    console.warn('[profile-sync] session', profileError)
+  }
+
   return res.json({
     ok: true,
     session: buildSession(data.user),
@@ -126,6 +141,15 @@ authRouter.post('/login', async (req, res) => {
   }
 
   recordAuthEvent('login_success', req, { userId: data.user.id })
+
+  try {
+    await upsertUserProfile({
+      userId: data.user.id,
+      fullName: data.user.user_metadata?.full_name ?? data.user.user_metadata?.name ?? '',
+    })
+  } catch (profileError) {
+    console.warn('[profile-sync] login', profileError)
+  }
 
   return res.json({
     ok: true,
@@ -176,6 +200,25 @@ authRouter.post('/signup', async (req, res) => {
     userId: user?.id ?? null,
     requiresConfirmation: !data?.session,
   })
+
+  if (user?.id) {
+    try {
+      await upsertUserProfile({
+        userId: user.id,
+        fullName: parsed.data.fullName,
+      })
+
+      await recordConsentAcceptance({
+        userId: user.id,
+        consentType: USER_DATA_CONSENT_TYPE,
+        consentVersion: USER_DATA_CONSENT_VERSION,
+        ip: req.ip,
+        userAgent: req.get('user-agent'),
+      })
+    } catch (persistenceError) {
+      console.warn('[profile-sync] signup', persistenceError)
+    }
+  }
 
   return res.status(201).json({
     ok: true,

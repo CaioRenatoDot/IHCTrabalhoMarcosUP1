@@ -1,0 +1,79 @@
+// Prisma schema for the RiskCare user-owned data layer.
+// RLS policies are enforced in Supabase SQL; Prisma defines the data shape.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Profile {
+  id        String   @id @default(uuid()) @db.Uuid
+  userId    String   @unique @map("user_id") @db.Uuid
+  fullName  String   @map("full_name")
+  state     String?  @map("state")
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+
+  questionnaireResponses QuestionnaireResponse[]
+  riskAssessments        RiskAssessment[]
+  consentRecords         ConsentRecord[]
+
+  @@map("profiles")
+  @@index([userId])
+}
+
+model QuestionnaireResponse {
+  id                     String   @id @default(uuid()) @db.Uuid
+  userId                 String   @map("user_id") @db.Uuid
+  profile                Profile  @relation(fields: [userId], references: [userId], onDelete: Cascade)
+  formVersion            String   @map("form_version")
+  payloadJson            Json     @map("payload_json")
+  normalizedSnapshotJson  Json     @map("normalized_snapshot_json")
+  submittedAt            DateTime @default(now()) @map("submitted_at")
+
+  riskAssessments RiskAssessment[]
+
+  @@map("questionnaire_responses")
+  @@index([userId])
+  @@index([submittedAt])
+}
+
+model RiskAssessment {
+  id                   String   @id @default(uuid()) @db.Uuid
+  userId               String   @map("user_id") @db.Uuid
+  responseId           String   @unique @map("response_id") @db.Uuid
+  profile              Profile  @relation(fields: [userId], references: [userId], onDelete: Cascade)
+  questionnaireResponse QuestionnaireResponse @relation(fields: [responseId], references: [id], onDelete: Cascade)
+  modelVersion         String   @map("model_version")
+  score                Int
+  rawScore             Int      @map("raw_score")
+  classification       String
+  groupScoresJson      Json     @map("group_scores_json")
+  factorBreakdownJson  Json     @map("factor_breakdown_json")
+  warningsJson         Json     @map("warnings_json")
+  sourcesJson          Json     @map("sources_json")
+  createdAt            DateTime @default(now()) @map("created_at")
+
+  @@map("risk_assessments")
+  @@index([userId])
+  @@index([responseId])
+  @@index([createdAt])
+}
+
+model ConsentRecord {
+  id              String   @id @default(uuid()) @db.Uuid
+  userId          String   @map("user_id") @db.Uuid
+  profile         Profile  @relation(fields: [userId], references: [userId], onDelete: Cascade)
+  consentType     String   @map("consent_type")
+  consentVersion  String   @map("consent_version")
+  acceptedAt      DateTime @default(now()) @map("accepted_at")
+  ip              String?
+  userAgent       String?  @map("user_agent")
+
+  @@map("consent_records")
+  @@index([userId])
+  @@index([consentType])
+}
