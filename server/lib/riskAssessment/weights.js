@@ -41,4 +41,3 @@ export const CLASSIFICATION_THRESHOLDS = {
   lowMax: 32,
   moderateMax: 65,
 }
-

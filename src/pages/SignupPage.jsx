@@ -4,6 +4,7 @@ import LoginDivider from '../components/login/LoginDivider.jsx'
 import LoginWarning from '../components/login/LoginWarning.jsx'
 import SocialLoginButtons from '../components/login/SocialLoginButtons.jsx'
 import SignupForm from '../components/login/SignupForm.jsx'
+import { useAuth } from '../contexts/AuthContext.jsx'
 import { handleSpaLinkClick, navigateWithoutReload } from '../utils/navigation.js'
 
 function SignupBackButton() {
@@ -23,6 +24,10 @@ function SignupBackButton() {
 
 function SignupPage({ onToast }) {
   const [isLoading, setIsLoading] = useState(false)
+  const { signUp } = useAuth()
+
+  const handleSignup = async ({ fullName, email, password }) =>
+    signUp({ fullName, email, password })
 
   const handleSignupSuccess = () => {
     setIsLoading(true)
@@ -68,7 +73,7 @@ function SignupPage({ onToast }) {
 
         <SocialLoginButtons />
         <LoginDivider text="Ou cadastre-se com e-mail" />
-        <SignupForm onSignupSuccess={handleSignupSuccess} />
+        <SignupForm onSignup={handleSignup} onSignupSuccess={handleSignupSuccess} />
 
         <p className="signup-link">
           Já possui conta?{' '}

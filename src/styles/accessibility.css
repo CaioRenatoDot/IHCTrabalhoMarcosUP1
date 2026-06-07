@@ -349,6 +349,7 @@
 }
 
 .accessibility-root .site-navbar__cta,
+.accessibility-root .site-navbar__logout,
 .accessibility-root .hero-copy__primary,
 .accessibility-root .hero-copy__secondary {
   font-size: calc(0.92rem * var(--accessibility-font-scale));
@@ -504,6 +505,7 @@
 
 .accessibility-root.is-high-contrast .site-navbar__brand,
 .accessibility-root.is-high-contrast .site-navbar__nav a,
+.accessibility-root.is-high-contrast .site-navbar__logout,
 .accessibility-root.is-high-contrast .awareness-title,
 .accessibility-root.is-high-contrast .awareness-title-highlight,
 .accessibility-root.is-high-contrast .awareness-description,
@@ -518,6 +520,7 @@
 }
 
 .accessibility-root.is-high-contrast .site-navbar__cta,
+.accessibility-root.is-high-contrast .site-navbar__logout,
 .accessibility-root.is-high-contrast .awareness-tag,
 .accessibility-root.is-high-contrast .section-tag,
 .accessibility-root.is-high-contrast .observation-banner {
@@ -534,8 +537,22 @@
   box-shadow: none;
 }
 
+.accessibility-root.is-high-contrast .site-navbar__logout {
+  background: #000;
+  color: #ffeb3b;
+  border: 2px solid #ffeb3b;
+  box-shadow: none;
+}
+
 .accessibility-root.is-high-contrast .hero-copy__primary:hover,
 .accessibility-root.is-high-contrast .site-navbar__cta:hover {
+  background: #1a1a1a;
+  color: #ffeb3b;
+  border-color: #ffeb3b;
+  box-shadow: none;
+}
+
+.accessibility-root.is-high-contrast .site-navbar__logout:hover {
   background: #1a1a1a;
   color: #ffeb3b;
   border-color: #ffeb3b;

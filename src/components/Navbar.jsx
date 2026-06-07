@@ -1,4 +1,8 @@
+import { useAuth } from '../contexts/AuthContext.jsx'
+
 function Navbar({ onNavigate, currentPath }) {
+  const { session, signOut } = useAuth()
+
   const handleNavigate = (event, href) => {
     if (typeof onNavigate !== 'function') {
       return
@@ -10,6 +14,19 @@ function Navbar({ onNavigate, currentPath }) {
 
   const isHomeActive = currentPath === '/'
   const isCoverActive = currentPath === '/sobre-projeto' || currentPath === '/cover'
+
+  const handleLogout = async (event) => {
+    if (typeof onNavigate !== 'function') {
+      return
+    }
+
+    event.preventDefault()
+    const result = await signOut()
+
+    if (result?.ok) {
+      onNavigate('/')
+    }
+  }
 
   return (
     <header className="site-navbar">
@@ -39,9 +56,21 @@ function Navbar({ onNavigate, currentPath }) {
         </a>
       </nav>
 
-      <a className="site-navbar__cta" href="/login" onClick={(event) => handleNavigate(event, '/login')}>
-        {'Come\u00E7ar avalia\u00E7\u00E3o'}
-      </a>
+      <div className="site-navbar__actions">
+        {session ? (
+          <button type="button" className="site-navbar__logout" onClick={handleLogout}>
+            Sair
+          </button>
+        ) : null}
+
+        <a
+          className="site-navbar__cta"
+          href={session ? '/formulario' : '/login'}
+          onClick={(event) => handleNavigate(event, session ? '/formulario' : '/login')}
+        >
+          {'Come\u00E7ar avalia\u00E7\u00E3o'}
+        </a>
+      </div>
     </header>
   )
 }

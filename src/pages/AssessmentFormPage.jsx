@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import { submitRiskAssessment } from '../lib/riskAssessmentApi.js'
+import { navigateWithoutReload } from '../utils/navigation.js'
 import '../styles/assessment-form.css'
 
 const steps = ['Perfil', 'Histórico', 'Sintomas', 'Hormonal', 'Estilo de vida']
@@ -593,6 +595,8 @@ function AssessmentFormPage() {
   const [currentStep, setCurrentStep] = useState(0)
   const [formData, setFormData] = useState(initialFormData)
   const [errors, setErrors] = useState({})
+  const [submitError, setSubmitError] = useState('')
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const hasErrors = Object.keys(errors).length > 0
   const progress = ((currentStep + 1) / steps.length) * 100
 
@@ -602,6 +606,7 @@ function AssessmentFormPage() {
       [field]: value,
     }))
 
+    setSubmitError('')
     setErrors((currentErrors) => {
       if (!currentErrors[field]) {
         return currentErrors
@@ -614,7 +619,12 @@ function AssessmentFormPage() {
   }
 
   const goBack = () => {
+    if (isSubmitting) {
+      return
+    }
+
     setErrors({})
+    setSubmitError('')
     setCurrentStep((step) => Math.max(step - 1, 0))
   }
 
@@ -632,11 +642,40 @@ function AssessmentFormPage() {
   }
 
   const goNext = () => {
+    if (isSubmitting) {
+      return
+    }
+
     if (!validateCurrentStep()) {
       return
     }
 
+    if (currentStep === steps.length - 1) {
+      void submitAssessment()
+      return
+    }
+
     setCurrentStep((step) => Math.min(step + 1, steps.length - 1))
+  }
+
+  const submitAssessment = async () => {
+    if (!validateCurrentStep()) {
+      return
+    }
+
+    setIsSubmitting(true)
+    setSubmitError('')
+
+    try {
+      const result = await submitRiskAssessment(formData)
+
+      window.sessionStorage.setItem('riskcare:latest-assessment', JSON.stringify(result))
+      navigateWithoutReload('/resultados')
+    } catch (error) {
+      setSubmitError(error?.message ?? 'Não foi possível calcular sua estimativa. Tente novamente.')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const stepContent = [
@@ -681,6 +720,12 @@ function AssessmentFormPage() {
               </p>
             ) : null}
 
+            {submitError ? (
+              <p className="assessment-step-error" role="alert">
+                {submitError}
+              </p>
+            ) : null}
+
             {stepContent}
           </form>
         </div>
@@ -690,6 +735,7 @@ function AssessmentFormPage() {
             className="assessment-action assessment-action--secondary"
             type="button"
             onClick={goBack}
+            disabled={isSubmitting}
           >
             Voltar
           </button>
@@ -700,8 +746,13 @@ function AssessmentFormPage() {
             className="assessment-action assessment-action--primary"
             type="button"
             onClick={goNext}
+            disabled={isSubmitting}
           >
-            {currentStep === steps.length - 1 ? 'Ver minha estimativa' : 'Continuar'}
+            {isSubmitting
+              ? 'Calculando...'
+              : currentStep === steps.length - 1
+                ? 'Ver minha estimativa'
+                : 'Continuar'}
           </button>
         </footer>
       </section>

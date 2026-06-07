@@ -61,7 +61,7 @@ function buildFactorBreakdown(payload, normalizedFields) {
 }
 
 function buildWarnings(classificationResult) {
-  const warnings = ['Esta ferramenta nao realiza diagnostico medico.']
+  const warnings = ['Esta ferramenta não realiza diagnóstico médico.']
 
   if (classificationResult.warning) {
     warnings.unshift(classificationResult.warning)
@@ -83,7 +83,7 @@ export function evaluateRiskAssessment(payload) {
 
   return {
     status: 'accepted',
-    message: 'Avaliacao processada com sucesso.',
+    message: 'Avaliação processada com sucesso.',
     score: classificationResult.score,
     rawScore: roundedRawScore,
     classification: classificationResult.classification,

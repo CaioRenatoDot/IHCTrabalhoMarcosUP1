@@ -276,6 +276,13 @@
   font-size: calc(16px * var(--accessibility-font-scale));
 }
 
+.login-form input:disabled,
+.login-form button:disabled,
+.signup-terms input:disabled {
+  opacity: 0.72;
+  cursor: not-allowed;
+}
+
 .login-form input:focus-visible {
   border-color: #c74f7e;
   outline: 2px solid #c74f7e;
@@ -366,6 +373,18 @@
   background: #b84271;
   box-shadow: 0 14px 24px rgba(199, 79, 126, 0.34);
   transform: translateY(-3px);
+}
+
+.login-form button[type="submit"]:disabled {
+  background: #d98bab;
+  box-shadow: none;
+  transform: none;
+}
+
+.login-form button[type="submit"]:disabled:hover {
+  background: #d98bab;
+  box-shadow: none;
+  transform: none;
 }
 
 .signup-link {

@@ -35,6 +35,7 @@ export function validateRiskAssessmentPayload(payload) {
       errors: {
         payload: 'O corpo da requisição deve ser um objeto JSON.',
       },
+      extraFields: [],
     }
   }
 
