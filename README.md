@@ -1,110 +1,118 @@
 <div align="center">
-  <img src="./riskcare_logo.png" alt="RiskCare Logo" width="200" height="200" />
-  
+  <img src="./riskcare_logo.png" alt="RiskCare Logo" width="180" height="180" />
+
   # RiskCare
-  
+
   <p>Plataforma web educativa para conscientização e estimativa orientativa de risco de câncer de mama.</p>
-  
-  ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white)
-  ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white)
-  ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
-  ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white)
-  ![React](https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=react&logoColor=black)
-  ![Node.js](https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=node.js&logoColor=white)
-  
-  > O sistema **não fornece diagnóstico médico**. A proposta é educativa, informativa e de apoio à reflexão sobre fatores de risco.
+
+  > Este sistema não fornece diagnóstico médico. O objetivo é educativo, informativo e de apoio à reflexão sobre fatores de risco.
 </div>
 
-## 📋 Visão Geral
+## Visão Geral
 
-O **RiskCare** é uma aplicação web que permite ao usuário:
+O RiskCare é uma aplicação web desenvolvida para apoiar a conscientização e a prevenção do câncer de mama por meio de um fluxo orientativo de avaliação.
 
-- Criar conta e fazer login
-- Preencher um questionário com dados pessoais, históricos e fatores de risco
-- Receber uma estimativa orientativa de risco
-- Visualizar o resultado com classificação, comparativos e fatores de maior impacto
-- Utilizar recursos de acessibilidade e navegação suave
-- Ter os dados persistidos com segurança no backend e no banco
+A plataforma permite que a usuária ou o usuário:
 
-## ✨ Funcionalidades
+- Crie conta e autentique o acesso
+- Preencha um questionário com dados pessoais, históricos e fatores de risco
+- Receba uma estimativa orientativa de risco
+- Visualize resultados com classificação, comparativos e fatores de maior impacto
+- Utilize recursos de acessibilidade e navegação suave
+- Tenha os dados tratados com foco em segurança e rastreabilidade
 
-- ✅ Cadastro e login de usuários
-- ✅ Sessão protegida por backend
-- ✅ Questionário em múltiplas etapas
-- ✅ Cálculo heurístico do risco
-- ✅ Tela de resultados com score e classificação
-- ✅ Comparativos e fatores de maior impacto
-- ✅ Persistência com Prisma + Supabase
-- ✅ Catálogo de bases de referência
-- ✅ Versionamento do motor de risco
-- ✅ Auditoria de eventos
-- ✅ RLS para proteção de dados
-- ✅ Recursos de acessibilidade
-- ✅ Rolagem suave com Lenis
-- ✅ Animações pontuais com GSAP
+## Funcionalidades Principais
 
-## 🛠️ Tecnologias
+- Cadastro e login de usuários
+- Sessão protegida por backend
+- Questionário para coleta de dados
+- Cálculo heurístico de risco
+- Tela de resultados com score e classificação
+- Comparativos e detalhamento de fatores
+- Persistência com Prisma e Supabase
+- Catálogo de bases de referência
+- Versionamento do modelo de risco
+- Auditoria de eventos de autenticação
+- Regras de RLS para proteção de dados
+- Recursos de acessibilidade
+- Rolagem suave com Lenis
+- Animações pontuais com GSAP
+
+## Tecnologias Utilizadas
 
 ### Frontend
-- **React** - UI component library
-- **Vite** - Build tool
-- **JavaScript** - Language
-- **React Router** - Client-side routing
-- **Lenis** - Smooth scrolling
-- **GSAP** - Animation library
-- **Supabase Auth** - Authentication
+
+- React
+- Vite
+- JavaScript
+- React Router
+- Lenis
+- GSAP
+- Supabase Auth
 
 ### Backend
-- **Node.js** - Runtime
-- **Express** - Web framework
-- **Prisma** - ORM
-- **PostgreSQL** - Database
-- **Supabase** - Backend as a service
-- **CSRF** - Request forgery protection
-- **Rate limiting** - API protection
-- **Cookies seguros** - HttpOnly, Secure, SameSite
+
+- Node.js
+- Express
+- Prisma
+- PostgreSQL
+- Supabase
+- CSRF
+- Rate limiting
+- Cookies seguros com HttpOnly, Secure e SameSite
 
 ### Banco e Persistência
-- **Supabase Postgres** - Managed database
-- **Prisma migrations** - Schema management
-- **RLS (Row Level Security)** - Data isolation
-- **JSONB** - Snapshots e detalhamentos
 
-## 📁 Estrutura do Projeto
+- Supabase Postgres
+- Prisma migrations
+- Row Level Security
+- JSONB para snapshots e detalhamentos
 
-```
+## Estrutura do Projeto
+
+```text
 .
-├── src/                    # Frontend da aplicação
-├── server/                 # Backend em Node.js e Express
-├── prisma/                 # Schema, migrations e seed
-└── README.md               # Este arquivo
+├── src/                    Frontend da aplicação
+├── server/                 Backend em Node.js e Express
+├── prisma/                 Schema, migrations e seed
+└── README.md               Documentação principal
 ```
 
-## 🚀 Como Executar
+## Como Executar
 
-### Instalar dependências
+### Instalação
+
 ```bash
 npm install
 ```
 
 ### Frontend
+
 ```bash
 npm run dev
 ```
 
 ### Backend
+
 ```bash
 npm run server
 ```
 
+### Ambiente completo
+
+```bash
+npm run dev:full
+```
+
 ### Prisma
+
 ```bash
 npx prisma generate
 npx prisma migrate deploy
 npx prisma db seed
 ```
 
-## 💾 Bases e Persistência
+## Dados e Persistência
 
 O projeto possui uma camada de persistência e rastreabilidade para:
 
@@ -112,58 +120,22 @@ O projeto possui uma camada de persistência e rastreabilidade para:
 - Versionar a lógica de avaliação
 - Registrar eventos de autenticação
 - Salvar o resultado da avaliação
-- Manter detalhes fator-a-fator
+- Manter detalhes fator a fator
 - Aplicar políticas de segurança com RLS
 
-### Entidades principais
+### Entidades Principais
 
-- **Profile** - Dados do usuário
-- **QuestionnaireResponse** - Respostas do questionário
-- **RiskAssessment** - Avaliação de risco
-- **ConsentRecord** - Registro de consentimento
-- **DatasetReference** - Bases de referência
-- **DatasetFeatureMapping** - Mapeamento de campos
-- **RiskModelVersion** - Versões do motor de risco
-- **AuthEvent** - Eventos de autenticação
-- **AssessmentFactorDetail** - Detalhes fator-a-fator
+- Profile - dados do usuário
+- QuestionnaireResponse - respostas do questionário
+- RiskAssessment - avaliação de risco
+- ConsentRecord - registro de consentimento
+- DatasetReference - bases de referência
+- DatasetFeatureMapping - mapeamento de campos
+- RiskModelVersion - versões do modelo de risco
+- AuthEvent - eventos de autenticação
+- AssessmentFactorDetail - detalhes fator a fator
 
-## 👥 Integrantes e Contribuições
-
-### Caio Gabriel Pereira de Menezes Correia
-
-**Principais entregas:**
-
-- Criação da tela de login
-- Criação do formulário
-- Aplicação do Lenis
-- Aplicação do GSAP em componente da dashboard inicial com animação de aumento de valor
-- Acessibilidade de zoom
-- Acessibilidade de lupa de texto
-- Implementação inicial do backend
-- Ligação com o Supabase
-- Implementação da primeira versão da lógica dos pesos de pontuação do formulário
-- `feat(accessibility): adicionar controles globais de acessibilidade (#7)` - implementação de acessibilidade de alteração de fonte
-
-### Caio Renato dos Santos Claudino
-
-**Principais entregas:**
-
-- Issue #1 relacionada à PR e à evolução da entrega da frente correspondente
-
-### Thalita Pereira de Andrade
-
-**Principais entregas:**
-
-- Issue #4
-
-### José Francisco de Araújo Neto
-
-**Principais entregas:**
-
-- Implementação do VLibras
-- `docs(vlibras): add issue #3 delivery record (#9)`
-
-## 🔒 Segurança e Privacidade
+## Segurança e Privacidade
 
 - Dados sensíveis ficam protegidos por sessão e backend
 - RLS é aplicado nas tabelas expostas
@@ -171,13 +143,58 @@ O projeto possui uma camada de persistência e rastreabilidade para:
 - Tabelas de auditoria são restritas ao backend/service role
 - O sistema reforça que não se trata de diagnóstico médico
 
-## 📝 Observações
+## Contribuições
+
+### Caio Gabriel Pereira de Menezes Correia
+
+Principais entregas:
+
+- Criação e evolução da tela de login
+- Criação e evolução do formulário de avaliação
+- Ajustes gerais no frontend, principalmente nas telas de formulário e resultado
+- Aplicação do Lenis
+- Aplicação do GSAP em componente da dashboard inicial
+- Implementação de acessibilidade de zoom e lupa de texto
+- Implementação inicial do backend
+- Integração com o Supabase
+- Primeira versão da lógica de pesos da pontuação do formulário
+- Ajustes de contraste e detalhes visuais de interface
+
+### Caio Renato dos Santos Claudino
+
+Principais entregas:
+
+- Ajustes gerais no frontend
+- Melhorias na experiência visual das telas de formulário e resultado
+- Contribuições na aplicação de contraste
+- Ajustes de detalhes visuais e refinamento de interface
+
+### Thalita Pereira de Andrade
+
+Principais entregas:
+
+- Sugestões para a arquitetura do sistema de autenticação
+- Criação e realização da issue relacionada à navegação por barra
+- Ideias gerais para a estruturação do projeto
+- Acompanhamento do progresso e testes para retorno ao time
+
+### José Francisco de Araújo Neto
+
+Principais entregas:
+
+- Estruturação do projeto e organização da documentação
+- Divisão e acompanhamento das etapas de planejamento
+- Definição de escopo, roadmap e checklist do projeto
+- Consolidação da lógica de dados, Prisma, RLS e separação de responsabilidades
+- Implementação do VLibras
+
+## Observações
 
 - O motor atual é heurístico e explicável
 - O resultado é orientativo
-- O projeto foi desenvolvido com foco em **acessibilidade**, **segurança** e **clareza de interface**
+- O projeto foi desenvolvido com foco em acessibilidade, segurança e clareza de interface
 - O banco e a lógica de avaliação foram integrados para permitir rastreabilidade e evolução do sistema
 
 ---
 
-**Desenvolvido com ❤️ para educação em saúde**
+Desenvolvido para fins acadêmicos em saúde digital
