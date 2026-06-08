@@ -96,26 +96,26 @@ CREATE POLICY "profiles_select_own"
 ON public.profiles
 FOR SELECT
 TO authenticated
-USING ((SELECT auth.uid()) = user_id);
+USING (((current_setting('request.jwt.claim.sub', true))::uuid) = user_id);
 
 CREATE POLICY "profiles_insert_own"
 ON public.profiles
 FOR INSERT
 TO authenticated
-WITH CHECK ((SELECT auth.uid()) = user_id);
+WITH CHECK (((current_setting('request.jwt.claim.sub', true))::uuid) = user_id);
 
 CREATE POLICY "profiles_update_own"
 ON public.profiles
 FOR UPDATE
 TO authenticated
-USING ((SELECT auth.uid()) = user_id)
-WITH CHECK ((SELECT auth.uid()) = user_id);
+USING (((current_setting('request.jwt.claim.sub', true))::uuid) = user_id)
+WITH CHECK (((current_setting('request.jwt.claim.sub', true))::uuid) = user_id);
 
 CREATE POLICY "profiles_delete_own"
 ON public.profiles
 FOR DELETE
 TO authenticated
-USING ((SELECT auth.uid()) = user_id);
+USING (((current_setting('request.jwt.claim.sub', true))::uuid) = user_id);
 
 DROP POLICY IF EXISTS "questionnaire_responses_select_own" ON public.questionnaire_responses;
 DROP POLICY IF EXISTS "questionnaire_responses_insert_own" ON public.questionnaire_responses;
@@ -126,26 +126,26 @@ CREATE POLICY "questionnaire_responses_select_own"
 ON public.questionnaire_responses
 FOR SELECT
 TO authenticated
-USING ((SELECT auth.uid()) = user_id);
+USING (((current_setting('request.jwt.claim.sub', true))::uuid) = user_id);
 
 CREATE POLICY "questionnaire_responses_insert_own"
 ON public.questionnaire_responses
 FOR INSERT
 TO authenticated
-WITH CHECK ((SELECT auth.uid()) = user_id);
+WITH CHECK (((current_setting('request.jwt.claim.sub', true))::uuid) = user_id);
 
 CREATE POLICY "questionnaire_responses_update_own"
 ON public.questionnaire_responses
 FOR UPDATE
 TO authenticated
-USING ((SELECT auth.uid()) = user_id)
-WITH CHECK ((SELECT auth.uid()) = user_id);
+USING (((current_setting('request.jwt.claim.sub', true))::uuid) = user_id)
+WITH CHECK (((current_setting('request.jwt.claim.sub', true))::uuid) = user_id);
 
 CREATE POLICY "questionnaire_responses_delete_own"
 ON public.questionnaire_responses
 FOR DELETE
 TO authenticated
-USING ((SELECT auth.uid()) = user_id);
+USING (((current_setting('request.jwt.claim.sub', true))::uuid) = user_id);
 
 DROP POLICY IF EXISTS "risk_assessments_select_own" ON public.risk_assessments;
 DROP POLICY IF EXISTS "risk_assessments_insert_own" ON public.risk_assessments;
@@ -156,26 +156,26 @@ CREATE POLICY "risk_assessments_select_own"
 ON public.risk_assessments
 FOR SELECT
 TO authenticated
-USING ((SELECT auth.uid()) = user_id);
+USING (((current_setting('request.jwt.claim.sub', true))::uuid) = user_id);
 
 CREATE POLICY "risk_assessments_insert_own"
 ON public.risk_assessments
 FOR INSERT
 TO authenticated
-WITH CHECK ((SELECT auth.uid()) = user_id);
+WITH CHECK (((current_setting('request.jwt.claim.sub', true))::uuid) = user_id);
 
 CREATE POLICY "risk_assessments_update_own"
 ON public.risk_assessments
 FOR UPDATE
 TO authenticated
-USING ((SELECT auth.uid()) = user_id)
-WITH CHECK ((SELECT auth.uid()) = user_id);
+USING (((current_setting('request.jwt.claim.sub', true))::uuid) = user_id)
+WITH CHECK (((current_setting('request.jwt.claim.sub', true))::uuid) = user_id);
 
 CREATE POLICY "risk_assessments_delete_own"
 ON public.risk_assessments
 FOR DELETE
 TO authenticated
-USING ((SELECT auth.uid()) = user_id);
+USING (((current_setting('request.jwt.claim.sub', true))::uuid) = user_id);
 
 DROP POLICY IF EXISTS "consent_records_select_own" ON public.consent_records;
 DROP POLICY IF EXISTS "consent_records_insert_own" ON public.consent_records;
@@ -186,23 +186,23 @@ CREATE POLICY "consent_records_select_own"
 ON public.consent_records
 FOR SELECT
 TO authenticated
-USING ((SELECT auth.uid()) = user_id);
+USING (((current_setting('request.jwt.claim.sub', true))::uuid) = user_id);
 
 CREATE POLICY "consent_records_insert_own"
 ON public.consent_records
 FOR INSERT
 TO authenticated
-WITH CHECK ((SELECT auth.uid()) = user_id);
+WITH CHECK (((current_setting('request.jwt.claim.sub', true))::uuid) = user_id);
 
 CREATE POLICY "consent_records_update_own"
 ON public.consent_records
 FOR UPDATE
 TO authenticated
-USING ((SELECT auth.uid()) = user_id)
-WITH CHECK ((SELECT auth.uid()) = user_id);
+USING (((current_setting('request.jwt.claim.sub', true))::uuid) = user_id)
+WITH CHECK (((current_setting('request.jwt.claim.sub', true))::uuid) = user_id);
 
 CREATE POLICY "consent_records_delete_own"
 ON public.consent_records
 FOR DELETE
 TO authenticated
-USING ((SELECT auth.uid()) = user_id);
+USING (((current_setting('request.jwt.claim.sub', true))::uuid) = user_id);
