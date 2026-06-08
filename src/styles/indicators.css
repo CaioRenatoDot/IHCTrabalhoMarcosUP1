@@ -32,6 +32,10 @@
   min-height: 84px;
   position: relative;
   padding: 0 24px;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: indicator-item-in 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  animation-delay: var(--indicator-delay, 0s);
 }
 
 .indicator-value {
@@ -60,4 +64,24 @@
   height: 48px;
   background: var(--rc-border);
   transform: translateY(-50%);
+}
+
+@keyframes indicator-item-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .indicator-item {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
 }

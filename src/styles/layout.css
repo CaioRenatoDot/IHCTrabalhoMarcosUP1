@@ -22,6 +22,24 @@
   transition: transform var(--rc-transition), box-shadow var(--rc-transition);
 }
 
+.home-section--cards.stagger-fade .cards-block__grid > div {
+  opacity: 0;
+  transform: translateY(18px) scale(0.985);
+  animation: feature-card-in 0.72s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.home-section--cards.stagger-fade .cards-block__grid > div:nth-child(1) {
+  animation-delay: 0.08s;
+}
+
+.home-section--cards.stagger-fade .cards-block__grid > div:nth-child(2) {
+  animation-delay: 0.18s;
+}
+
+.home-section--cards.stagger-fade .cards-block__grid > div:nth-child(3) {
+  animation-delay: 0.28s;
+}
+
 .feature-card-panel:hover {
   transform: translateY(-4px);
   box-shadow: var(--rc-shadow-md);
@@ -149,4 +167,24 @@
 .home-section--notice .home-section__inner {
   padding-top: 32px;
   padding-bottom: 32px;
+}
+
+@keyframes feature-card-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-section--cards.stagger-fade .cards-block__grid > div {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
 }

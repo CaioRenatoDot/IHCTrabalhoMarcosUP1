@@ -103,7 +103,15 @@ body {
 }
 
 .page-shell {
-  animation: app-page-fade 0.28s ease-out;
+  width: 100%;
+}
+
+.page-shell__transition {
+  width: 100%;
+  transform-origin: top center;
+  backface-visibility: hidden;
+  will-change: opacity, transform, filter;
+  animation: app-page-fade 0.68s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .home-section.stagger-fade {
@@ -115,12 +123,19 @@ body {
 @keyframes app-page-fade {
   from {
     opacity: 0;
-    transform: translateY(6px);
+    transform: translateY(24px) scale(0.985);
+    filter: blur(5px);
+  }
+
+  60% {
+    opacity: 0.92;
+    filter: blur(1px);
   }
 
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
+    filter: blur(0);
   }
 }
 
@@ -133,6 +148,18 @@ body {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-shell__transition,
+  .home-section.stagger-fade,
+  .cover.stagger-fade .cover__left,
+  .cover.stagger-fade .cover__right > .cover-block {
+    animation: none;
+    opacity: 1;
+    transform: none;
+    filter: none;
   }
 }
 

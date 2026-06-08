@@ -12,6 +12,54 @@
   background: transparent;
 }
 
+.awareness-section.stagger-fade .awareness-content > * {
+  opacity: 0;
+  transform: translateY(18px);
+  animation: awareness-fade-in 0.72s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.awareness-section.stagger-fade .awareness-content > :nth-child(1) {
+  animation-delay: 0.06s;
+}
+
+.awareness-section.stagger-fade .awareness-content > :nth-child(2) {
+  animation-delay: 0.14s;
+}
+
+.awareness-section.stagger-fade .awareness-content > :nth-child(3) {
+  animation-delay: 0.22s;
+}
+
+.awareness-section.stagger-fade .risk-card {
+  opacity: 0;
+  transform: translateX(22px) scale(0.98);
+  animation: risk-card-in 0.78s cubic-bezier(0.16, 1, 0.3, 1) 0.18s forwards;
+}
+
+.awareness-section.stagger-fade .awareness-content > * {
+  opacity: 0;
+  transform: translateY(18px);
+  animation: awareness-fade-in 0.72s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.awareness-section.stagger-fade .awareness-content > :nth-child(1) {
+  animation-delay: 0.06s;
+}
+
+.awareness-section.stagger-fade .awareness-content > :nth-child(2) {
+  animation-delay: 0.14s;
+}
+
+.awareness-section.stagger-fade .awareness-content > :nth-child(3) {
+  animation-delay: 0.22s;
+}
+
+.awareness-section.stagger-fade .risk-card {
+  opacity: 0;
+  transform: translateX(22px) scale(0.98);
+  animation: risk-card-in 0.78s cubic-bezier(0.16, 1, 0.3, 1) 0.18s forwards;
+}
+
 .awareness-content {
   display: flex;
   flex-direction: column;
@@ -171,4 +219,70 @@
 
 .risk-low {
   color: var(--rc-success);
+}
+
+@keyframes awareness-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes risk-card-in {
+  from {
+    opacity: 0;
+    transform: translateX(22px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .awareness-section.stagger-fade .awareness-content > *,
+  .awareness-section.stagger-fade .risk-card {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+}
+
+@keyframes awareness-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes risk-card-in {
+  from {
+    opacity: 0;
+    transform: translateX(22px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .awareness-section.stagger-fade .awareness-content > *,
+  .awareness-section.stagger-fade .risk-card {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
 }
