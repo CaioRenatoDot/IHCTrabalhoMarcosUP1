@@ -4,6 +4,18 @@
   margin-right: calc(50% - 50vw);
 }
 
+.cover.stagger-fade .cover__left {
+  opacity: 0;
+  animation: section-stagger-in 0.55s ease forwards;
+  animation-delay: 0.04s;
+}
+
+.cover.stagger-fade .cover__right > .cover-block {
+  opacity: 0;
+  animation: section-stagger-in 0.55s ease forwards;
+  animation-delay: calc((var(--stagger-index, 0) * 0.08s) + 0.06s);
+}
+
 .cover {
   display: grid;
   grid-template-columns: minmax(300px, 571px) minmax(0, 1fr);
