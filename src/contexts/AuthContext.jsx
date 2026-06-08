@@ -1,11 +1,12 @@
 /* eslint-disable react-refresh/only-export-components */
-import { createContext, useContext, useEffect, useMemo, useState } from 'react'
+import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import {
   getAuthSession,
   loginWithBackend,
   logoutWithBackend,
   signupWithBackend,
 } from '../lib/authApi.js'
+import { getLatestRiskAssessment } from '../lib/riskAssessmentApi.js'
 
 const AuthContext = createContext(null)
 
@@ -43,6 +44,30 @@ function normalizeAuthError(error) {
 export function AuthProvider({ children }) {
   const [session, setSession] = useState(null)
   const [loading, setLoading] = useState(true)
+  const [latestAssessment, setLatestAssessment] = useState(null)
+  const [latestAssessmentLoading, setLatestAssessmentLoading] = useState(false)
+
+  const loadLatestAssessment = useCallback(async (userId) => {
+    if (!userId) {
+      setLatestAssessment(null)
+      setLatestAssessmentLoading(false)
+      return null
+    }
+
+    setLatestAssessmentLoading(true)
+
+    try {
+      const data = await getLatestRiskAssessment()
+      const assessment = data?.assessment ?? null
+      setLatestAssessment(assessment)
+      return assessment
+    } catch {
+      setLatestAssessment(null)
+      return null
+    } finally {
+      setLatestAssessmentLoading(false)
+    }
+  }, [])
 
   useEffect(() => {
     let isMounted = true
@@ -56,9 +81,15 @@ export function AuthProvider({ children }) {
         }
 
         setSession(data.session ?? null)
+        setLatestAssessment(data.latestAssessment ?? null)
+
+        if (!data.latestAssessment) {
+          void loadLatestAssessment(data.session?.user?.id ?? null)
+        }
       } catch {
         if (isMounted) {
           setSession(null)
+          setLatestAssessment(null)
         }
       } finally {
         if (isMounted) {
@@ -72,12 +103,15 @@ export function AuthProvider({ children }) {
     return () => {
       isMounted = false
     }
-  }, [])
+  }, [loadLatestAssessment])
 
   const value = useMemo(
     () => ({
       isConfigured: true,
       loading,
+      latestAssessment,
+      latestAssessmentLoading,
+      refreshLatestAssessment: () => loadLatestAssessment(session?.user?.id ?? null),
       session,
       user: session?.user ?? null,
       signIn: async ({ email, password }) => {
@@ -88,6 +122,7 @@ export function AuthProvider({ children }) {
           })
 
           setSession(data.session ?? null)
+          void loadLatestAssessment(data.session?.user?.id ?? null)
 
           return {
             ok: true,
@@ -102,6 +137,7 @@ export function AuthProvider({ children }) {
         try {
           await logoutWithBackend()
           setSession(null)
+          setLatestAssessment(null)
 
           return { ok: true }
         } catch (error) {
@@ -118,6 +154,7 @@ export function AuthProvider({ children }) {
           })
 
           setSession(data.session ?? null)
+          void loadLatestAssessment(data.session?.user?.id ?? null)
 
           return {
             ok: true,
@@ -130,7 +167,7 @@ export function AuthProvider({ children }) {
         }
       },
     }),
-    [loading, session],
+    [latestAssessment, latestAssessmentLoading, loadLatestAssessment, loading, session],
   )
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>

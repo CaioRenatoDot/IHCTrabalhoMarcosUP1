@@ -1,4 +1,4 @@
-import { prisma } from './prisma.js'
+import { getPrisma } from './prisma.js'
 import { buildMappingSummary } from './riskAssessment/riskAssessmentPayload.js'
 import { normalizeAssessmentPayload } from './riskAssessment/normalize.js'
 import { RISK_MODEL_VERSION } from './riskAssessment/version.js'
@@ -45,6 +45,7 @@ export async function upsertUserProfile({ userId, fullName, state }) {
     return null
   }
 
+  const prisma = getPrisma()
   const profileData = buildProfileData({ userId, fullName, state })
 
   return prisma.profile.upsert({
@@ -68,6 +69,7 @@ export async function recordConsentAcceptance({
     return null
   }
 
+  const prisma = getPrisma()
   return prisma.consentRecord.create({
     data: {
       userId,
@@ -95,6 +97,7 @@ export async function persistAssessmentSubmission({
     }
   }
 
+  const prisma = getPrisma()
   const normalizedSnapshot = normalizeAssessmentPayload(payload)
   const mappingSummary = buildMappingSummary()
   const factorDetailsData = buildFactorDetailsData(assessment.factorBreakdown)
@@ -103,6 +106,10 @@ export async function persistAssessmentSubmission({
     const riskModelVersion = await tx.riskModelVersion.findUnique({
       where: { version: modelVersion },
       select: { id: true },
+    })
+
+    await tx.questionnaireResponse.deleteMany({
+      where: { userId },
     })
 
     const profile = await tx.profile.upsert({
@@ -157,6 +164,67 @@ export async function persistAssessmentSubmission({
       riskAssessment,
       modelVersion: riskModelVersion?.id ? modelVersion : null,
     }
+  })
+}
+
+export async function getLatestRiskAssessmentForUser(userId) {
+  if (!userId) {
+    return null
+  }
+
+  const prisma = getPrisma()
+
+  return prisma.riskAssessment.findFirst({
+    where: { userId },
+    orderBy: { createdAt: 'desc' },
+    include: {
+      assessmentFactorDetails: {
+        orderBy: [
+          {
+            contribution: 'desc',
+          },
+          {
+            createdAt: 'asc',
+          },
+        ],
+      },
+      questionnaireResponse: {
+        select: {
+          id: true,
+          formVersion: true,
+          normalizedSnapshotJson: true,
+          submittedAt: true,
+        },
+      },
+      riskModelVersion: {
+        select: {
+          id: true,
+          version: true,
+          name: true,
+          active: true,
+        },
+      },
+    },
+  })
+}
+
+export async function getUserProfileByUserId(userId) {
+  if (!userId) {
+    return null
+  }
+
+  const prisma = getPrisma()
+
+  return prisma.profile.findUnique({
+    where: { userId },
+    select: {
+      id: true,
+      userId: true,
+      fullName: true,
+      state: true,
+      createdAt: true,
+      updatedAt: true,
+    },
   })
 }
 

@@ -2,9 +2,52 @@ import { Router } from 'express'
 import { buildMappingSummary, validateRiskAssessmentPayload } from '../lib/riskAssessment/riskAssessmentPayload.js'
 import { evaluateRiskAssessment } from '../lib/riskAssessment/score.js'
 import { requireAuthSession } from '../middleware/requireAuthSession.js'
-import { persistAssessmentSubmission } from '../lib/userData.js'
+import { getLatestRiskAssessmentForUser, persistAssessmentSubmission } from '../lib/userData.js'
 
 export const riskAssessmentRouter = Router()
+
+function mapPersistedAssessment(record) {
+  if (!record) {
+    return null
+  }
+
+  return {
+    status: 'accepted',
+    message: 'Avaliação recuperada com sucesso.',
+    modelVersion: record.modelVersion ?? record.riskModelVersion?.version ?? null,
+    score: record.score,
+    rawScore: record.rawScore,
+    classification: record.classification,
+    groupScores: record.groupScoresJson ?? {},
+    factorBreakdown: record.factorBreakdownJson ?? record.assessmentFactorDetails ?? [],
+    warnings: record.warningsJson ?? [],
+    sourcesUsed: record.sourcesJson ?? [],
+    normalizedGroups: record.questionnaireResponse?.normalizedSnapshotJson?.normalizedGroups ?? {},
+    mappingSummary: record.questionnaireResponse?.normalizedSnapshotJson?.mappingSummary ?? null,
+    persistence: {
+      attempted: true,
+      saved: true,
+      source: 'database',
+    },
+    meta: {
+      source: 'database',
+      createdAt: record.createdAt,
+      submittedAt: record.questionnaireResponse?.submittedAt ?? null,
+      responseId: record.responseId,
+    },
+    userId: record.userId,
+  }
+}
+
+riskAssessmentRouter.get('/latest', requireAuthSession, async (request, response) => {
+  const assessment = await getLatestRiskAssessmentForUser(request.authUser?.id ?? null)
+
+  return response.status(200).json({
+    ok: true,
+    hasAssessment: Boolean(assessment),
+    assessment: mapPersistedAssessment(assessment),
+  })
+})
 
 riskAssessmentRouter.post('/', requireAuthSession, async (request, response) => {
   const validation = validateRiskAssessmentPayload(request.body)

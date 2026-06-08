@@ -4,6 +4,8 @@ import { env, hasSupabaseConfig } from '../config/env.js'
 import { createSupabaseServerClient } from '../lib/supabase.js'
 import { getAuthDiagnostics, persistAuthEvent, recordAuthEvent } from '../lib/audit.js'
 import {
+  getLatestRiskAssessmentForUser,
+  getUserProfileByUserId,
   recordConsentAcceptance,
   upsertUserProfile,
   USER_DATA_CONSENT_TYPE,
@@ -22,7 +24,18 @@ const signupSchema = credentialsSchema.extend({
   acceptedTerms: z.literal(true),
 })
 
-function sanitizeUser(user) {
+function resolveFullName(user, profile) {
+  const profileName = typeof profile?.fullName === 'string' ? profile.fullName.trim() : ''
+
+  if (profileName.length > 0) {
+    return profileName
+  }
+
+  const authName = user?.user_metadata?.full_name ?? user?.user_metadata?.name ?? ''
+  return typeof authName === 'string' ? authName.trim() : ''
+}
+
+function sanitizeUser(user, profile = null) {
   if (!user) {
     return null
   }
@@ -30,19 +43,52 @@ function sanitizeUser(user) {
   return {
     id: user.id,
     email: user.email,
-    fullName: user.user_metadata?.full_name ?? user.user_metadata?.name ?? '',
+    fullName: resolveFullName(user, profile),
     createdAt: user.created_at,
     emailConfirmedAt: user.email_confirmed_at ?? null,
   }
 }
 
-function buildSession(user) {
+function buildSession(user, profile = null) {
   if (!user) {
     return null
   }
 
   return {
-    user: sanitizeUser(user),
+    user: sanitizeUser(user, profile),
+  }
+}
+
+function mapLatestAssessmentForSession(record) {
+  if (!record) {
+    return null
+  }
+
+  return {
+    status: 'accepted',
+    message: 'Avaliação recuperada com sucesso.',
+    modelVersion: record.modelVersion ?? record.riskModelVersion?.version ?? null,
+    score: record.score,
+    rawScore: record.rawScore,
+    classification: record.classification,
+    groupScores: record.groupScoresJson ?? {},
+    factorBreakdown: record.factorBreakdownJson ?? record.assessmentFactorDetails ?? [],
+    warnings: record.warningsJson ?? [],
+    sourcesUsed: record.sourcesJson ?? [],
+    normalizedGroups: record.questionnaireResponse?.normalizedSnapshotJson?.normalizedGroups ?? {},
+    mappingSummary: record.questionnaireResponse?.normalizedSnapshotJson?.mappingSummary ?? null,
+    persistence: {
+      attempted: true,
+      saved: true,
+      source: 'database',
+    },
+    meta: {
+      source: 'database',
+      createdAt: record.createdAt,
+      submittedAt: record.questionnaireResponse?.submittedAt ?? null,
+      responseId: record.responseId,
+    },
+    userId: record.userId,
   }
 }
 
@@ -96,14 +142,28 @@ authRouter.get('/session', async (req, res) => {
     })
   }
 
+  let profile = null
+
   try {
-    await upsertUserProfile({
-      userId: data.user.id,
-      fullName: data.user.user_metadata?.full_name ?? data.user.user_metadata?.name ?? '',
-    })
+    profile = await getUserProfileByUserId(data.user.id)
+
+    if (!profile) {
+      const fullName = resolveFullName(data.user, null)
+
+      if (fullName) {
+        profile = await upsertUserProfile({
+          userId: data.user.id,
+          fullName,
+        })
+      }
+    }
   } catch (profileError) {
     console.warn('[profile-sync] session', profileError)
   }
+
+  const latestAssessment = mapLatestAssessmentForSession(
+    await getLatestRiskAssessmentForUser(data.user.id),
+  )
 
   void persistAuthEvent({
     userId: data.user.id,
@@ -116,8 +176,9 @@ authRouter.get('/session', async (req, res) => {
 
   return res.json({
     ok: true,
-    session: buildSession(data.user),
-    user: sanitizeUser(data.user),
+    session: buildSession(data.user, profile),
+    user: sanitizeUser(data.user, profile),
+    latestAssessment,
   })
 })
 
@@ -147,11 +208,21 @@ authRouter.post('/login', async (req, res) => {
     })
   }
 
+  let profile = null
+
   try {
-    await upsertUserProfile({
-      userId: data.user.id,
-      fullName: data.user.user_metadata?.full_name ?? data.user.user_metadata?.name ?? '',
-    })
+    profile = await getUserProfileByUserId(data.user.id)
+
+    if (!profile) {
+      const fullName = resolveFullName(data.user, null)
+
+      if (fullName) {
+        profile = await upsertUserProfile({
+          userId: data.user.id,
+          fullName,
+        })
+      }
+    }
   } catch (profileError) {
     console.warn('[profile-sync] login', profileError)
   }
@@ -167,8 +238,8 @@ authRouter.post('/login', async (req, res) => {
 
   return res.json({
     ok: true,
-    session: buildSession(data.user),
-    user: sanitizeUser(data.user),
+    session: buildSession(data.user, profile),
+    user: sanitizeUser(data.user, profile),
   })
 })
 
@@ -208,11 +279,11 @@ authRouter.post('/signup', async (req, res) => {
   }
 
   const user = data?.user ?? null
-  const session = data?.session?.user ? buildSession(data.session.user) : buildSession(user)
+  let profile = null
 
   if (user?.id) {
     try {
-      await upsertUserProfile({
+      profile = await upsertUserProfile({
         userId: user.id,
         fullName: parsed.data.fullName,
       })
@@ -241,11 +312,15 @@ authRouter.post('/signup', async (req, res) => {
     })
   }
 
+  const session = data?.session?.user
+    ? buildSession(data.session.user, profile)
+    : buildSession(user, profile)
+
   return res.status(201).json({
     ok: true,
     requiresConfirmation: !data?.session,
     session,
-    user: sanitizeUser(user),
+    user: sanitizeUser(user, profile),
   })
 })
 

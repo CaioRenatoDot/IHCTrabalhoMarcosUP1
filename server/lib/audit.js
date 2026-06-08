@@ -1,4 +1,4 @@
-import { prisma } from './prisma.js'
+import { getPrisma } from './prisma.js'
 
 const authEvents = []
 const MAX_EVENTS = 100
@@ -35,6 +35,7 @@ export async function persistAuthEvent({ userId, eventType, req, details = {} })
     }
   }
 
+  const prisma = getPrisma()
   const event = recordAuthEvent(eventType, req, {
     ...details,
     userId,

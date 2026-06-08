@@ -1,10 +1,8 @@
-const DEFAULT_API_BASE_URL = 'http://localhost:3001'
-
-const apiBaseUrl = import.meta.env.VITE_API_BASE_URL?.trim() || DEFAULT_API_BASE_URL
+const apiBaseUrl = import.meta.env.PROD ? import.meta.env.VITE_API_BASE_URL?.trim() || '' : ''
 let csrfTokenCache = null
 
 async function fetchJson(path, options = {}) {
-  const url = new URL(path, apiBaseUrl)
+  const url = apiBaseUrl ? new URL(path, apiBaseUrl) : path
   const response = await fetch(url, {
     method: options.method ?? 'GET',
     headers: {
@@ -29,7 +27,7 @@ async function getCsrfToken() {
     return csrfTokenCache
   }
 
-  const url = new URL('/api/security/csrf', apiBaseUrl)
+  const url = apiBaseUrl ? new URL('/api/security/csrf', apiBaseUrl) : '/api/security/csrf'
   const response = await fetch(url, {
     credentials: 'include',
   })
@@ -54,4 +52,8 @@ export async function submitRiskAssessment(payload) {
       'x-csrf-token': csrfToken,
     },
   })
+}
+
+export async function getLatestRiskAssessment() {
+  return fetchJson('/api/risk-assessment/latest')
 }

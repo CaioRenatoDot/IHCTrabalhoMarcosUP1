@@ -16,9 +16,11 @@ function createPrismaClient() {
   })
 }
 
-export const prisma = globalForPrisma.__riskcarePrisma ?? createPrismaClient()
+export function getPrisma() {
+  if (!globalForPrisma.__riskcarePrisma) {
+    globalForPrisma.__riskcarePrisma = createPrismaClient()
+  }
 
-if (process.env.NODE_ENV !== 'production') {
-  globalForPrisma.__riskcarePrisma = prisma
+  return globalForPrisma.__riskcarePrisma
 }
 
