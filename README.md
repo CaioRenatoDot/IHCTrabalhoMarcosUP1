@@ -1,110 +1,183 @@
-# IHCTrabalhoMarcosUP1
+<div align="center">
+  <img src="./riskcare_logo.png" alt="RiskCare Logo" width="200" height="200" />
+  
+  # RiskCare
+  
+  <p>Plataforma web educativa para conscientização e estimativa orientativa de risco de câncer de mama.</p>
+  
+  ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white)
+  ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white)
+  ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
+  ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white)
+  ![React](https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=react&logoColor=black)
+  ![Node.js](https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=node.js&logoColor=white)
+  
+  > O sistema **não fornece diagnóstico médico**. A proposta é educativa, informativa e de apoio à reflexão sobre fatores de risco.
+</div>
 
-Projeto da disciplina de IHC desenvolvido com React + Vite.
+## 📋 Visão Geral
 
-## Atividade
+O **RiskCare** é uma aplicação web que permite ao usuário:
 
-A proposta da atividade é:
+- Criar conta e fazer login
+- Preencher um questionário com dados pessoais, históricos e fatores de risco
+- Receber uma estimativa orientativa de risco
+- Visualizar o resultado com classificação, comparativos e fatores de maior impacto
+- Utilizar recursos de acessibilidade e navegação suave
+- Ter os dados persistidos com segurança no backend e no banco
 
-Escolher uma tela (página) do projeto em equipe e implementar os componentes presentes nessa página.
+## ✨ Funcionalidades
 
-## Divisão De Responsabilidades
+- ✅ Cadastro e login de usuários
+- ✅ Sessão protegida por backend
+- ✅ Questionário em múltiplas etapas
+- ✅ Cálculo heurístico do risco
+- ✅ Tela de resultados com score e classificação
+- ✅ Comparativos e fatores de maior impacto
+- ✅ Persistência com Prisma + Supabase
+- ✅ Catálogo de bases de referência
+- ✅ Versionamento do motor de risco
+- ✅ Auditoria de eventos
+- ✅ RLS para proteção de dados
+- ✅ Recursos de acessibilidade
+- ✅ Rolagem suave com Lenis
+- ✅ Animações pontuais com GSAP
 
-O desenvolvimento desta página foi realizado de forma colaborativa, com divisão de tarefas entre os integrantes da equipe:
+## 🛠️ Tecnologias
 
-- Caio Gabriel: implementação dos cards informativos.
-- Renato: desenvolvimento da Navbar e da seção "Saiba mais", incluindo ajustes visuais para maior fidelidade ao protótipo no Figma.
-- Thalita: criação dos cards de estatística e dos botões interativos da interface.
-- Francisco: implementação da funcionalidade de avaliação gratuita.
+### Frontend
+- **React** - UI component library
+- **Vite** - Build tool
+- **JavaScript** - Language
+- **React Router** - Client-side routing
+- **Lenis** - Smooth scrolling
+- **GSAP** - Animation library
+- **Supabase Auth** - Authentication
 
-Todos os botões e estilos foram implementados com sucesso.
+### Backend
+- **Node.js** - Runtime
+- **Express** - Web framework
+- **Prisma** - ORM
+- **PostgreSQL** - Database
+- **Supabase** - Backend as a service
+- **CSRF** - Request forgery protection
+- **Rate limiting** - API protection
+- **Cookies seguros** - HttpOnly, Secure, SameSite
 
-## Tela Escolhida
+### Banco e Persistência
+- **Supabase Postgres** - Managed database
+- **Prisma migrations** - Schema management
+- **RLS (Row Level Security)** - Data isolation
+- **JSONB** - Snapshots e detalhamentos
 
-A tela implementada neste projeto é a `HomePage`, com foco na experiência da página inicial da aplicação **RiskCare**.
+## 📁 Estrutura do Projeto
 
-## Componentes Implementados Na Página
+```
+.
+├── src/                    # Frontend da aplicação
+├── server/                 # Backend em Node.js e Express
+├── prisma/                 # Schema, migrations e seed
+└── README.md               # Este arquivo
+```
 
-- `Navbar`: cabeçalho com marca, links e CTA.
-- `ConscientizacaoPrevencaoSection`: seção principal com título, descrição, ações e card de risco.
-- `AvaliacaoGratuitaButton`: CTA principal.
-- `SaibaMaisButton`: CTA secundária.
-- `Indicadores`: bloco de métricas em destaque.
-- `FeatureCard`: cartões de benefícios/funcionalidades.
-- `ObservationBanner`: aviso informativo ao final da página.
+## 🚀 Como Executar
 
-## Tecnologias
-
-- React 18
-- Vite 5
-- JavaScript (JSX)
-- CSS global
-
-## Como Executar
-
+### Instalar dependências
 ```bash
 npm install
+```
+
+### Frontend
+```bash
 npm run dev
 ```
 
-Verificação de qualidade:
-
+### Backend
 ```bash
-npm run lint
+npm run server
 ```
 
-Para gerar build de produção:
-
+### Prisma
 ```bash
-npm run build
-npm run preview
+npx prisma generate
+npx prisma migrate deploy
+npx prisma db seed
 ```
 
-## Estrutura Do Projeto
+## 💾 Bases e Persistência
 
-```text
-.
-├─ index.html
-├─ package.json
-├─ vite.config.js
-└─ src
-   ├─ main.jsx
-   ├─ App.jsx
-   ├─ pages
-   │  └─ HomePage.jsx
-   ├─ components
-   │  ├─ Navbar.jsx
-   │  ├─ ConscientizacaoPrevencaoSection.jsx
-   │  ├─ AvaliacaoGratuitaButton.jsx
-   │  ├─ SaibaMaisButton.jsx
-   │  ├─ Indicadores.jsx
-   │  ├─ FeatureCard.jsx
-   │  ├─ ObservationBanner.jsx
-   │  ├─ Hero.jsx
-   │  └─ Section.jsx
-   └─ styles
-      ├─ base.css
-      ├─ layout.css
-      ├─ navbar.css
-      ├─ hero-actions.css
-      ├─ awareness.css
-      ├─ indicators.css
-      ├─ banner.css
-      ├─ responsive.css
-      └─ global.css
-```
+O projeto possui uma camada de persistência e rastreabilidade para:
 
-## Arquivos Principais
+- Mapear campos do questionário para bases de referência
+- Versionar a lógica de avaliação
+- Registrar eventos de autenticação
+- Salvar o resultado da avaliação
+- Manter detalhes fator-a-fator
+- Aplicar políticas de segurança com RLS
 
-- `src/main.jsx`: ponto de entrada da aplicação e montagem do React.
-- `src/App.jsx`: componente raiz da interface.
-- `src/pages/HomePage.jsx`: composição da página com os componentes principais.
-- `src/styles/global.css`: agregador dos módulos de estilo.
-- `src/styles/*.css`: estilos divididos por responsabilidade (base, layout, seções e responsividade).
-- `src/components/*.jsx`: componentes reutilizáveis da interface.
+### Entidades principais
 
-## Observação
+- **Profile** - Dados do usuário
+- **QuestionnaireResponse** - Respostas do questionário
+- **RiskAssessment** - Avaliação de risco
+- **ConsentRecord** - Registro de consentimento
+- **DatasetReference** - Bases de referência
+- **DatasetFeatureMapping** - Mapeamento de campos
+- **RiskModelVersion** - Versões do motor de risco
+- **AuthEvent** - Eventos de autenticação
+- **AssessmentFactorDetail** - Detalhes fator-a-fator
 
-Os componentes `Hero.jsx` e `Section.jsx` permanecem no projeto como apoio/estrutura reutilizável, enquanto a composição atual da tela principal acontece via `HomePage.jsx`.
+## 👥 Integrantes e Contribuições
 
-O `index.html` continua necessário no Vite/React como template base de montagem (container `#root` e carregamento do bundle).
+### Caio Gabriel Pereira de Menezes Correia
+
+**Principais entregas:**
+
+- Criação da tela de login
+- Criação do formulário
+- Aplicação do Lenis
+- Aplicação do GSAP em componente da dashboard inicial com animação de aumento de valor
+- Acessibilidade de zoom
+- Acessibilidade de lupa de texto
+- Implementação inicial do backend
+- Ligação com o Supabase
+- Implementação da primeira versão da lógica dos pesos de pontuação do formulário
+- `feat(accessibility): adicionar controles globais de acessibilidade (#7)` - implementação de acessibilidade de alteração de fonte
+
+### Caio Renato dos Santos Claudino
+
+**Principais entregas:**
+
+- Issue #1 relacionada à PR e à evolução da entrega da frente correspondente
+
+### Thalita Pereira de Andrade
+
+**Principais entregas:**
+
+- Issue #4
+
+### José Francisco de Araújo Neto
+
+**Principais entregas:**
+
+- Implementação do VLibras
+- `docs(vlibras): add issue #3 delivery record (#9)`
+
+## 🔒 Segurança e Privacidade
+
+- Dados sensíveis ficam protegidos por sessão e backend
+- RLS é aplicado nas tabelas expostas
+- Tabelas de catálogo possuem leitura controlada
+- Tabelas de auditoria são restritas ao backend/service role
+- O sistema reforça que não se trata de diagnóstico médico
+
+## 📝 Observações
+
+- O motor atual é heurístico e explicável
+- O resultado é orientativo
+- O projeto foi desenvolvido com foco em **acessibilidade**, **segurança** e **clareza de interface**
+- O banco e a lógica de avaliação foram integrados para permitir rastreabilidade e evolução do sistema
+
+---
+
+**Desenvolvido com ❤️ para educação em saúde**
