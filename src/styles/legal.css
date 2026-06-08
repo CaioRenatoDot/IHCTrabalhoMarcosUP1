@@ -15,7 +15,8 @@
 .legal-header-top {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
   padding-bottom: 0.75rem;
   border-bottom: 1px solid var(--rc-border);
 }
@@ -34,6 +35,34 @@
   width: 20px;
   height: 20px;
   flex-shrink: 0;
+}
+
+.legal-header-back {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  padding: 0.48rem 0.85rem;
+  border-radius: 999px;
+  border: 1px solid var(--rc-border);
+  background: var(--rc-rose-bg);
+  color: var(--rc-rose-dark);
+  font-size: 0.84rem;
+  font-weight: 800;
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.legal-header-back:hover {
+  transform: translateY(-1px);
+  border-color: rgba(196, 81, 122, 0.25);
+  background: #fff;
+  color: var(--rc-rose);
 }
 
 .legal-header h1 {
@@ -284,6 +313,10 @@
     flex-direction: column;
     align-items: flex-start;
     gap: 0.65rem;
+  }
+
+  .legal-header-back {
+    width: 100%;
   }
 
   .legal-header h1 {

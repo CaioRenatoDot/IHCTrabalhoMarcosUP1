@@ -1,5 +1,5 @@
 import '../styles/login.css'
-import { handleSpaLinkClick } from '../utils/navigation.js'
+import InternalLink from '../components/InternalLink.jsx'
 
 function CheckIcon() {
   return (
@@ -10,9 +10,7 @@ function CheckIcon() {
 }
 
 function SignupSuccessPage({ onToast }) {
-  const handleGoToLogin = (event) => {
-    handleSpaLinkClick(event, '/login')
-
+  const handleGoToLogin = () => {
     if (typeof onToast === 'function') {
       onToast('Faça login para iniciar sua avaliação')
     }
@@ -37,9 +35,9 @@ function SignupSuccessPage({ onToast }) {
             Agora você pode fazer login e começar sua avaliação.
           </p>
 
-          <button type="button" className="success-cta" onClick={handleGoToLogin}>
+          <InternalLink className="success-cta" href="/login" onClick={handleGoToLogin}>
             Ir para o login
-          </button>
+          </InternalLink>
         </div>
       </section>
     </main>

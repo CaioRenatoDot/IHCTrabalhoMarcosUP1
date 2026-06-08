@@ -1,4 +1,4 @@
-﻿import { handleSpaLinkClick } from '../utils/navigation.js'
+import InternalLink from './InternalLink.jsx'
 
 function Footer() {
   const startYear = 2026
@@ -18,16 +18,9 @@ function Footer() {
         <p className="site-footer__right site-footer__text">Projeto acadêmico de IHC</p>
       </div>
       <div className="site-footer__links" aria-label="Links legais">
-        <a href="/termos-de-uso" onClick={(event) => handleSpaLinkClick(event, '/termos-de-uso')}>
-          Termos de uso
-        </a>
+        <InternalLink href="/termos-de-uso">Termos de uso</InternalLink>
         <span aria-hidden="true">•</span>
-        <a
-          href="/politica-de-privacidade"
-          onClick={(event) => handleSpaLinkClick(event, '/politica-de-privacidade')}
-        >
-          Política de privacidade
-        </a>
+        <InternalLink href="/politica-de-privacidade">Política de privacidade</InternalLink>
       </div>
     </footer>
   )

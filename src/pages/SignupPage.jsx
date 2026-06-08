@@ -4,6 +4,7 @@ import LoginDivider from '../components/login/LoginDivider.jsx'
 import LoginWarning from '../components/login/LoginWarning.jsx'
 import SocialLoginButtons from '../components/login/SocialLoginButtons.jsx'
 import SignupForm from '../components/login/SignupForm.jsx'
+import InternalLink from '../components/InternalLink.jsx'
 import { useAuth } from '../contexts/AuthContext.jsx'
 import { handleSpaLinkClick, navigateWithoutReload } from '../utils/navigation.js'
 
@@ -65,10 +66,7 @@ function SignupPage({ onToast }) {
 
         <h1>Crie sua conta</h1>
         <p className="login-subtitle">
-          Já tem uma conta?{' '}
-          <a href="/login" onClick={(event) => handleSpaLinkClick(event, '/login')}>
-            Faça login
-          </a>
+          Já tem uma conta? <InternalLink href="/login">Faça login</InternalLink>
         </p>
 
         <SocialLoginButtons />
@@ -76,10 +74,7 @@ function SignupPage({ onToast }) {
         <SignupForm onSignup={handleSignup} onSignupSuccess={handleSignupSuccess} />
 
         <p className="signup-link">
-          Já possui conta?{' '}
-          <a href="/login" onClick={(event) => handleSpaLinkClick(event, '/login')}>
-            Faça login
-          </a>
+          Já possui conta? <InternalLink href="/login">Faça login</InternalLink>
         </p>
 
         <LoginWarning />

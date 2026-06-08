@@ -1,14 +1,13 @@
-import { handleSpaLinkClick } from '../utils/navigation.js'
+import InternalLink from './InternalLink.jsx'
 
 function SaibaMaisButton() {
   return (
-    <a
+    <InternalLink
       className="hero-copy__secondary"
       href="/login"
-      onClick={(event) => handleSpaLinkClick(event, '/login')}
     >
       Saiba mais
-    </a>
+    </InternalLink>
   )
 }
 

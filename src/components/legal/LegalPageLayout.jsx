@@ -1,4 +1,6 @@
-﻿function BrandIcon() {
+import InternalLink from '../InternalLink.jsx'
+
+function BrandIcon() {
   return (
     <svg
       aria-hidden="true"
@@ -61,6 +63,8 @@ function LegalPageLayout({
   calloutTitle,
   calloutText,
   children,
+  backHref = '/',
+  backLabel = 'Voltar ao início',
 }) {
   return (
     <div className="legal-page" aria-label={title}>
@@ -70,6 +74,10 @@ function LegalPageLayout({
             <BrandIcon />
             RiskCare
           </span>
+
+          <InternalLink className="legal-header-back" href={backHref}>
+            {backLabel}
+          </InternalLink>
         </div>
 
         <h1>{title}</h1>

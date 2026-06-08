@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react'
+import InternalLink from '../InternalLink.jsx'
 
 function SignupForm({ onSignup, onSignupSuccess }) {
   const [fullName, setFullName] = useState('')
@@ -150,7 +151,11 @@ function SignupForm({ onSignup, onSignupSuccess }) {
           aria-describedby={passwordError ? 'signup-password-error' : undefined}
           disabled={isSubmitting}
         />
-        <p id="signup-password-error" className={`form-error${passwordError ? ' show' : ''}`} role="alert">
+        <p
+          id="signup-password-error"
+          className={`form-error${passwordError ? ' show' : ''}`}
+          role="alert"
+        >
           {passwordError}
         </p>
       </div>
@@ -172,15 +177,9 @@ function SignupForm({ onSignup, onSignupSuccess }) {
         </label>
 
         <p className="signup-terms__text">
-          com os{' '}
-          <a href="/termos-de-uso" target="_blank" rel="noopener noreferrer">
-            Termos de uso
-          </a>{' '}
-          e com a{' '}
-          <a href="/politica-de-privacidade" target="_blank" rel="noopener noreferrer">
-            Política de privacidade
-          </a>{' '}
-          do RiskCare.
+          com os <InternalLink href="/termos-de-uso">Termos de uso</InternalLink> e com a{' '}
+          <InternalLink href="/politica-de-privacidade">Política de privacidade</InternalLink> do
+          RiskCare.
         </p>
       </div>
 

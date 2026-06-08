@@ -1,4 +1,4 @@
-import { handleSpaLinkClick } from '../../utils/navigation.js'
+import InternalLink from '../InternalLink.jsx'
 
 function LoginHeader() {
   return (
@@ -10,10 +10,7 @@ function LoginHeader() {
 
       <h1>Bem-vinda de volta</h1>
       <p className="login-subtitle">
-        Ainda não possui conta?{' '}
-        <a href="/cadastro" onClick={(event) => handleSpaLinkClick(event, '/cadastro')}>
-          Cadastre-se grátis
-        </a>
+        Ainda não possui conta? <InternalLink href="/cadastro">Cadastre-se grátis</InternalLink>
       </p>
     </>
   )

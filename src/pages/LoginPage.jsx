@@ -5,6 +5,7 @@ import LoginForm from '../components/login/LoginForm.jsx'
 import LoginHeader from '../components/login/LoginHeader.jsx'
 import LoginWarning from '../components/login/LoginWarning.jsx'
 import SocialLoginButtons from '../components/login/SocialLoginButtons.jsx'
+import InternalLink from '../components/InternalLink.jsx'
 import { useAuth } from '../contexts/AuthContext.jsx'
 import { handleSpaLinkClick, navigateWithoutReload } from '../utils/navigation.js'
 
@@ -63,10 +64,7 @@ function LoginPage({ onToast }) {
         <LoginForm onLogin={handleLogin} onLoginSuccess={handleLoginSuccess} />
 
         <p className="signup-link">
-          Não possui conta?{' '}
-          <a href="/cadastro" onClick={(event) => handleSpaLinkClick(event, '/cadastro')}>
-            Cadastre-se
-          </a>
+          Não possui conta? <InternalLink href="/cadastro">Cadastre-se</InternalLink>
         </p>
 
         <LoginWarning />
