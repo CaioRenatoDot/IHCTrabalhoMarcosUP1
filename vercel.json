@@ -3,7 +3,7 @@
   "outputDirectory": "dist",
   "functions": {
     "api/index.js": {
-      "includeFiles": "server/**"
+      "includeFiles": "server/**,node_modules/.prisma/**,node_modules/@prisma/client/**"
     }
   },
   "rewrites": [

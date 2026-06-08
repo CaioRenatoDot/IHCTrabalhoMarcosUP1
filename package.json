@@ -14,7 +14,7 @@
     "db:migrate": "prisma migrate dev",
     "db:seed": "prisma db seed",
     "db:studio": "prisma studio",
-    "build": "vite build",
+    "build": "prisma generate && vite build",
     "preview": "vite preview",
     "lint": "eslint src server vite.config.js eslint.config.js"
   },
