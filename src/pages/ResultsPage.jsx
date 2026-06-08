@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+﻿import { useEffect, useMemo, useState } from 'react'
 import {
   Bar,
   BarChart,
@@ -12,8 +12,13 @@ import {
   YAxis,
 } from 'recharts'
 import { useAuth } from '../contexts/AuthContext.jsx'
-
-const STORAGE_KEY = 'riskcare:latest-assessment'
+import AccountShell from '../components/AccountShell.jsx'
+import {
+  getAssessmentStorageKey,
+  readStoredAssessment,
+  writeStoredAssessment,
+} from '../lib/riskAssessmentStorage.js'
+import '../styles/account-shell.css'
 
 const resultTabs = [
   { id: 'fatores-risco', label: 'Fatores de risco' },
@@ -23,8 +28,8 @@ const resultTabs = [
 
 const legendItems = [
   { label: 'Você', className: 'is-user' },
-  { label: 'Média brasileira (35 - 44 anos)', className: 'is-average' },
-  { label: 'Alto risco referência', className: 'is-reference' },
+  { label: 'Contexto populacional', className: 'is-average' },
+  { label: 'Referência clínica', className: 'is-reference' },
 ]
 
 const populationLegendBase = [
@@ -72,6 +77,58 @@ const fallbackProjectionData = [
   { age: 65, noIntervention: 72, prevention: 35, population: 38 },
 ]
 
+const comparisonMatrixSections = [
+  {
+    field: 'Idade e faixa etária',
+    base: 'INCA, SEER e OMS',
+    type: 'Comparativo populacional',
+    display: 'Card de faixa etária, barra comparativa e legenda contextual',
+    note: 'É um dos comparativos mais fortes do MVP e ajuda a situar o usuário no panorama geral.',
+  },
+  {
+    field: 'Estado/UF',
+    base: 'INCA',
+    type: 'Contexto regional',
+    display: 'Card de contexto epidemiológico',
+    note: 'Serve para contextualizar a carga regional sem inferência clínica direta.',
+  },
+  {
+    field: 'IMC e marcadores metabólicos',
+    base: 'Breast Cancer Coimbra',
+    type: 'Comparativo metabólico',
+    display: 'Card comparativo e barra de faixa',
+    note: 'Sustenta o bloco de IMC e metabolismo com idade, glicose, insulina, HOMA e afins.',
+  },
+  {
+    field: 'Mamografia, BI-RADS e severidade',
+    base: 'Mammographic Mass e Wisconsin Diagnostic',
+    type: 'Comparativo de exame',
+    display: 'Card de rastreio e gráfico de referência',
+    note: 'É o melhor apoio para sintomas, exame e contexto mamográfico.',
+  },
+  {
+    field: 'Menopausa e recorrência',
+    base: 'Breast Cancer (recurrence/non-recurrence)',
+    type: 'Comparativo prognóstico',
+    display: 'Card de seguimento e alerta de contexto',
+    note: 'Ajuda a diferenciar triagem de acompanhamento quando há histórico prévio.',
+  },
+  {
+    field: 'Histórico familiar, BRCA e fatores hormonais',
+    base: 'WHO / OMS',
+    type: 'Fator clínico contextual',
+    display: 'Card educativo',
+    note: 'Deve aparecer como contexto de atenção, sem espelho estatístico direto.',
+  },
+  {
+    field: 'Estilo de vida',
+    base: 'WHO / OMS / INCA',
+    type: 'Fator preventivo',
+    display: 'Card educativo e lembrete de prevenção',
+    note: 'Funciona melhor como orientação preventiva do que como comparação clínica rígida.',
+  },
+]
+
 function clamp(value, min, max) {
   return Math.min(max, Math.max(min, value))
 }
@@ -79,24 +136,6 @@ function clamp(value, min, max) {
 function toNumber(value, fallback = 0) {
   const parsed = Number(value)
   return Number.isFinite(parsed) ? parsed : fallback
-}
-
-function safeReadStoredAssessment() {
-  if (typeof window === 'undefined') {
-    return null
-  }
-
-  const raw = window.sessionStorage.getItem(STORAGE_KEY)
-  if (!raw) {
-    return null
-  }
-
-  try {
-    const parsed = JSON.parse(raw)
-    return parsed && typeof parsed === 'object' ? parsed : null
-  } catch {
-    return null
-  }
 }
 
 function normalizeClassification(classification) {
@@ -196,6 +235,79 @@ function getFactorDetailData(assessment) {
   }))
 }
 
+function getTopFactorInsights(assessment) {
+  if (!assessment?.factorBreakdown?.length) {
+    return []
+  }
+
+  return assessment.factorBreakdown.slice(0, 3).map((factor, index) => ({
+    rank: index + 1,
+    factor: factor.label || factor.key || `Fator ${index + 1}`,
+    group: factor.groupLabel || factor.group || 'Grupo',
+    contribution: clamp(toNumber(factor.contribution, 0), 0, 100),
+    impact: factor.impact || 'baixo',
+    normalizedValue: clamp(toNumber(factor.normalizedValue, 0), 0, 100),
+  }))
+}
+
+function getCoverageSummaryCards(mappingSummary, sourcesUsed) {
+  const groups = mappingSummary?.groups ?? {}
+  const groupCount = Object.keys(groups).length
+
+  return [
+    {
+      label: 'Campos totais',
+      value: countFieldEntries(mappingSummary?.totalFields, 0),
+      hint: 'Campos reconhecidos no formulário',
+    },
+    {
+      label: 'Campos no score',
+      value: countFieldEntries(mappingSummary?.scoredFields, 0),
+      hint: 'Campos usados no cálculo principal',
+    },
+    {
+      label: 'Metadados',
+      value: countFieldEntries(mappingSummary?.metadataFields, 0),
+      hint: 'Campos de contexto e organização',
+    },
+    {
+      label: 'Grupos analisados',
+      value: groupCount,
+      hint: 'Blocos temáticos da avaliação',
+    },
+    {
+      label: 'Fontes base',
+      value: Array.isArray(sourcesUsed) ? sourcesUsed.length : 0,
+      hint: 'Bases citadas no resultado',
+    },
+  ]
+}
+
+function getGroupCoverageData(mappingSummary) {
+  const groups = mappingSummary?.groups ?? {}
+  const preferredOrder = ['profile', 'familyHistory', 'symptomsExams', 'hormonalReproductive', 'lifestyle']
+
+  return preferredOrder
+    .map((groupKey) => {
+      const group = groups[groupKey]
+      if (!group) {
+        return null
+      }
+
+      const coverage = group.totalFields > 0 ? Math.round((group.scoredFields / group.totalFields) * 100) : 0
+
+      return {
+        key: groupKey,
+        label: group.step,
+        totalFields: group.totalFields,
+        scoredFields: group.scoredFields,
+        metadataFields: group.metadataFields,
+        coverage,
+      }
+    })
+    .filter(Boolean)
+}
+
 function getProjectionData(score) {
   if (typeof score !== 'number' || Number.isNaN(score)) {
     return fallbackProjectionData
@@ -206,6 +318,60 @@ function getProjectionData(score) {
     noIntervention: clamp(Math.round(score + index * 7 - 8), 0, 100),
     prevention: clamp(Math.round(score + index * 3 - 10), 0, 100),
   }))
+}
+
+function getRecommendationBlocks(classification) {
+  if (classification === 'alto') {
+    return {
+      title: 'Recomendações educativas para risco alto',
+      intro:
+        'Este resultado indica a necessidade de acompanhamento profissional mais próximo e atenção aos fatores que mais contribuíram para a estimativa.',
+      items: [
+        'Agende uma avaliação com ginecologista ou mastologista para interpretar o resultado no seu contexto clínico.',
+        'Leve o relatório gerado pelo RiskCare para apoiar a conversa com o profissional de saúde.',
+        'Revise fatores modificáveis, como estilo de vida, e mantenha acompanhamento preventivo regular.',
+      ],
+      nextSteps: [
+        'Buscar avaliação profissional.',
+        'Compartilhar o relatório com um especialista.',
+        'Monitorar fatores de risco e manter prevenção ativa.',
+      ],
+    }
+  }
+
+  if (classification === 'baixo') {
+    return {
+      title: 'Recomendações educativas para risco baixo',
+      intro:
+        'A estimativa sugere um cenário mais favorável, mas a prevenção e o acompanhamento de rotina continuam importantes.',
+      items: [
+        'Mantenha consultas preventivas e exames de rotina conforme orientação profissional.',
+        'Siga hábitos protetivos como atividade física, alimentação equilibrada e controle do IMC.',
+        'Observe mudanças no corpo e procure atendimento se surgirem sintomas novos.',
+      ],
+      nextSteps: [
+        'Continuar prevenção e rastreio.',
+        'Reavaliar periodicamente o questionário.',
+        'Manter hábitos saudáveis e acompanhamento regular.',
+      ],
+    }
+  }
+
+  return {
+    title: 'Recomendações educativas para risco moderado',
+    intro:
+      'O resultado aponta atenção intermediária. Vale reforçar medidas preventivas e acompanhar os fatores que mais influenciam a estimativa.',
+    items: [
+      'Reforce exames de rotina e mantenha acompanhamento preventivo.',
+      'Observe os fatores com maior contribuição no gráfico e veja quais podem ser ajustados.',
+      'Converse com um profissional de saúde caso exista histórico familiar relevante ou sintomas persistentes.',
+    ],
+    nextSteps: [
+      'Acompanhar fatores com maior impacto.',
+      'Repetir a avaliação após mudanças relevantes.',
+      'Buscar orientação profissional se houver dúvidas.',
+    ],
+  }
 }
 
 function getMainLabel(assessment) {
@@ -276,23 +442,34 @@ function ResultsFactorTick({ payload, x, y }) {
 }
 
 function ResultsPage() {
-  const { session } = useAuth()
+  const { latestAssessment, session } = useAuth()
+  const storageKey = useMemo(() => getAssessmentStorageKey(session?.user?.id), [session?.user?.id])
 
-  const [storedAssessment, setStoredAssessment] = useState(() => safeReadStoredAssessment())
+  const [storedAssessment, setStoredAssessment] = useState(() => readStoredAssessment(storageKey))
   const [activeTab, setActiveTab] = useState(() => {
     const hash = typeof window !== 'undefined' ? window.location.hash.replace('#', '') : ''
     return resultTabs.some((tab) => tab.id === hash) ? hash : resultTabs[0].id
   })
 
   useEffect(() => {
-    const syncStoredAssessment = () => setStoredAssessment(safeReadStoredAssessment())
+    const syncStoredAssessment = () => setStoredAssessment(readStoredAssessment(storageKey))
+
     syncStoredAssessment()
     window.addEventListener('storage', syncStoredAssessment)
 
     return () => {
       window.removeEventListener('storage', syncStoredAssessment)
     }
-  }, [])
+  }, [storageKey])
+
+  useEffect(() => {
+    if (!latestAssessment) {
+      return
+    }
+
+    setStoredAssessment(latestAssessment)
+    writeStoredAssessment(storageKey, latestAssessment)
+  }, [latestAssessment, storageKey])
 
   useEffect(() => {
     const syncActiveTab = () => {
@@ -311,7 +488,7 @@ function ResultsPage() {
     }
   }, [])
 
-  const assessment = storedAssessment
+  const assessment = latestAssessment ?? storedAssessment
   const score = clamp(toNumber(assessment?.score ?? assessment?.rawScore, 34), 0, 100)
   const rawScore = clamp(toNumber(assessment?.rawScore ?? assessment?.score, score), 0, 100)
   const classification = normalizeClassification(assessment?.classification)
@@ -325,14 +502,28 @@ function ResultsPage() {
         'Esta ferramenta não realiza diagnóstico médico.',
         'Os resultados são estimativas educativas e devem ser interpretados com orientação profissional.',
       ]
-  const sourcesUsed = Array.isArray(assessment?.sourcesUsed) && assessment.sourcesUsed.length
-    ? assessment.sourcesUsed
-    : ['INCA', 'SEER']
+  const sourcesUsed = useMemo(
+    () =>
+      Array.isArray(assessment?.sourcesUsed) && assessment.sourcesUsed.length
+        ? assessment.sourcesUsed
+        : ['INCA', 'SEER'],
+    [assessment?.sourcesUsed],
+  )
   const factorDetailData = useMemo(() => getFactorDetailData(assessment), [assessment])
   const comparisonData = useMemo(() => getAssessmentComparisonData(assessment, score), [assessment, score])
   const populationRiskData = useMemo(() => getAssessmentPopulationData(score), [score])
   const populationLegendItems = useMemo(() => getPopulationLegendItems(score), [score])
   const projectionData = useMemo(() => getProjectionData(score), [score])
+  const recommendationBlocks = useMemo(() => getRecommendationBlocks(classification), [classification])
+  const topFactorInsights = useMemo(() => getTopFactorInsights(assessment), [assessment])
+  const coverageSummaryCards = useMemo(
+    () => getCoverageSummaryCards(assessment?.mappingSummary, sourcesUsed),
+    [assessment?.mappingSummary, sourcesUsed],
+  )
+  const groupCoverageData = useMemo(
+    () => getGroupCoverageData(assessment?.mappingSummary),
+    [assessment?.mappingSummary],
+  )
   const hasStoredAssessment = Boolean(assessment)
   const adjustedByDiagnosis = rawScore !== score && Boolean(assessment)
 
@@ -352,6 +543,17 @@ function ResultsPage() {
 
   return (
     <main id="main-content" className="results-page" tabIndex={-1}>
+      <AccountShell
+        actionHref="/formulario"
+        actionLabel="Nova avaliação"
+        description={
+          hasStoredAssessment
+            ? 'Seu último resultado está salvo e você pode iniciar uma nova avaliação quando quiser.'
+            : 'Você pode abrir o formulário para gerar uma nova avaliação e salvar o próximo resultado.'
+        }
+        statusLabel={hasStoredAssessment ? 'Último resultado salvo' : 'Visualização demonstrativa'}
+        title="Painel da sua avaliação"
+      />
       <section className="results-card" aria-labelledby="results-title">
         <header className="results-card__header">
           <div className="results-card__summary">
@@ -379,6 +581,92 @@ function ResultsPage() {
           </div>
         </header>
 
+        <section className="results-executive-section" aria-labelledby="executive-title">
+          <div className="results-risk-section__heading">
+            <h2 id="executive-title">Leitura executiva do resultado</h2>
+            <p>
+              Esta visão destaca a cobertura da avaliação, os blocos do formulário e os fatores que mais
+              pesaram na estimativa para que o resultado pareça um relatório, não só um número.
+            </p>
+          </div>
+
+          <div className="results-executive-grid">
+            <article className="results-executive-card results-executive-card--overview">
+              <div className="results-executive-card__header">
+                <span className="results-pill">Cobertura do formulário</span>
+                <strong>Base estruturada pela avaliação enviada</strong>
+              </div>
+
+              <div className="results-metric-strip">
+                {coverageSummaryCards.map((item) => (
+                  <article className="results-metric-card" key={item.label}>
+                    <strong>{item.value}</strong>
+                    <span>{item.label}</span>
+                    <small>{item.hint}</small>
+                  </article>
+                ))}
+              </div>
+
+              <div className="results-executive-note">
+                <p>
+                  O score final é calculado a partir dos campos incluídos no modelo, enquanto o restante
+                  ajuda a contextualizar o perfil e enriquecer a leitura do relatório.
+                </p>
+              </div>
+            </article>
+
+            <article className="results-executive-card results-executive-card--insights">
+              <div className="results-executive-card__header">
+                <span className="results-pill">Principais influências</span>
+                <strong>Fatores que mais contribuíram</strong>
+              </div>
+
+              <div className="results-insight-list">
+                {topFactorInsights.length ? (
+                  topFactorInsights.map((item) => (
+                    <div className="results-insight-item" key={`${item.factor}-${item.rank}`}>
+                      <div className="results-insight-item__rank">{item.rank}</div>
+                      <div className="results-insight-item__content">
+                        <strong>{item.factor}</strong>
+                        <span>{item.group}</span>
+                        <div className="results-insight-item__meta">
+                          <span>Contribuição: {item.contribution.toFixed(2)}%</span>
+                          <span>Impacto: {item.impact}</span>
+                        </div>
+                      </div>
+                      <div className="results-insight-item__bar" aria-hidden="true">
+                        <i style={{ '--factor-value': `${item.normalizedValue}%` }} />
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <p className="results-empty-state">A avaliação será detalhada assim que houver dados salvos.</p>
+                )}
+              </div>
+            </article>
+          </div>
+
+          <div className="results-group-grid">
+            {groupCoverageData.map((group) => (
+              <article className="results-group-card" key={group.key}>
+                <div className="results-group-card__header">
+                  <strong>{group.label}</strong>
+                  <span>{group.coverage}% coberto</span>
+                </div>
+
+                <div className="results-group-card__bar" aria-hidden="true">
+                  <i style={{ '--factor-value': `${group.coverage}%` }} />
+                </div>
+
+                <div className="results-group-card__meta">
+                  <span>{group.scoredFields} campos no score</span>
+                  <span>{group.metadataFields} metadados</span>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+
         <nav className="results-tabs" aria-label="Visualizações dos resultados">
           {resultTabs.map((tab) => (
             <a
@@ -392,12 +680,37 @@ function ResultsPage() {
           ))}
         </nav>
 
+        <section className="results-matrix-section" aria-labelledby="matrix-title">
+          <div className="results-risk-section__heading">
+            <h2 id="matrix-title">Matriz de comparativos do resultado</h2>
+            <p>
+              Essa matriz resume como cada campo do formulário se conecta com as bases do MVP e
+              como ele aparece na tela de resultado.
+            </p>
+          </div>
+
+          <div className="results-matrix-grid">
+            {comparisonMatrixSections.map((item) => (
+              <article className="results-matrix-card" key={item.field}>
+                <div className="results-matrix-card__header">
+                  <span>{item.type}</span>
+                  <strong>{item.base}</strong>
+                </div>
+
+                <h3>{item.field}</h3>
+                <p>{item.display}</p>
+                <small>{item.note}</small>
+              </article>
+            ))}
+          </div>
+        </section>
+
         <section id="fatores-risco" className="results-risk-section" aria-labelledby="risk-factors-title">
           <div className="results-risk-section__heading">
-            <h2 id="risk-factors-title">Seus fatores vs. média da população</h2>
+            <h2 id="risk-factors-title">Seus fatores vs. referências do MVP</h2>
             <p>
-              Comparação entre seu perfil e mulheres na mesma faixa etária (35 - 44 anos) no banco
-              de dados nacional.
+              Comparação entre seu perfil e as referências populacionais, clínicas e educativas
+              priorizadas no projeto.
             </p>
           </div>
 
@@ -447,7 +760,7 @@ function ResultsPage() {
                   />
                   <Tooltip cursor={{ fill: 'var(--results-chart-hover)' }} content={<ResultsComparisonTooltip />} />
                   <Bar
-                    name="Alto risco referência"
+                    name="Referência clínica"
                     dataKey="reference"
                     fill="var(--results-reference)"
                     radius={[0, 6, 6, 0]}
@@ -674,6 +987,33 @@ function ResultsPage() {
           </div>
         </section>
 
+        <section className="results-recommendations-section" aria-labelledby="recommendations-title">
+          <div className="results-risk-section__heading">
+            <h2 id="recommendations-title">{recommendationBlocks.title}</h2>
+            <p>{recommendationBlocks.intro}</p>
+          </div>
+
+          <div className="results-recommendations-grid">
+            <article className="results-recommendations-card">
+              <h3>Orientações práticas</h3>
+              <ul>
+                {recommendationBlocks.items.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </article>
+
+            <article className="results-recommendations-card results-recommendations-card--accent">
+              <h3>Próximos passos</h3>
+              <ol>
+                {recommendationBlocks.nextSteps.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ol>
+            </article>
+          </div>
+        </section>
+
         <section className="results-actions-section" aria-label="Ações do resultado">
           <div className="results-disclaimer">
             <strong>Nota educativa:</strong> Os gráficos utilizam dados populacionais de referência
@@ -710,3 +1050,7 @@ function ResultsPage() {
 }
 
 export default ResultsPage
+
+
+
+
