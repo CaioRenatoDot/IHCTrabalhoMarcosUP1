@@ -1,7 +1,11 @@
 import { useAuth } from '../contexts/AuthContext.jsx'
+import { getAssessmentStorageKey, readStoredAssessment } from '../lib/riskAssessmentStorage.js'
 
 function Navbar({ onNavigate, currentPath }) {
-  const { session, signOut } = useAuth()
+  const { latestAssessment, session, signOut } = useAuth()
+  const storageKey = session?.user?.id ? getAssessmentStorageKey(session.user.id) : null
+  const localAssessment = storageKey ? readStoredAssessment(storageKey) : null
+  const hasSavedAssessment = Boolean(latestAssessment || localAssessment)
 
   const handleNavigate = (event, href) => {
     if (typeof onNavigate !== 'function') {
@@ -14,6 +18,12 @@ function Navbar({ onNavigate, currentPath }) {
 
   const isHomeActive = currentPath === '/'
   const isCoverActive = currentPath === '/sobre-projeto' || currentPath === '/cover'
+  const ctaLabel = session
+    ? (hasSavedAssessment ? 'Ver resultado' : 'Continuar avaliação')
+    : 'Começar avaliação'
+  const ctaHref = session
+    ? (hasSavedAssessment ? '/resultados' : '/formulario')
+    : '/login'
 
   const handleLogout = async (event) => {
     if (typeof onNavigate !== 'function') {
@@ -39,7 +49,7 @@ function Navbar({ onNavigate, currentPath }) {
         RiskCare
       </a>
 
-      <nav className="site-navbar__nav" aria-label={'Navega\u00E7\u00E3o principal'}>
+      <nav className="site-navbar__nav" aria-label="Navegação principal">
         <a
           href="/"
           className={isHomeActive ? 'is-active' : ''}
@@ -65,10 +75,10 @@ function Navbar({ onNavigate, currentPath }) {
 
         <a
           className="site-navbar__cta"
-          href={session ? '/formulario' : '/login'}
-          onClick={(event) => handleNavigate(event, session ? '/formulario' : '/login')}
+          href={ctaHref}
+          onClick={(event) => handleNavigate(event, ctaHref)}
         >
-          {'Come\u00E7ar avalia\u00E7\u00E3o'}
+          {ctaLabel}
         </a>
       </div>
     </header>

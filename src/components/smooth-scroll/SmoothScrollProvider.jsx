@@ -1,7 +1,25 @@
-import { ReactLenis } from 'lenis/react'
+import { useEffect } from 'react'
+import { ReactLenis, useLenis } from 'lenis/react'
 import 'lenis/dist/lenis.css'
 
-function SmoothScrollProvider({ children }) {
+function RouteScrollReset({ routeKey }) {
+  const lenis = useLenis()
+
+  useEffect(() => {
+    if (!lenis) {
+      return
+    }
+
+    lenis.scrollTo(0, {
+      immediate: true,
+      force: true,
+    })
+  }, [lenis, routeKey])
+
+  return null
+}
+
+function SmoothScrollProvider({ children, routeKey }) {
   return (
     <ReactLenis
       root
@@ -12,6 +30,7 @@ function SmoothScrollProvider({ children }) {
         syncTouch: false,
       }}
     >
+      <RouteScrollReset routeKey={routeKey} />
       {children}
     </ReactLenis>
   )

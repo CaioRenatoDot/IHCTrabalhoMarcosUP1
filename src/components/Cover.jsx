@@ -50,7 +50,7 @@ function BrandIcon() {
 
 function Cover() {
   return (
-    <section className="cover" aria-label="Capa do projeto RiskCare">
+    <section className="cover stagger-fade" aria-label="Capa do projeto RiskCare">
       <aside className="cover__left">
         <div className="cover-brand">
           <span className="cover-brand__icon">
@@ -80,7 +80,7 @@ function Cover() {
       </aside>
 
       <div className="cover__right">
-        <section className="cover-block">
+        <section className="cover-block" style={{ '--stagger-index': 1 }}>
           <div className="cover-block__head">
             <h2>CONCEITO</h2>
             <span />
@@ -103,7 +103,7 @@ function Cover() {
           </section>
         </section>
 
-        <section className="cover-block">
+        <section className="cover-block" style={{ '--stagger-index': 2 }}>
           <div className="cover-block__head">
             <h2>{'P\u00daBLICO-ALVO'}</h2>
             <span />
@@ -115,7 +115,7 @@ function Cover() {
           </ul>
         </section>
 
-        <section className="cover-block">
+        <section className="cover-block" style={{ '--stagger-index': 3 }}>
           <div className="cover-block__head">
             <h2>PROBLEMA</h2>
             <span />
@@ -127,7 +127,7 @@ function Cover() {
           </p>
         </section>
 
-        <section className="cover-block cover-team">
+        <section className="cover-block cover-team" style={{ '--stagger-index': 4 }}>
           <div className="cover-block__head">
             <h2>EQUIPE</h2>
             <span />

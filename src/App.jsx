@@ -170,6 +170,8 @@ function App() {
     page = <CoverPage />
   } else if (route.path === '/resultados') {
     page = <ResultsPage />
+    showNavbar = false
+    showFooter = false
   } else {
     page = <HomePage />
   }
@@ -186,7 +188,7 @@ function App() {
   }
 
   return (
-    <SmoothScrollProvider>
+    <SmoothScrollProvider routeKey={route.path}>
       <AccessibilityControls>
         <SkipLink />
         <div className="app-page">

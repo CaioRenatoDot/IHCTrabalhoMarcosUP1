@@ -1,6 +1,14 @@
-import { useState } from 'react'
+﻿import { useEffect, useMemo, useState } from 'react'
 import { submitRiskAssessment } from '../lib/riskAssessmentApi.js'
+import { useAuth } from '../contexts/AuthContext.jsx'
+import AccountShell from '../components/AccountShell.jsx'
+import {
+  getAssessmentStorageKey,
+  readStoredAssessment,
+  writeStoredAssessment,
+} from '../lib/riskAssessmentStorage.js'
 import { navigateWithoutReload } from '../utils/navigation.js'
+import '../styles/account-shell.css'
 import '../styles/assessment-form.css'
 
 const steps = ['Perfil', 'Histórico', 'Sintomas', 'Hormonal', 'Estilo de vida']
@@ -101,6 +109,56 @@ function hasValue(value) {
   }
 
   return String(value).trim() !== ''
+}
+
+function parseBmiInput(value) {
+  const normalized = String(value).replace(',', '.').trim()
+  const parsed = Number(normalized)
+  return Number.isFinite(parsed) ? parsed : null
+}
+
+function calculateBmi(weightKg, heightCm) {
+  const weight = parseBmiInput(weightKg)
+  const height = parseBmiInput(heightCm)
+
+  if (weight === null || height === null || weight <= 0 || height <= 0) {
+    return null
+  }
+
+  const heightInMeters = height / 100
+  if (!heightInMeters) {
+    return null
+  }
+
+  return weight / (heightInMeters * heightInMeters)
+}
+
+function getBmiCategory(bmi) {
+  if (bmi === null) {
+    return null
+  }
+
+  if (bmi < 18.5) {
+    return 'Abaixo de 18,5 (abaixo do peso)'
+  }
+
+  if (bmi < 25) {
+    return '18,5 - 24,9 (peso normal)'
+  }
+
+  if (bmi < 30) {
+    return '25 - 29,9 (sobrepeso)'
+  }
+
+  return 'Acima de 30 (obesidade)'
+}
+
+function formatBmiValue(value) {
+  if (value === null) {
+    return '--'
+  }
+
+  return value.toFixed(1).replace('.', ',')
 }
 
 function AssessmentStepIndicator({ currentStep }) {
@@ -355,15 +413,6 @@ function PerfilStep({ errors, formData, updateField }) {
         onChange={(value) => updateField('cancerDiagnosis', value)}
       />
 
-      <div className="assessment-warning" role="note">
-        <span className="assessment-warning__icon" aria-hidden="true">
-          !
-        </span>
-        <p>
-          Esta ferramenta <strong>não realiza diagnóstico médico</strong> - os resultados são apenas
-          estimativas informativas.
-        </p>
-      </div>
     </>
   )
 }
@@ -524,7 +573,16 @@ function HormonalStep({ errors, formData, updateField }) {
   )
 }
 
-function EstiloVidaStep({ errors, formData, updateField }) {
+function EstiloVidaStep({ bmiCalculator, errors, formData, updateField, updateBmiCalculator }) {
+  const calculatedBmi = calculateBmi(bmiCalculator.weight, bmiCalculator.height)
+  const bmiCategory = getBmiCategory(calculatedBmi)
+
+  const applyCalculatedBmi = () => {
+    if (bmiCategory) {
+      updateField('bmi', bmiCategory)
+    }
+  }
+
   return (
     <>
       <div className="assessment-copy">
@@ -571,12 +629,74 @@ function EstiloVidaStep({ errors, formData, updateField }) {
         onChange={(value) => updateField('diet', value)}
       />
 
+      <div className="assessment-bmi-calculator">
+        <div className="assessment-bmi-calculator__header">
+          <div>
+            <h2>Calculadora de IMC</h2>
+            <p>Use peso e altura para calcular a categoria no próprio formulário.</p>
+          </div>
+          <span className="assessment-bmi-calculator__badge" aria-live="polite">
+            IMC calculado: {formatBmiValue(calculatedBmi)}
+          </span>
+        </div>
+
+        <div className="assessment-grid assessment-grid--two">
+          <TextField
+            id="bmiWeight"
+            label="Peso (kg)"
+            placeholder="Ex: 68,5"
+            inputMode="decimal"
+            value={bmiCalculator.weight}
+            onChange={(event) =>
+              updateBmiCalculator((current) => ({
+                ...current,
+                weight: event.target.value,
+              }))
+            }
+          />
+          <TextField
+            id="bmiHeight"
+            label="Altura (cm)"
+            placeholder="Ex: 165"
+            inputMode="decimal"
+            value={bmiCalculator.height}
+            onChange={(event) =>
+              updateBmiCalculator((current) => ({
+                ...current,
+                height: event.target.value,
+              }))
+            }
+          />
+        </div>
+
+        <div className="assessment-bmi-calculator__result">
+          <div>
+            <strong>{bmiCategory ?? 'Preencha os dados para calcular'}</strong>
+            <p>O valor calculado ajuda a preencher a opção de IMC sem sair da página.</p>
+          </div>
+
+          <button
+            className="assessment-bmi-calculator__action"
+            type="button"
+            onClick={applyCalculatedBmi}
+            disabled={!bmiCategory}
+          >
+            Aplicar IMC calculado
+          </button>
+        </div>
+      </div>
+
       <OptionGroup
         columns
         legend="Qual seu índice de massa corporal aproximado?"
         note="(IMC)"
         name="bmi"
-        options={['Abaixo de 18,5 (abaixo do peso)', '18,5 - 24,9 (peso normal)', '25 - 29,9 (sobrepeso)', 'Acima de 30 (obesidade)']}
+        options={[
+          'Abaixo de 18,5 (abaixo do peso)',
+          '18,5 - 24,9 (peso normal)',
+          '25 - 29,9 (sobrepeso)',
+          'Acima de 30 (obesidade)',
+        ]}
         required
         error={errors.bmi}
         value={formData.bmi}
@@ -592,13 +712,32 @@ function EstiloVidaStep({ errors, formData, updateField }) {
 }
 
 function AssessmentFormPage() {
+  const { latestAssessment, refreshLatestAssessment, session } = useAuth()
   const [currentStep, setCurrentStep] = useState(0)
   const [formData, setFormData] = useState(initialFormData)
+  const [bmiCalculator, setBmiCalculator] = useState({
+    weight: '',
+    height: '',
+  })
   const [errors, setErrors] = useState({})
   const [submitError, setSubmitError] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const assessmentStorageKey = useMemo(
+    () => getAssessmentStorageKey(session?.user?.id),
+    [session?.user?.id],
+  )
+  const localStoredAssessment = useMemo(
+    () => readStoredAssessment(assessmentStorageKey),
+    [assessmentStorageKey],
+  )
+  const hasStoredAssessment = Boolean(latestAssessment || localStoredAssessment)
   const hasErrors = Object.keys(errors).length > 0
   const progress = ((currentStep + 1) / steps.length) * 100
+
+  useEffect(() => {
+    const mainContent = document.getElementById('main-content')
+    mainContent?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }, [currentStep])
 
   const updateField = (field, value) => {
     setFormData((currentData) => ({
@@ -669,7 +808,8 @@ function AssessmentFormPage() {
     try {
       const result = await submitRiskAssessment(formData)
 
-      window.sessionStorage.setItem('riskcare:latest-assessment', JSON.stringify(result))
+      writeStoredAssessment(assessmentStorageKey, result)
+      void refreshLatestAssessment()
       navigateWithoutReload('/resultados')
     } catch (error) {
       setSubmitError(error?.message ?? 'Não foi possível calcular sua estimativa. Tente novamente.')
@@ -683,11 +823,29 @@ function AssessmentFormPage() {
     <HistoricoStep errors={errors} formData={formData} updateField={updateField} />,
     <SintomasStep errors={errors} formData={formData} updateField={updateField} />,
     <HormonalStep errors={errors} formData={formData} updateField={updateField} />,
-    <EstiloVidaStep errors={errors} formData={formData} updateField={updateField} />,
+    <EstiloVidaStep
+      bmiCalculator={bmiCalculator}
+      errors={errors}
+      formData={formData}
+      updateField={updateField}
+      updateBmiCalculator={setBmiCalculator}
+    />,
   ][currentStep]
 
   return (
     <main id="main-content" tabIndex={-1} className="assessment-page">
+      <AccountShell
+        actionHref={hasStoredAssessment ? '/resultados' : undefined}
+        actionLabel={hasStoredAssessment ? 'Ver resultado' : undefined}
+        description={
+          hasStoredAssessment
+            ? 'Você já tem um resultado salvo. Consulte-o quando quiser ou inicie uma nova avaliação quando preferir.'
+            : 'Sua conta está ativa. Continue preenchendo a avaliação no seu ritmo e acompanhe tudo por aqui.'
+        }
+        layout="compact"
+        statusLabel={hasStoredAssessment ? 'Resultado salvo' : 'Avaliação em andamento'}
+        title={hasStoredAssessment ? 'Você já tem um resultado' : 'Sua avaliação está em andamento'}
+      />
       <section className="assessment-card" aria-labelledby="assessment-title">
         <header className="assessment-header">
           <div className="assessment-brand" aria-label="RiskCare">
@@ -761,3 +919,9 @@ function AssessmentFormPage() {
 }
 
 export default AssessmentFormPage
+
+
+
+
+
+

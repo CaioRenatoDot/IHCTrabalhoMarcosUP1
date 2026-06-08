@@ -1,0 +1,241 @@
+.account-shell {
+  display: grid;
+  gap: 0.9rem 1rem;
+  align-items: center;
+  margin: 1rem auto 1rem;
+  border: 1px solid rgba(216, 90, 137, 0.16);
+  border-radius: 22px;
+  background:
+    linear-gradient(180deg, rgba(255, 250, 252, 0.98) 0%, rgba(255, 255, 255, 1) 100%);
+  box-shadow: 0 18px 40px rgba(216, 90, 137, 0.08);
+}
+
+.account-shell--wide {
+  width: min(100%, 980px);
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  padding: 0.95rem 1.05rem;
+}
+
+.account-shell--compact {
+  width: min(100%, 760px);
+  grid-template-columns: auto minmax(0, 1fr);
+  padding: 0.85rem 0.95rem;
+}
+
+.account-shell__avatar {
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(216, 90, 137, 0.18), rgba(216, 90, 137, 0.08));
+  color: var(--rc-rose-dark);
+  font-size: 0.88rem;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.account-shell__content {
+  min-width: 0;
+}
+
+.account-shell__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: 0.38rem;
+  padding: 0.28rem 0.6rem;
+  border-radius: 999px;
+  background: var(--rc-rose-bg);
+  color: var(--rc-rose);
+  font-size: 0.7rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.account-shell__content h2 {
+  margin: 0;
+  color: var(--rc-text-dark);
+  font-size: clamp(1rem, 2vw, 1.12rem);
+  line-height: 1.2;
+}
+
+.account-shell__content p {
+  max-width: 68ch;
+  margin: 0.4rem 0 0;
+  color: var(--rc-text);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.account-shell__side {
+  display: grid;
+  justify-items: end;
+  gap: 0.7rem;
+}
+
+.account-shell__meta {
+  display: grid;
+  justify-items: end;
+  gap: 0.2rem;
+  color: var(--rc-text);
+  font-size: 0.86rem;
+  text-align: right;
+}
+
+.account-shell__meta strong {
+  color: var(--rc-text-dark);
+  font-size: 0.95rem;
+}
+
+.account-shell__actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+}
+
+.account-shell__action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 0.56rem 0.95rem;
+  border-radius: 999px;
+  font-size: 0.86rem;
+  font-weight: 800;
+  text-decoration: none;
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    background-color 0.2s ease,
+    color 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.account-shell__action:hover {
+  transform: translateY(-1px);
+}
+
+.account-shell__action--primary {
+  border: 1px solid var(--rc-rose);
+  background: var(--rc-rose);
+  color: var(--rc-white);
+}
+
+.account-shell__action--primary:hover {
+  border-color: var(--rc-rose-dark);
+  background: var(--rc-rose-dark);
+}
+
+.account-shell__action--ghost {
+  border: 0;
+  background: transparent;
+  color: var(--rc-text);
+  cursor: pointer;
+  padding-inline: 0.4rem;
+}
+
+.account-shell__action--ghost:hover {
+  color: var(--rc-rose);
+  opacity: 1;
+}
+
+.account-shell--compact .account-shell__side {
+  grid-column: 1 / -1;
+  justify-items: start;
+}
+
+.account-shell--compact .account-shell__meta {
+  justify-items: start;
+  text-align: left;
+}
+
+.account-shell--compact .account-shell__actions {
+  justify-content: flex-start;
+}
+
+.accessibility-root.is-high-contrast .account-shell {
+  border-color: #fff;
+  background: #000;
+  box-shadow: none;
+}
+
+.accessibility-root.is-high-contrast .account-shell__avatar {
+  background: #fff;
+  color: #000;
+}
+
+.accessibility-root.is-high-contrast .account-shell__eyebrow {
+  border: 1px solid #fff;
+  background: #000;
+  color: #fff;
+}
+
+.accessibility-root.is-high-contrast .account-shell__content h2,
+.accessibility-root.is-high-contrast .account-shell__content p,
+.accessibility-root.is-high-contrast .account-shell__meta,
+.accessibility-root.is-high-contrast .account-shell__meta strong {
+  color: #fff;
+}
+
+.accessibility-root.is-high-contrast .account-shell__action--primary {
+  border-color: #ffeb3b;
+  background: #ffeb3b;
+  color: #000;
+}
+
+.accessibility-root.is-high-contrast .account-shell__action--primary:hover {
+  border-color: #fff;
+  background: #fff;
+  color: #000;
+}
+
+.accessibility-root.is-high-contrast .account-shell__action--ghost {
+  color: #fff;
+}
+
+.accessibility-root.is-high-contrast .account-shell__action--ghost:hover {
+  color: #ffeb3b;
+}
+
+@media (max-width: 860px) {
+  .account-shell--wide {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .account-shell--wide .account-shell__side {
+    grid-column: 1 / -1;
+    justify-items: start;
+  }
+
+  .account-shell--wide .account-shell__meta {
+    justify-items: start;
+    text-align: left;
+  }
+
+  .account-shell--wide .account-shell__actions {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 640px) {
+  .account-shell {
+    gap: 0.75rem 0.85rem;
+  }
+
+  .account-shell--wide,
+  .account-shell--compact {
+    padding: 0.8rem 0.85rem;
+  }
+
+  .account-shell__content p {
+    font-size: 0.88rem;
+  }
+
+  .account-shell__action {
+    width: 100%;
+  }
+}
