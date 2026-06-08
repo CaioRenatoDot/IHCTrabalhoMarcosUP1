@@ -6,7 +6,7 @@ import { persistAssessmentSubmission } from '../lib/userData.js'
 
 export const riskAssessmentRouter = Router()
 
-riskAssessmentRouter.post('/', requireAuthSession, (request, response) => {
+riskAssessmentRouter.post('/', requireAuthSession, async (request, response) => {
   const validation = validateRiskAssessmentPayload(request.body)
 
   if (!validation.isValid) {
@@ -25,17 +25,28 @@ riskAssessmentRouter.post('/', requireAuthSession, (request, response) => {
 
   const assessmentResult = evaluateRiskAssessment(request.body)
 
-  Promise.resolve(
-    persistAssessmentSubmission({
+  let persistence = {
+    attempted: true,
+    saved: false,
+  }
+
+  try {
+    const persistenceResult = await persistAssessmentSubmission({
       userId: request.authUser?.id ?? null,
       payload: request.body,
       assessment: assessmentResult,
       fullName: request.body?.fullName,
       state: request.body?.state,
-    }),
-  ).catch((persistenceError) => {
+    })
+
+    persistence = {
+      attempted: true,
+      saved: Boolean(persistenceResult?.saved),
+      modelVersion: persistenceResult?.modelVersion ?? assessmentResult.modelVersion ?? null,
+    }
+  } catch (persistenceError) {
     console.warn('[assessment-persistence]', persistenceError)
-  })
+  }
 
   return response.status(200).json({
     ...assessmentResult,
@@ -46,8 +57,6 @@ riskAssessmentRouter.post('/', requireAuthSession, (request, response) => {
       unmappedFields: validation.extraFields ?? [],
     },
     userId: request.authUser?.id ?? null,
-    persistence: {
-      attempted: true,
-    },
+    persistence,
   })
 })

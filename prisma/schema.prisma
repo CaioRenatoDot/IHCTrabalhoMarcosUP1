@@ -20,6 +20,7 @@ model Profile {
   questionnaireResponses QuestionnaireResponse[]
   riskAssessments        RiskAssessment[]
   consentRecords         ConsentRecord[]
+  authEvents             AuthEvent[]
 
   @@map("profiles")
   @@index([userId])
@@ -42,24 +43,28 @@ model QuestionnaireResponse {
 }
 
 model RiskAssessment {
-  id                   String   @id @default(uuid()) @db.Uuid
-  userId               String   @map("user_id") @db.Uuid
-  responseId           String   @unique @map("response_id") @db.Uuid
-  profile              Profile  @relation(fields: [userId], references: [userId], onDelete: Cascade)
+  id                  String            @id @default(uuid()) @db.Uuid
+  userId              String            @map("user_id") @db.Uuid
+  responseId          String            @unique @map("response_id") @db.Uuid
+  riskModelVersionId  String?           @map("risk_model_version_id") @db.Uuid
+  profile             Profile           @relation(fields: [userId], references: [userId], onDelete: Cascade)
   questionnaireResponse QuestionnaireResponse @relation(fields: [responseId], references: [id], onDelete: Cascade)
-  modelVersion         String   @map("model_version")
-  score                Int
-  rawScore             Int      @map("raw_score")
-  classification       String
-  groupScoresJson      Json     @map("group_scores_json")
-  factorBreakdownJson  Json     @map("factor_breakdown_json")
-  warningsJson         Json     @map("warnings_json")
-  sourcesJson          Json     @map("sources_json")
-  createdAt            DateTime @default(now()) @map("created_at")
+  riskModelVersion     RiskModelVersion?  @relation(fields: [riskModelVersionId], references: [id], onDelete: SetNull)
+  modelVersion        String            @map("model_version")
+  score               Int
+  rawScore            Int               @map("raw_score")
+  classification      String
+  groupScoresJson     Json              @map("group_scores_json")
+  factorBreakdownJson  Json              @map("factor_breakdown_json")
+  warningsJson        Json              @map("warnings_json")
+  sourcesJson         Json              @map("sources_json")
+  createdAt           DateTime          @default(now()) @map("created_at")
+  assessmentFactorDetails AssessmentFactorDetail[]
 
   @@map("risk_assessments")
   @@index([userId])
   @@index([responseId])
+  @@index([riskModelVersionId])
   @@index([createdAt])
 }
 
@@ -76,4 +81,95 @@ model ConsentRecord {
   @@map("consent_records")
   @@index([userId])
   @@index([consentType])
+}
+
+model DatasetReference {
+  id          String   @id @default(uuid()) @db.Uuid
+  slug        String   @unique
+  name        String
+  sourceType  String   @map("source_type")
+  sourceUrl   String   @map("source_url")
+  description String?
+  useCase     String   @map("use_case")
+  version     String
+  active      Boolean  @default(true)
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  featureMappings DatasetFeatureMapping[]
+
+  @@map("dataset_references")
+  @@index([sourceType])
+  @@index([active])
+}
+
+model DatasetFeatureMapping {
+  id                   String   @id @default(uuid()) @db.Uuid
+  datasetReferenceId   String   @map("dataset_reference_id") @db.Uuid
+  projectFieldKey      String   @map("project_field_key")
+  datasetFieldName     String   @map("dataset_field_name")
+  mappingType          String   @map("mapping_type")
+  evidenceStrength     String   @map("evidence_strength")
+  notes                String?
+  createdAt            DateTime @default(now()) @map("created_at")
+  updatedAt            DateTime @updatedAt @map("updated_at")
+
+  datasetReference DatasetReference @relation(fields: [datasetReferenceId], references: [id], onDelete: Cascade)
+
+  @@map("dataset_feature_mappings")
+  @@index([datasetReferenceId])
+  @@index([projectFieldKey])
+}
+
+model RiskModelVersion {
+  id           String   @id @default(uuid()) @db.Uuid
+  version      String   @unique
+  name         String
+  description  String?
+  thresholdsJson Json   @map("thresholds_json")
+  weightsJson   Json    @map("weights_json")
+  active       Boolean  @default(true)
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  riskAssessments RiskAssessment[]
+
+  @@map("risk_model_versions")
+  @@index([active])
+}
+
+model AuthEvent {
+  id         String   @id @default(uuid()) @db.Uuid
+  userId     String   @map("user_id") @db.Uuid
+  profile    Profile  @relation(fields: [userId], references: [userId], onDelete: Cascade)
+  eventType  String   @map("event_type")
+  ip         String?
+  userAgent  String?  @map("user_agent")
+  detailsJson Json    @map("details_json")
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  @@map("auth_events")
+  @@index([userId])
+  @@index([eventType])
+  @@index([createdAt])
+}
+
+model AssessmentFactorDetail {
+  id               String   @id @default(uuid()) @db.Uuid
+  assessmentId     String   @map("assessment_id") @db.Uuid
+  factorKey        String   @map("factor_key")
+  label            String
+  groupKey         String   @map("group_key")
+  originalValue    String?  @map("original_value")
+  normalizedValue  Float?   @map("normalized_value")
+  contribution     Float
+  impact           String
+  createdAt        DateTime @default(now()) @map("created_at")
+
+  assessment RiskAssessment @relation(fields: [assessmentId], references: [id], onDelete: Cascade)
+
+  @@map("assessment_factor_details")
+  @@index([assessmentId])
+  @@index([factorKey])
+  @@index([groupKey])
 }

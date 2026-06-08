@@ -2,6 +2,7 @@ import { FIELD_MAPPING } from './fieldMapping.js'
 import { classifyWithDiagnosisFloor } from './classification.js'
 import { normalizeAssessmentPayload } from './normalize.js'
 import { GROUP_FACTOR_WEIGHTS, GROUP_WEIGHTS } from './weights.js'
+import { RISK_MODEL_VERSION } from './version.js'
 
 const GROUP_LABELS = {
   profile: 'Perfil',
@@ -84,6 +85,7 @@ export function evaluateRiskAssessment(payload) {
   return {
     status: 'accepted',
     message: 'Avaliação processada com sucesso.',
+    modelVersion: RISK_MODEL_VERSION,
     score: classificationResult.score,
     rawScore: roundedRawScore,
     classification: classificationResult.classification,

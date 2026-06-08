@@ -2,7 +2,7 @@ import { Router } from 'express'
 import { z } from 'zod'
 import { env, hasSupabaseConfig } from '../config/env.js'
 import { createSupabaseServerClient } from '../lib/supabase.js'
-import { getAuthDiagnostics, recordAuthEvent } from '../lib/audit.js'
+import { getAuthDiagnostics, persistAuthEvent, recordAuthEvent } from '../lib/audit.js'
 import {
   recordConsentAcceptance,
   upsertUserProfile,
@@ -96,8 +96,6 @@ authRouter.get('/session', async (req, res) => {
     })
   }
 
-  recordAuthEvent('session_checked', req, { userId: data.user.id })
-
   try {
     await upsertUserProfile({
       userId: data.user.id,
@@ -106,6 +104,15 @@ authRouter.get('/session', async (req, res) => {
   } catch (profileError) {
     console.warn('[profile-sync] session', profileError)
   }
+
+  void persistAuthEvent({
+    userId: data.user.id,
+    eventType: 'session_checked',
+    req,
+    details: { source: 'session_endpoint' },
+  }).catch((persistError) => {
+    console.warn('[auth-event-persist] session_checked', persistError)
+  })
 
   return res.json({
     ok: true,
@@ -140,8 +147,6 @@ authRouter.post('/login', async (req, res) => {
     })
   }
 
-  recordAuthEvent('login_success', req, { userId: data.user.id })
-
   try {
     await upsertUserProfile({
       userId: data.user.id,
@@ -150,6 +155,15 @@ authRouter.post('/login', async (req, res) => {
   } catch (profileError) {
     console.warn('[profile-sync] login', profileError)
   }
+
+  void persistAuthEvent({
+    userId: data.user.id,
+    eventType: 'login_success',
+    req,
+    details: { email: parsed.data.email },
+  }).catch((persistError) => {
+    console.warn('[auth-event-persist] login_success', persistError)
+  })
 
   return res.json({
     ok: true,
@@ -196,11 +210,6 @@ authRouter.post('/signup', async (req, res) => {
   const user = data?.user ?? null
   const session = data?.session?.user ? buildSession(data.session.user) : buildSession(user)
 
-  recordAuthEvent('signup_success', req, {
-    userId: user?.id ?? null,
-    requiresConfirmation: !data?.session,
-  })
-
   if (user?.id) {
     try {
       await upsertUserProfile({
@@ -218,6 +227,18 @@ authRouter.post('/signup', async (req, res) => {
     } catch (persistenceError) {
       console.warn('[profile-sync] signup', persistenceError)
     }
+
+    void persistAuthEvent({
+      userId: user.id,
+      eventType: 'signup_success',
+      req,
+      details: {
+        requiresConfirmation: !data?.session,
+        email: parsed.data.email,
+      },
+    }).catch((persistError) => {
+      console.warn('[auth-event-persist] signup_success', persistError)
+    })
   }
 
   return res.status(201).json({
@@ -237,6 +258,8 @@ authRouter.post('/logout', async (req, res) => {
   }
 
   const supabase = createSupabaseServerClient(req, res)
+  const { data: currentUserData } = await supabase.auth.getUser()
+  const currentUserId = currentUserData?.user?.id ?? null
   const { error } = await supabase.auth.signOut()
 
   if (error) {
@@ -246,7 +269,14 @@ authRouter.post('/logout', async (req, res) => {
     })
   }
 
-  recordAuthEvent('logout_success', req, {})
+  void persistAuthEvent({
+    userId: currentUserId,
+    eventType: 'logout_success',
+    req,
+    details: {},
+  }).catch((persistError) => {
+    console.warn('[auth-event-persist] logout_success', persistError)
+  })
 
   return res.json({
     ok: true,

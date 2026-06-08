@@ -1,9 +1,10 @@
 import { prisma } from './prisma.js'
 import { buildMappingSummary } from './riskAssessment/riskAssessmentPayload.js'
 import { normalizeAssessmentPayload } from './riskAssessment/normalize.js'
+import { RISK_MODEL_VERSION } from './riskAssessment/version.js'
 
 export const USER_DATA_FORM_VERSION = 'assessment-form-v1'
-export const USER_DATA_MODEL_VERSION = 'risk-model-v1'
+export const USER_DATA_MODEL_VERSION = RISK_MODEL_VERSION
 export const USER_DATA_CONSENT_VERSION = 'terms-privacy-v1'
 export const USER_DATA_CONSENT_TYPE = 'terms_and_privacy'
 
@@ -22,6 +23,21 @@ function buildProfileData({ userId, fullName, state }) {
     fullName: toStringOrEmpty(fullName) || 'Usuário RiskCare',
     ...(state !== undefined ? { state: toNullableString(state) } : {}),
   }
+}
+
+function buildFactorDetailsData(factorBreakdown = []) {
+  return factorBreakdown.map((factor) => ({
+    factorKey: factor.key,
+    label: factor.label,
+    groupKey: factor.group,
+    originalValue: factor.originalValue === undefined ? null : String(factor.originalValue),
+    normalizedValue:
+      typeof factor.normalizedValue === 'number' && Number.isFinite(factor.normalizedValue)
+        ? factor.normalizedValue
+        : null,
+    contribution: typeof factor.contribution === 'number' ? factor.contribution : 0,
+    impact: String(factor.impact ?? 'baixo'),
+  }))
 }
 
 export async function upsertUserProfile({ userId, fullName, state }) {
@@ -81,8 +97,14 @@ export async function persistAssessmentSubmission({
 
   const normalizedSnapshot = normalizeAssessmentPayload(payload)
   const mappingSummary = buildMappingSummary()
+  const factorDetailsData = buildFactorDetailsData(assessment.factorBreakdown)
 
   return prisma.$transaction(async (tx) => {
+    const riskModelVersion = await tx.riskModelVersion.findUnique({
+      where: { version: modelVersion },
+      select: { id: true },
+    })
+
     const profile = await tx.profile.upsert({
       where: { userId },
       create: buildProfileData({ userId, fullName, state }),
@@ -110,6 +132,7 @@ export async function persistAssessmentSubmission({
         userId,
         responseId: questionnaireResponse.id,
         modelVersion,
+        ...(riskModelVersion?.id ? { riskModelVersionId: riskModelVersion.id } : {}),
         score: assessment.score,
         rawScore: assessment.rawScore,
         classification: assessment.classification,
@@ -117,6 +140,13 @@ export async function persistAssessmentSubmission({
         factorBreakdownJson: assessment.factorBreakdown,
         warningsJson: assessment.warnings,
         sourcesJson: assessment.sourcesUsed,
+        assessmentFactorDetails: {
+          create: factorDetailsData,
+        },
+      },
+      include: {
+        assessmentFactorDetails: true,
+        riskModelVersion: true,
       },
     })
 
@@ -125,6 +155,7 @@ export async function persistAssessmentSubmission({
       profile,
       questionnaireResponse,
       riskAssessment,
+      modelVersion: riskModelVersion?.id ? modelVersion : null,
     }
   })
 }
