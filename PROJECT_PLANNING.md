@@ -155,16 +155,16 @@
 
 ### 7.2 Frente do Gabriel - Catálogo de Bases, Versionamento e Auditoria
 
-[ ] - Mapear cada campo do questionário para pelo menos uma base de referência.
-[ ] - Classificar cada base por papel: clínica, imagem, genômica, epidemiológica ou contextual.
-[ ] - Priorizar as bases com melhor encaixe inicial para o comparativo do projeto.
-[ ] - Criar os modelos Prisma para `DatasetReference`, `DatasetFeatureMapping`, `RiskModelVersion`, `AuthEvent` e `AssessmentFactorDetail`.
-[ ] - Definir a política de RLS dessas tabelas conforme o nível de acesso de cada uma.
-[ ] - Garantir que as tabelas de catálogo tenham leitura aberta ou autenticada e escrita apenas do backend.
-[ ] - Garantir que as tabelas de auditoria e segurança sejam acessíveis somente pelo backend/service role.
-[ ] - Considerar que o role do Prisma pode ser privilegiado; manter filtro explícito por `user_id` no backend como defesa em profundidade.
-[ ] - Políticas com `USING` e `WITH CHECK` em todas as tabelas expostas.
-[ ] - Consolidar a modelagem de dados para permitir comparativos mais precisos entre bases.
+[X] - Mapear cada campo do questionário para pelo menos uma base de referência.
+[X] - Classificar cada base por papel: clínica, imagem, genômica, epidemiológica ou contextual.
+[X] - Priorizar as bases com melhor encaixe inicial para o comparativo do projeto.
+[X] - Criar os modelos Prisma para `DatasetReference`, `DatasetFeatureMapping`, `RiskModelVersion`, `AuthEvent` e `AssessmentFactorDetail`.
+[X] - Definir a política de RLS dessas tabelas conforme o nível de acesso de cada uma.
+[X] - Garantir que as tabelas de catálogo tenham leitura aberta ou autenticada e escrita apenas do backend.
+[X] - Garantir que as tabelas de auditoria e segurança sejam acessíveis somente pelo backend/service role.
+[X] - Considerar que o role do Prisma pode ser privilegiado; manter filtro explícito por `user_id` no backend como defesa em profundidade.
+[X] - Políticas com `USING` e `WITH CHECK` em todas as tabelas expostas.
+[X] - Consolidar a modelagem de dados para permitir comparativos mais precisos entre bases.
 
 ### 7.3 Integração Entre as Duas Frentes
 
