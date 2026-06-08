@@ -13,11 +13,13 @@ import {
 } from 'recharts'
 import { useAuth } from '../contexts/AuthContext.jsx'
 import AccountShell from '../components/AccountShell.jsx'
+import ConfirmModal from '../components/ConfirmModal.jsx'
 import {
   getAssessmentStorageKey,
   readStoredAssessment,
   writeStoredAssessment,
 } from '../lib/riskAssessmentStorage.js'
+import { navigateWithoutReload } from '../utils/navigation.js'
 import '../styles/account-shell.css'
 
 const resultTabs = [
@@ -442,7 +444,7 @@ function ResultsFactorTick({ payload, x, y }) {
 }
 
 function ResultsPage() {
-  const { latestAssessment, session } = useAuth()
+  const { latestAssessment, session, signOut } = useAuth()
   const storageKey = useMemo(() => getAssessmentStorageKey(session?.user?.id), [session?.user?.id])
 
   const [storedAssessment, setStoredAssessment] = useState(() => readStoredAssessment(storageKey))
@@ -450,6 +452,8 @@ function ResultsPage() {
     const hash = typeof window !== 'undefined' ? window.location.hash.replace('#', '') : ''
     return resultTabs.some((tab) => tab.id === hash) ? hash : resultTabs[0].id
   })
+  const [isNewAssessmentModalOpen, setIsNewAssessmentModalOpen] = useState(false)
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false)
 
   useEffect(() => {
     const syncStoredAssessment = () => setStoredAssessment(readStoredAssessment(storageKey))
@@ -541,11 +545,25 @@ function ResultsPage() {
     target.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
 
+  const handleConfirmNewAssessment = () => {
+    setIsNewAssessmentModalOpen(false)
+    navigateWithoutReload('/formulario')
+  }
+
+  const handleConfirmLogout = async () => {
+    const result = await signOut()
+
+    if (result?.ok) {
+      setIsLogoutModalOpen(false)
+      navigateWithoutReload('/')
+    }
+  }
+
   return (
     <main id="main-content" className="results-page" tabIndex={-1}>
       <AccountShell
-        actionHref="/formulario"
-        actionLabel="Nova avaliação"
+        actionHref="/"
+        actionLabel="Voltar ao início"
         description={
           hasStoredAssessment
             ? 'Seu último resultado está salvo e você pode iniciar uma nova avaliação quando quiser.'
@@ -553,6 +571,7 @@ function ResultsPage() {
         }
         statusLabel={hasStoredAssessment ? 'Último resultado salvo' : 'Visualização demonstrativa'}
         title="Painel da sua avaliação"
+        onLogoutClick={() => setIsLogoutModalOpen(true)}
       />
       <section className="results-card" aria-labelledby="results-title">
         <header className="results-card__header">
@@ -1039,11 +1058,39 @@ function ResultsPage() {
             <button type="button" className="results-action-button">
               Exportar PDF
             </button>
-            <a className="results-action-button" href={session ? '/formulario' : '/login'}>
+            <button
+              type="button"
+              className="results-action-button"
+              onClick={() => setIsNewAssessmentModalOpen(true)}
+            >
               Nova avaliação
-            </a>
+            </button>
           </div>
         </section>
+
+        <ConfirmModal
+          cancelLabel="Cancelar"
+          confirmLabel="Iniciar nova avaliação"
+          description="Uma nova avaliação substitui o foco atual do painel e leva você de volta ao formulário para preencher um novo envio."
+          iconLabel="↺"
+          open={isNewAssessmentModalOpen}
+          title="Deseja iniciar uma nova avaliação?"
+          tone="primary"
+          onCancel={() => setIsNewAssessmentModalOpen(false)}
+          onConfirm={handleConfirmNewAssessment}
+        />
+
+        <ConfirmModal
+          cancelLabel="Cancelar"
+          confirmLabel="Sair"
+          description="Ao sair, você volta para a tela inicial e pode precisar autenticar novamente para ver dados salvos."
+          iconLabel="!"
+          open={isLogoutModalOpen}
+          title="Deseja sair da conta?"
+          tone="danger"
+          onCancel={() => setIsLogoutModalOpen(false)}
+          onConfirm={() => void handleConfirmLogout()}
+        />
       </section>
     </main>
   )

@@ -43,6 +43,8 @@ function AccountShell({
   layout = 'wide',
   statusLabel = 'Conta ativa',
   title,
+  onActionClick,
+  onLogoutClick,
 }) {
   const { loading, session, signOut } = useAuth()
 
@@ -55,12 +57,21 @@ function AccountShell({
   const initials = getInitials(displayName)
   const email = typeof user.email === 'string' ? user.email.trim() : ''
 
-  const handleAction = (event, href) => {
-    event.preventDefault()
+  const handleAction = (href) => {
+    if (typeof onActionClick === 'function') {
+      onActionClick()
+      return
+    }
+
     navigateWithoutReload(href)
   }
 
   const handleLogout = async () => {
+    if (typeof onLogoutClick === 'function') {
+      onLogoutClick()
+      return
+    }
+
     const result = await signOut()
 
     if (result?.ok) {
@@ -88,13 +99,26 @@ function AccountShell({
 
         <div className="account-shell__actions">
           {actionLabel && actionHref ? (
-            <a
-              className="account-shell__action account-shell__action--primary"
-              href={actionHref}
-              onClick={(event) => handleAction(event, actionHref)}
-            >
-              {actionLabel}
-            </a>
+            typeof onActionClick === 'function' ? (
+              <button
+                type="button"
+                className="account-shell__action account-shell__action--primary"
+                onClick={() => handleAction(actionHref)}
+              >
+                {actionLabel}
+              </button>
+            ) : (
+              <a
+                className="account-shell__action account-shell__action--primary"
+                href={actionHref}
+                onClick={(event) => {
+                  event.preventDefault()
+                  handleAction(actionHref)
+                }}
+              >
+                {actionLabel}
+              </a>
+            )
           ) : null}
 
           <button

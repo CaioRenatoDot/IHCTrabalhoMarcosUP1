@@ -2,6 +2,7 @@
 import { submitRiskAssessment } from '../lib/riskAssessmentApi.js'
 import { useAuth } from '../contexts/AuthContext.jsx'
 import AccountShell from '../components/AccountShell.jsx'
+import ConfirmModal from '../components/ConfirmModal.jsx'
 import {
   getAssessmentStorageKey,
   readStoredAssessment,
@@ -712,7 +713,7 @@ function EstiloVidaStep({ bmiCalculator, errors, formData, updateField, updateBm
 }
 
 function AssessmentFormPage() {
-  const { latestAssessment, refreshLatestAssessment, session } = useAuth()
+  const { latestAssessment, refreshLatestAssessment, session, signOut } = useAuth()
   const [currentStep, setCurrentStep] = useState(0)
   const [formData, setFormData] = useState(initialFormData)
   const [bmiCalculator, setBmiCalculator] = useState({
@@ -722,6 +723,8 @@ function AssessmentFormPage() {
   const [errors, setErrors] = useState({})
   const [submitError, setSubmitError] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isSubmitConfirmOpen, setIsSubmitConfirmOpen] = useState(false)
+  const [isLogoutConfirmOpen, setIsLogoutConfirmOpen] = useState(false)
   const assessmentStorageKey = useMemo(
     () => getAssessmentStorageKey(session?.user?.id),
     [session?.user?.id],
@@ -790,7 +793,7 @@ function AssessmentFormPage() {
     }
 
     if (currentStep === steps.length - 1) {
-      void submitAssessment()
+      setIsSubmitConfirmOpen(true)
       return
     }
 
@@ -810,8 +813,10 @@ function AssessmentFormPage() {
 
       writeStoredAssessment(assessmentStorageKey, result)
       void refreshLatestAssessment()
+      setIsSubmitConfirmOpen(false)
       navigateWithoutReload('/resultados')
     } catch (error) {
+      setIsSubmitConfirmOpen(false)
       setSubmitError(error?.message ?? 'Não foi possível calcular sua estimativa. Tente novamente.')
     } finally {
       setIsSubmitting(false)
@@ -842,9 +847,10 @@ function AssessmentFormPage() {
             ? 'Você já tem um resultado salvo. Consulte-o quando quiser ou inicie uma nova avaliação quando preferir.'
             : 'Sua conta está ativa. Continue preenchendo a avaliação no seu ritmo e acompanhe tudo por aqui.'
         }
-        layout="compact"
+        layout="wide"
         statusLabel={hasStoredAssessment ? 'Resultado salvo' : 'Avaliação em andamento'}
         title={hasStoredAssessment ? 'Você já tem um resultado' : 'Sua avaliação está em andamento'}
+        onLogoutClick={() => setIsLogoutConfirmOpen(true)}
       />
       <section className="assessment-card" aria-labelledby="assessment-title">
         <header className="assessment-header">
@@ -914,6 +920,38 @@ function AssessmentFormPage() {
           </button>
         </footer>
       </section>
+
+      <ConfirmModal
+        cancelLabel="Voltar"
+        confirmLabel="Enviar avaliação"
+        description="Ao confirmar, sua avaliação será processada e o resultado final será salvo para esta conta."
+        iconLabel="?"
+        confirmDisabled={isSubmitting}
+        open={isSubmitConfirmOpen}
+        title="Confirmar envio da avaliação"
+        tone="primary"
+        onCancel={() => setIsSubmitConfirmOpen(false)}
+        onConfirm={() => void submitAssessment()}
+      />
+
+      <ConfirmModal
+        cancelLabel="Cancelar"
+        confirmLabel="Sair"
+        description="Se sair agora, você precisará entrar novamente para continuar ou ver seus resultados salvos."
+        iconLabel="!"
+        open={isLogoutConfirmOpen}
+        title="Deseja sair da conta?"
+        tone="danger"
+        onCancel={() => setIsLogoutConfirmOpen(false)}
+        onConfirm={async () => {
+          const result = await signOut()
+
+          if (result?.ok) {
+            setIsLogoutConfirmOpen(false)
+            navigateWithoutReload('/login')
+          }
+        }}
+      />
     </main>
   )
 }

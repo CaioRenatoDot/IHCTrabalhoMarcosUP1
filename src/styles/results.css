@@ -23,7 +23,7 @@
 }
 
 .results-card {
-  width: min(100%, 980px);
+  width: min(100%, 1120px);
   margin: 0 auto;
   overflow: hidden;
   border: 1px solid var(--rc-border);

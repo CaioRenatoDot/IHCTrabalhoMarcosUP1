@@ -7,6 +7,11 @@ import {
   signupWithBackend,
 } from '../lib/authApi.js'
 import { getLatestRiskAssessment } from '../lib/riskAssessmentApi.js'
+import {
+  getAssessmentStorageKey,
+  readStoredAssessment,
+  writeStoredAssessment,
+} from '../lib/riskAssessmentStorage.js'
 
 const AuthContext = createContext(null)
 
@@ -58,12 +63,24 @@ export function AuthProvider({ children }) {
 
     try {
       const data = await getLatestRiskAssessment()
-      const assessment = data?.assessment ?? null
+      const backendAssessment = data?.assessment ?? null
+      const storageKey = getAssessmentStorageKey(userId)
+      const cachedAssessment = readStoredAssessment(storageKey)
+      const assessment = backendAssessment ?? cachedAssessment ?? null
+
       setLatestAssessment(assessment)
+
+      if (assessment) {
+        writeStoredAssessment(storageKey, assessment)
+      }
+
       return assessment
     } catch {
-      setLatestAssessment(null)
-      return null
+      const storageKey = getAssessmentStorageKey(userId)
+      const cachedAssessment = readStoredAssessment(storageKey)
+
+      setLatestAssessment(cachedAssessment)
+      return cachedAssessment
     } finally {
       setLatestAssessmentLoading(false)
     }
@@ -81,11 +98,14 @@ export function AuthProvider({ children }) {
         }
 
         setSession(data.session ?? null)
-        setLatestAssessment(data.latestAssessment ?? null)
 
-        if (!data.latestAssessment) {
-          void loadLatestAssessment(data.session?.user?.id ?? null)
-        }
+        const sessionUserId = data.session?.user?.id ?? null
+        const storageKey = getAssessmentStorageKey(sessionUserId)
+        const cachedAssessment = sessionUserId ? readStoredAssessment(storageKey) : null
+        const sessionAssessment =
+          data.latestAssessment ?? (sessionUserId ? await loadLatestAssessment(sessionUserId) : null) ?? cachedAssessment ?? null
+
+        setLatestAssessment(sessionAssessment)
       } catch {
         if (isMounted) {
           setSession(null)
@@ -122,7 +142,7 @@ export function AuthProvider({ children }) {
           })
 
           setSession(data.session ?? null)
-          void loadLatestAssessment(data.session?.user?.id ?? null)
+          await loadLatestAssessment(data.session?.user?.id ?? null)
 
           return {
             ok: true,
@@ -154,7 +174,7 @@ export function AuthProvider({ children }) {
           })
 
           setSession(data.session ?? null)
-          void loadLatestAssessment(data.session?.user?.id ?? null)
+          await loadLatestAssessment(data.session?.user?.id ?? null)
 
           return {
             ok: true,

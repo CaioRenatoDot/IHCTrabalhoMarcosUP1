@@ -51,7 +51,7 @@ function focusElementById(id) {
 function App() {
   const [route, setRoute] = useState(parseLocation)
   const previousPathRef = useRef(route.path)
-  const { session, loading: authLoading } = useAuth()
+  const { latestAssessmentLoading, session, loading: authLoading } = useAuth()
 
   const navigate = useCallback(
     (href) => {
@@ -178,8 +178,10 @@ function App() {
 
   const shouldShowAuthLoader =
     (authLoading && (AUTH_ROUTES.has(route.path) || PROTECTED_ROUTES.has(route.path))) ||
+    (latestAssessmentLoading && PROTECTED_ROUTES.has(route.path) && Boolean(session)) ||
     (PROTECTED_ROUTES.has(route.path) && !session) ||
     (AUTH_ROUTES.has(route.path) && Boolean(session))
+  const pageTransitionKey = route.path
 
   if (shouldShowAuthLoader) {
     page = <RouteLoadingPage label="Verificando acesso" />
@@ -194,7 +196,9 @@ function App() {
         <div className="app-page">
           {showNavbar ? <Navbar onNavigate={navigate} currentPath={route.path} /> : null}
           <div className="page-shell">
-            {page}
+            <div key={pageTransitionKey} className="page-shell__transition">
+              {page}
+            </div>
           </div>
           {showFooter ? <Footer /> : null}
         </div>

@@ -1,8 +1,11 @@
+import { useState } from 'react'
 import { useAuth } from '../contexts/AuthContext.jsx'
+import ConfirmModal from './ConfirmModal.jsx'
 import { getAssessmentStorageKey, readStoredAssessment } from '../lib/riskAssessmentStorage.js'
 
 function Navbar({ onNavigate, currentPath }) {
   const { latestAssessment, session, signOut } = useAuth()
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false)
   const storageKey = session?.user?.id ? getAssessmentStorageKey(session.user.id) : null
   const localAssessment = storageKey ? readStoredAssessment(storageKey) : null
   const hasSavedAssessment = Boolean(latestAssessment || localAssessment)
@@ -25,15 +28,11 @@ function Navbar({ onNavigate, currentPath }) {
     ? (hasSavedAssessment ? '/resultados' : '/formulario')
     : '/login'
 
-  const handleLogout = async (event) => {
-    if (typeof onNavigate !== 'function') {
-      return
-    }
-
-    event.preventDefault()
+  const handleLogout = async () => {
     const result = await signOut()
 
     if (result?.ok) {
+      setIsLogoutModalOpen(false)
       onNavigate('/')
     }
   }
@@ -68,7 +67,14 @@ function Navbar({ onNavigate, currentPath }) {
 
       <div className="site-navbar__actions">
         {session ? (
-          <button type="button" className="site-navbar__logout" onClick={handleLogout}>
+          <button
+            type="button"
+            className="site-navbar__logout"
+            onClick={(event) => {
+              event.preventDefault()
+              setIsLogoutModalOpen(true)
+            }}
+          >
             Sair
           </button>
         ) : null}
@@ -81,6 +87,18 @@ function Navbar({ onNavigate, currentPath }) {
           {ctaLabel}
         </a>
       </div>
+
+      <ConfirmModal
+        cancelLabel="Cancelar"
+        confirmLabel="Sair"
+        description="Ao sair da conta, você volta para a tela inicial e precisará autenticar novamente para acessar dados salvos."
+        iconLabel="!"
+        open={isLogoutModalOpen}
+        title="Deseja realmente sair?"
+        tone="danger"
+        onCancel={() => setIsLogoutModalOpen(false)}
+        onConfirm={() => void handleLogout()}
+      />
     </header>
   )
 }
