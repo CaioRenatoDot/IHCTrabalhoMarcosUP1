@@ -187,13 +187,13 @@ Principais entregas:
 - Criação e evolução do formulário de avaliação
 - Ajustes gerais no frontend, principalmente nas telas de formulário e resultado
 - Aplicação do Lenis
-- Aplicação do GSAP em componente da landing
-- Implementação de acessibilidade de zoom e lupa de texto
+- Aplicação do GSAP em componente da landing **Commit:** `ba590a4`
+- Implementação de acessibilidade de zoom e lupa de texto **Commit:** `022df27`  `feat(accessibility): adicionar controles globais de acessibilidade (#7)` 
 - Implementação inicial do backend
 - Integração com o Supabase
 - Primeira versão da lógica de pesos da pontuação do formulário
 - Ajustes de contraste e detalhes visuais de interface
-- - `feat(accessibility): adicionar controles globais de acessibilidade (#7)` - implementação de acessibilidade de alteração de fonte
+  
 
 ### Caio Renato dos Santos Claudino
 
