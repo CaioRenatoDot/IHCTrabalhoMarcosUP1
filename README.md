@@ -193,6 +193,7 @@ Principais entregas:
 - Integração com o Supabase
 - Primeira versão da lógica de pesos da pontuação do formulário
 - Ajustes de contraste e detalhes visuais de interface
+- - `feat(accessibility): adicionar controles globais de acessibilidade (#7)` - implementação de acessibilidade de alteração de fonte
 
 ### Caio Renato dos Santos Claudino
 
@@ -200,7 +201,7 @@ Principais entregas:
 
 - Ajustes gerais no frontend
 - Melhorias na experiência visual das telas de formulário e resultado
-- Contribuições na aplicação de contraste
+- Contribuições na aplicação de contraste - Issue #1
 - Ajustes de detalhes visuais e refinamento de interface
 
 ### Thalita Pereira de Andrade
@@ -208,7 +209,7 @@ Principais entregas:
 Principais entregas:
 
 - Sugestões para a arquitetura do sistema de autenticação
-- Criação e realização da issue relacionada à navegação por barra
+- Criação e realização da issue relacionada à navegação por barra - Issue #4
 - Ideias gerais para a estruturação do projeto
 - Acompanhamento do progresso e testes para retorno ao time
 
@@ -220,7 +221,7 @@ Principais entregas:
 - Divisão e acompanhamento das etapas de planejamento
 - Definição de escopo, roadmap e checklist do projeto
 - Consolidação da lógica de dados, Prisma, RLS e separação de responsabilidades
-- Implementação do VLibras
+- Implementação do VLibras `docs(vlibras): add issue #3 delivery record (#9)`
 
 ## Observações
 
