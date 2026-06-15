@@ -91,8 +91,9 @@ A aplicação foi pensada para manter a pessoa usuária dentro de uma jornada co
 
 ## Como Executar
 
+Ao abrir o site clique em: Iniciar avaliação onde será redirecionado para a tela de login. Abaixo serão disponibilizados os dados para login 
 
-###Email/Senha de teste 
+##Email/Senha de teste 
 email:teste@riskcare.com
 senha:teste123@
 
