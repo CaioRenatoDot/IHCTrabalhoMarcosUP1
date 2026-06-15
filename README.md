@@ -91,6 +91,12 @@ A aplicação foi pensada para manter a pessoa usuária dentro de uma jornada co
 
 ## Como Executar
 
+
+###Email/Senha de teste 
+email:teste@riskcare.com
+senha:teste123@
+
+
 ### Instalação
 
 ```bash
