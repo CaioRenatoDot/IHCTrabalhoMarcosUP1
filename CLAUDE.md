@@ -32,6 +32,26 @@ npm run db:seed      # popula o catálogo de datasets e a versão do modelo
 
 Ainda não existe suíte de testes. Ao mexer no motor de risco, adicione testes (Vitest).
 
+## Fluxo de trabalho
+
+O andamento do projeto está em [CHECKLIST.md](CHECKLIST.md) (itens com ID, como `FR-01`, e fase `F0`–`F7`).
+A visão e o roadmap estão em [PLANEJAMENTO.md](PLANEJAMENTO.md).
+
+1. Toda mudança de código sai de uma branch criada a partir da `develop` (ex.: `fase-0/front-credibilidade`).
+   Nunca commitar código direto na `develop` ou na `main`.
+2. Commits pequenos, em português, no formato `tipo: descrição` (`feat`, `fix`, `docs`, `refactor`, `ci`).
+3. Abrir PR para a `develop`. O CI ([.github/workflows/ci.yml](.github/workflows/ci.yml)) roda `npm ci`, `lint` e `build`
+   e precisa passar. Merge por **squash**.
+4. Marcar a caixa do item no CHECKLIST.md **no mesmo PR** que o entrega.
+5. A `main` só recebe a `develop` quando estiver estável, e só quando o dono do projeto pedir.
+
+Antes de abrir o PR, rode localmente o que o CI roda. O build precisa de variáveis falsas para o `prisma generate`:
+
+```bash
+npm run lint
+DATABASE_URL=postgresql://u:p@localhost:5432/db DIRECT_URL=postgresql://u:p@localhost:5432/db npm run build
+```
+
 ## Mapa do código
 
 - [src/App.jsx](src/App.jsx): roteador **escrito à mão** (pathname + `if/else`), com guarda

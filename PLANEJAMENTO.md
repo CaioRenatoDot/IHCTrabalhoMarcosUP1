@@ -287,125 +287,18 @@ antes do redesign porque muda a estrutura do resultado, e não vale desenhar dua
 
 ---
 
-## 8. Frentes de trabalho (checklist de execução)
+## 8. Acompanhamento
 
-Esta seção reorganiza os itens das seções 3 a 5 por área, para atacar uma frente de cada vez.
-Ordem sugerida: **Front → Back → Formulário e resultado → Conteúdo e fontes → Infra e qualidade**.
+A execução é acompanhada no [CHECKLIST.md](CHECKLIST.md), organizado em cinco frentes
+(Front, Back, Formulário e resultado, Conteúdo e fontes, Infra e qualidade), com itens
+numerados e a fase de cada um. Este documento guarda a visão, o diagnóstico e o roadmap;
+o checklist guarda o andamento.
 
 Dependências entre as frentes:
 - O **resultado novo** só deve ser desenhado depois do **motor** (Gail) no back; senão o trabalho é feito duas vezes.
 - A página de **números** e os **artigos** dependem do **registro de fontes**, então ele sai primeiro.
 - O que faz parte da Fase 0 no front (retirar dados falsos e textos acadêmicos) não depende de nada e pode começar já.
-
-### 8.1 Front (visual e navegação)
-
-**Identidade e design system**
-- [ ] Paleta: manter o rosa e adicionar uma cor de apoio escura, mais cores semânticas (alerta, atenção, ok, info) com contraste AA ([base.css](src/styles/base.css))
-- [ ] Escala tipográfica e de espaçamento em tokens; modo escuro
-- [ ] Componentes base: `Button`, `Card`, `Callout`, `Badge`, `Accordion`, `Tabs`, `StatCard`, `SourceCitation`
-- [ ] Ícones padronizados (`react-icons` já está instalado) no lugar dos SVGs copiados
-- [ ] Ilustrações num estilo único
-
-**Home**
-- [ ] Hero sem o card de "32%" falso ([ConscientizacaoPrevencaoSection.jsx](src/components/ConscientizacaoPrevencaoSection.jsx))
-- [ ] Faixa de números reais, cada um com fonte ([Indicadores.jsx](src/components/Indicadores.jsx))
-- [ ] Cards levando a páginas reais (hoje os `FeatureCard` não levam a lugar nenhum)
-- [ ] Bloco de sinais de alerta, "Como funciona" sem "crie seu perfil", FAQ curto
-
-**Navegação e estrutura**
-- [ ] Navbar nova: Avaliação · Aprenda · Números · Onde buscar ajuda · Metodologia ([Navbar.jsx](src/components/Navbar.jsx))
-- [ ] Rodapé completo: mapa do site, fontes, aviso médico, contato ([Footer.jsx](src/components/Footer.jsx))
-- [ ] React Router com lazy loading no lugar do roteador manual ([App.jsx](src/App.jsx))
-- [ ] Tirar o tom acadêmico: rodapé e página "Sobre o projeto" ([Cover.jsx](src/components/Cover.jsx))
-
-**Qualidade do front**
-- [ ] SEO: `title`, description, Open Graph, `sitemap.xml`, `robots.txt` ([index.html](index.html))
-- [ ] Carregar o VLibras só quando ativado
-- [ ] Trocar escapes `á` por UTF-8
-- [ ] Quebrar os arquivos grandes (`ResultsPage.jsx`, `AssessmentFormPage.jsx`, `results.css`)
-
-**Fontes desta frente:** apenas os números reais da home, que vêm do INCA (ver 8.4).
-
-### 8.2 Back (API, motor de risco e dados)
-
-**Motor de risco**
-- [ ] Parar de pontuar sintomas e mamografia como risco ([normalize.js](server/lib/riskAssessment/normalize.js), [weights.js](server/lib/riskAssessment/weights.js))
-- [ ] Remover `sourcesUsed` fixo; as fontes passam a vir do modelo ativo ([score.js](server/lib/riskAssessment/score.js))
-- [ ] Implementar o **modelo de Gail** (risco em 5 anos e ao longo da vida) e testar contra os valores de referência do NCI
-- [ ] Manter o score atual renomeado como "índice de hábitos de proteção"
-- [ ] Subir `RISK_MODEL_VERSION` a cada mudança ([version.js](server/lib/riskAssessment/version.js))
-
-**API**
-- [ ] Endpoint de avaliação **sem login**, com rate limit ([riskAssessment.js](server/routes/riskAssessment.js))
-- [ ] Histórico: listar todas as avaliações, não só a última
-- [ ] Endpoints para exportar e excluir os dados da pessoa (LGPD)
-- [ ] Validação com `zod` (já instalado) no payload
-
-**Banco**
-- [ ] Revisar o [schema.prisma](prisma/schema.prisma): `fullName` deixa de ser obrigatório
-- [ ] Decidir o destino dos datasets em `data/datasets/` (não servem para pontuar o questionário)
-- [ ] Novas migrations para os campos do Gail
-
-**Fontes desta frente:** NCI (BCRAT/Gail) e Ministério da Saúde (limiares de rastreamento).
-
-### 8.3 Formulário e resultado
-
-**Questionário** ([AssessmentFormPage.jsx](src/pages/AssessmentFormPage.jsx))
-- [ ] Remover "Nome completo"
-- [ ] Novas perguntas do Gail: idade no primeiro parto, biópsias, hiperplasia atípica, raça/etnia
-- [ ] Separar o que é sintoma (alerta) do que é fator de risco
-- [ ] Valores estáveis (`"first_degree"`) no lugar de rótulos em texto
-- [ ] "Por que perguntamos isso?" em cada pergunta; salvar progresso; tempo restante
-
-**Resultado** ([ResultsPage.jsx](src/pages/ResultsPage.jsx))
-- [ ] Remover os gráficos com dados inventados e a matriz com notas internas
-- [ ] Novo layout: sinais de alerta → plano de ação → o que mais influenciou → rastreamento → fontes
-- [ ] Gráfico simples: risco da pessoa contra a média da idade (dados do próprio modelo)
-- [ ] **Plano de ação** personalizado, cada recomendação com fonte
-- [ ] "Perguntas para levar à consulta"
-- [ ] Mitigação mínima já na Fase 0: aviso de "procure atendimento" quando houver nódulo ou secreção, independente do score
-
-**PDF**
-- [ ] Relatório com resumo, respostas, resultado, plano, perguntas, fontes e aviso (`@react-pdf/renderer`, gerado no navegador)
-- [ ] Impressão com CSS `@media print`
-
-**Fontes desta frente:** NCI (Gail), INCA e Ministério da Saúde (rastreamento e estilo de vida).
-
-### 8.4 Conteúdo e fontes (site de consulta)
-
-**Páginas**
-- [ ] `/aprenda`: fatores de risco, sinais de alerta, autoexame, rastreamento, diagnóstico e tratamento, mitos e verdades, câncer de mama masculino
-- [ ] `/numeros`: casos novos e mortalidade por UF e por idade
-- [ ] `/onde-buscar-ajuda`: SUS, Disque Saúde 136, como pedir mamografia, ONGs
-- [ ] Seus direitos, `/metodologia`, `/fontes`, FAQ, glossário
-
-**Infraestrutura de fontes**
-- [ ] Registro central `src/content/sources.js` (nome, link, ano, data de acesso)
-- [ ] Componente `SourceCitation` com nota numerada e lista de referências
-- [ ] "Última revisão em …" em cada artigo
-
-**Fontes a levantar** (confirmar a edição vigente de cada uma antes de citar):
-
-| Fonte | O que pegar |
-|---|---|
-| **INCA** (gov.br/inca) | Estimativa de casos novos por ano e por UF; fatores de risco; sinais e sintomas; detecção precoce |
-| **INCA, Atlas de Mortalidade** | Mortalidade por UF e série histórica |
-| **Ministério da Saúde** | Diretriz vigente de rastreamento mamográfico (faixa etária e periodicidade) |
-| **DATASUS / SISCAN** | Cobertura de mamografia no SUS |
-| **NCI, BCRAT** (bcrisktool.cancer.gov) | Modelo de Gail: fórmula, coeficientes e limitações |
-| **SEER** (seer.cancer.gov) | Incidência por idade |
-| **OMS / OPAS** | Ficha técnica de câncer de mama (contexto global) |
-| **Leis 12.732/2012 e 13.896/2019** | Prazos para diagnóstico e tratamento no SUS |
-
-### 8.5 Infra e qualidade
-
-- [ ] CI no GitHub Actions (lint e build; testes depois). Em espera por decisão do time.
-- [ ] Vitest: motor de risco, normalização e validação
-- [ ] Testes de API (supertest)
-- [ ] Supabase de desenvolvimento para rodar o login localmente
-- [ ] Renomear o pacote para `riskcare` ([package.json](package.json))
-- [ ] Revisar termos de uso e política de privacidade (sem "fins acadêmicos", com controlador e contato)
-- [ ] README como estudo de caso (créditos do grupo, prints, decisões)
+- O **redesenho das telas** precisa da direção visual definida antes; a Fase 0 só remove o que é falso e não depende dele.
 
 ---
 
