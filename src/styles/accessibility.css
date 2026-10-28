@@ -375,18 +375,6 @@
   );
 }
 
-.accessibility-root .indicator-value {
-  font-size: clamp(
-    calc(1.75rem * var(--accessibility-font-scale)),
-    calc(3vw * var(--accessibility-font-scale)),
-    calc(2.5rem * var(--accessibility-font-scale))
-  );
-}
-
-.accessibility-root .indicator-label {
-  font-size: calc(0.9rem * var(--accessibility-font-scale));
-}
-
 .accessibility-root .cards-block h3 {
   font-size: calc(1.08rem * var(--accessibility-font-scale)) !important;
 }
@@ -475,7 +463,6 @@
 .accessibility-root.is-high-contrast .site-navbar,
 .accessibility-root.is-high-contrast .home-section,
 .accessibility-root.is-high-contrast .home-section--hero,
-.accessibility-root.is-high-contrast .home-section--metrics,
 .accessibility-root.is-high-contrast .home-section--cards,
 .accessibility-root.is-high-contrast .home-section--how,
 .accessibility-root.is-high-contrast .home-section--notice,
@@ -491,7 +478,6 @@
 .accessibility-root.is-high-contrast .awareness-description,
 .accessibility-root.is-high-contrast .section-title,
 .accessibility-root.is-high-contrast .section-sub,
-.accessibility-root.is-high-contrast .indicator-label,
 .accessibility-root.is-high-contrast .observation-banner__text,
 .accessibility-root.is-high-contrast .site-footer__left,
 .accessibility-root.is-high-contrast .site-footer__center,
@@ -556,14 +542,6 @@
 .accessibility-root.is-high-contrast .login-card a,
 .accessibility-root.is-high-contrast .cards-block h3 {
   color: #ffeb3b;
-}
-
-.accessibility-root.is-high-contrast .indicator-value {
-  color: #fff;
-}
-
-.accessibility-root.is-high-contrast .indicator-separator {
-  background: #333;
 }
 
 .accessibility-root.is-high-contrast .feature-card-panel {
