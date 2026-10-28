@@ -64,12 +64,14 @@
   letter-spacing: 0.18em;
 }
 
+.site-footer__text a,
 .site-footer__links a {
   color: inherit;
   text-decoration: none;
   transition: color 0.2s ease;
 }
 
+.site-footer__text a:hover,
 .site-footer__links a:hover {
   color: var(--rc-rose);
 }
