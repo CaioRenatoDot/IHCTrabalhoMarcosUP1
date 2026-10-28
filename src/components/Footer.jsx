@@ -29,6 +29,18 @@ function Footer() {
               <InternalLink href="/formulario">Fazer avaliação</InternalLink>
             </li>
             <li>
+              <InternalLink href="/sinais-de-alerta">Sinais de alerta</InternalLink>
+            </li>
+            <li>
+              <InternalLink href="/mamografia">Quando fazer mamografia</InternalLink>
+            </li>
+            <li>
+              <InternalLink href="/perguntas-frequentes">Perguntas frequentes</InternalLink>
+            </li>
+            <li>
+              <InternalLink href="/onde-buscar-ajuda">Onde buscar ajuda</InternalLink>
+            </li>
+            <li>
               <InternalLink href="/sobre-projeto">Sobre o projeto e a equipe</InternalLink>
             </li>
           </ul>

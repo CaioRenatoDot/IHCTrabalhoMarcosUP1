@@ -5,10 +5,10 @@ import ConfirmModal from './ConfirmModal.jsx'
 import { getAssessmentStorageKey, readStoredAssessment } from '../lib/riskAssessmentStorage.js'
 
 const NAV_LINKS = [
-  { href: '/', label: 'Início', activePaths: ['/'] },
-  { href: '/#como-funciona', label: 'Como funciona' },
-  { href: '/#sinais', label: 'Sinais de alerta' },
-  { href: '/#apoio', label: 'Onde buscar ajuda' },
+  { href: '/sinais-de-alerta', label: 'Sinais de alerta', activePaths: ['/sinais-de-alerta'] },
+  { href: '/mamografia', label: 'Mamografia', activePaths: ['/mamografia'] },
+  { href: '/perguntas-frequentes', label: 'Perguntas', activePaths: ['/perguntas-frequentes'] },
+  { href: '/onde-buscar-ajuda', label: 'Onde buscar ajuda', activePaths: ['/onde-buscar-ajuda'] },
   { href: '/sobre-projeto', label: 'Sobre', activePaths: ['/sobre-projeto', '/cover'] },
 ]
 
