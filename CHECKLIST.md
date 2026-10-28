@@ -92,7 +92,9 @@ A parte de front da Fase 0 (FR-01 a FR-04) já está na `develop` (PR #18).
 - [ ] **FM-04** `F0` Aviso mínimo de "procure atendimento" quando houver nódulo ou secreção, independente do score
 - [ ] **FM-05** `F0` Remover "Nome completo" do questionário (decidir se fica só no cadastro) ([AssessmentFormPage.jsx](src/pages/AssessmentFormPage.jsx))
 
-**Questionário v2**
+**Questionário v2** — especificação completa em [docs/formulario.md](docs/formulario.md)
+- [x] **FM-14** `F3` Planejar o formulário: fontes, etapas, perguntas e versões ([docs/formulario.md](docs/formulario.md))
+- [ ] **FM-15** `F3` Resolver as pendências da seção 9 do docs/formulario.md (fontes a confirmar, pesos do índice de hábitos)
 - [ ] **FM-10** `F3` Perguntas do Gail: idade no primeiro parto, biópsias, hiperplasia atípica, raça/etnia
 - [ ] **FM-11** `F3` Separar sintomas (alerta) de fatores de risco
 - [ ] **FM-12** `F1` Valores estáveis (`"first_degree"`) no lugar de rótulos em texto

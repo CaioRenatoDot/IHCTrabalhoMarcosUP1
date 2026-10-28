@@ -135,6 +135,9 @@ Legenda: **P0** = essencial · **P1** = alto impacto · **P2** = desejável
 
 ### 3.1 Avaliação
 
+> A especificação do formulário (fontes, etapas, perguntas e versões v1/v2/v3) está em [docs/formulario.md](docs/formulario.md).
+> Decisão de 28/10/2026: a v2 classifica por **critérios de risco elevado** (consenso do INCA); o modelo de Gail fica para a v3.
+
 - [ ] **P0** Avaliação **sem login**: o cálculo pode rodar no cliente ou num endpoint público com rate limit. A conta passa a servir só para salvar.
 - [ ] **P0** Separar o resultado em três blocos independentes:
   - **Sinais de alerta** → banner "procure atendimento", independente do score.
