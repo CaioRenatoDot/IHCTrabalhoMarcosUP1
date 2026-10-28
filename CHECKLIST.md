@@ -130,6 +130,7 @@ O redesenho das telas (FR-10 em diante) só começa depois de a direção visual
 - [ ] **IN-05** `F1` Supabase de desenvolvimento para rodar o login localmente
 - [ ] **IN-06** `F7` README como estudo de caso (prints, decisões); Lighthouse acima de 90
 - [ ] **IN-07** `F1` Pedir ao dono a proteção de branch exigindo o check `check` verde
+- [ ] **IN-08** `F1` Docker para desenvolvimento: `Dockerfile` + `docker-compose.yml` (Node 22, `node_modules` em volume, polling para o hot-reload no Windows) e Supabase local via CLI (`supabase start`). Fazer junto com o IN-05
 
 ---
 
