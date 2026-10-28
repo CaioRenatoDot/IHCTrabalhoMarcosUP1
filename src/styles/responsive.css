@@ -20,10 +20,6 @@
     max-width: 100%;
   }
 
-  .risk-card {
-    width: min(320px, 100%);
-  }
-
   .cards-block__grid {
     grid-template-columns: 1fr;
     max-width: 480px;

@@ -34,7 +34,7 @@ O redesenho das telas (FR-10 em diante) só começa depois de a direção visual
 ## FR — Front
 
 **Fase 0: remover o que é falso ou sem fonte**
-- [ ] **FR-01** `F0` Hero sem o card "Sua estimativa de risco: 32%" que aparece antes de qualquer resposta ([ConscientizacaoPrevencaoSection.jsx](src/components/ConscientizacaoPrevencaoSection.jsx))
+- [x] **FR-01** `F0` Hero sem o card "Sua estimativa de risco: 32%" que aparece antes de qualquer resposta ([ConscientizacaoPrevencaoSection.jsx](src/components/ConscientizacaoPrevencaoSection.jsx))
 - [ ] **FR-02** `F0` Indicadores da home: os 4 números não têm fonte ("+50k casos/ano", "12 fatores", "5 min", "100%"). Trocar por dados oficiais com fonte ou remover ([Indicadores.jsx](src/components/Indicadores.jsx))
 - [ ] **FR-03** `F0` Tirar o tom acadêmico: rodapé ([Footer.jsx](src/components/Footer.jsx)) e página "Sobre o projeto" ([Cover.jsx](src/components/Cover.jsx))
 - [ ] **FR-04** `F0` `index.html`: título, meta description e Open Graph ([index.html](index.html))
