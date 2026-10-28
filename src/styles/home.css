@@ -36,32 +36,66 @@
   line-height: 1.6;
 }
 
+.home-intro--hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  padding-bottom: 0.5rem;
+}
+
+.home-intro--hero .home-intro__title {
+  font-size: calc(clamp(2rem, 3.8vw, 2.9rem) * var(--home-scale));
+}
+
+.home-intro__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.75rem;
+}
+
+.home-intro__media {
+  margin: 0;
+}
+
+.home-intro__media img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  border-radius: 20px;
+  box-shadow: var(--rc-shadow-lg);
+}
+
+.home-intro__media figcaption {
+  margin-top: 0.5rem;
+  color: var(--rc-ink-muted);
+  font-size: calc(0.75rem * var(--home-scale));
+  text-align: right;
+}
+
+.home-intro__media figcaption a {
+  color: inherit;
+}
+
 /* Você sabia? */
 .home-tip {
   display: flex;
   align-items: center;
   gap: 1rem 1.25rem;
   padding: 1.1rem 1.4rem;
-  border: 1px solid #ecd3dc;
+  border: 1px solid var(--rc-border);
   border-radius: 14px;
-  background: var(--rc-brand-soft);
+  background: var(--rc-surface);
 }
 
 .home-tip__icon {
-  display: inline-flex;
   flex-shrink: 0;
-  align-items: center;
-  justify-content: center;
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  background: var(--rc-bg);
-  color: var(--rc-action);
-}
-
-.home-tip__icon svg {
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
+  color: var(--rc-brand);
 }
 
 .home-tip__body {
@@ -105,7 +139,7 @@
 }
 
 .home-tip__link:hover {
-  background: #fff7fa;
+  background: var(--rc-brand-soft);
 }
 
 .home-tip__link svg {
@@ -133,7 +167,53 @@
 }
 
 .home-card--featured {
-  border-top: 4px solid var(--rc-brand);
+  border-color: var(--rc-ink);
+  background: var(--rc-ink);
+  color: #fff;
+  box-shadow: var(--rc-shadow-lg);
+}
+
+.home-card--featured .home-card__icon {
+  background: rgba(255, 255, 255, 0.1);
+  color: #f6c3d6;
+}
+
+.home-card--featured .home-card__eyebrow {
+  color: #f6c3d6;
+}
+
+.home-card--featured .home-card__title {
+  color: #fff;
+  font-size: calc(1.6rem * var(--home-scale));
+}
+
+.home-card--featured .home-card__text,
+.home-card--featured .home-card__note {
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.home-benefits {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-top: 1rem;
+  list-style: none;
+  color: rgba(255, 255, 255, 0.92);
+  font-size: calc(0.98rem * var(--home-scale));
+}
+
+.home-benefits li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+}
+
+.home-benefits svg {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  margin-top: 0.2rem;
+  color: #f6c3d6;
 }
 
 .home-card__icon {
@@ -344,6 +424,26 @@
   border-color: var(--rc-ink-muted);
 }
 
+.home-button--light {
+  border-color: #fff;
+  background: #fff;
+  color: var(--rc-ink);
+}
+
+.home-button--light:hover {
+  background: var(--rc-brand-soft);
+}
+
+.home-button--ghost {
+  border-color: rgba(255, 255, 255, 0.4);
+  background: transparent;
+  color: #fff;
+}
+
+.home-button--ghost:hover {
+  border-color: #fff;
+}
+
 /* Notícias + coluna lateral */
 .home-columns {
   display: grid;
@@ -504,6 +604,20 @@
 }
 
 /* Responsivo */
+@media (max-width: 860px) {
+  .home-intro--hero {
+    grid-template-columns: 1fr;
+  }
+
+  .home-intro__media {
+    order: -1;
+  }
+
+  .home-intro__media img {
+    aspect-ratio: 16 / 9;
+  }
+}
+
 @media (max-width: 1024px) {
   .home-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -538,7 +652,8 @@
     justify-content: center;
   }
 
-  .home-card__actions .home-button {
+  .home-card__actions .home-button,
+  .home-intro__actions .home-button {
     flex: 1 1 100%;
   }
 }
@@ -599,6 +714,28 @@
 .accessibility-root.is-high-contrast .home-contacts svg,
 .accessibility-root.is-high-contrast .home-shortcuts svg {
   color: #ffeb3b;
+}
+
+.accessibility-root.is-high-contrast .home-benefits,
+.accessibility-root.is-high-contrast .home-intro__media figcaption {
+  color: #fff;
+}
+
+.accessibility-root.is-high-contrast .home-benefits svg,
+.accessibility-root.is-high-contrast .home-card--featured .home-card__eyebrow {
+  color: #ffeb3b;
+}
+
+.accessibility-root.is-high-contrast .home-button--light {
+  border: 2px solid #ffeb3b;
+  background: #000;
+  color: #ffeb3b;
+}
+
+.accessibility-root.is-high-contrast .home-button--ghost {
+  border: 1px solid #fff;
+  background: #000;
+  color: #fff;
 }
 
 .accessibility-root.is-high-contrast .home-button--primary {

@@ -1,4 +1,4 @@
-import { LuArrowRight, LuCalendarDays, LuClipboardCheck, LuLifeBuoy, LuLightbulb, LuPhone } from 'react-icons/lu'
+import { LuArrowRight, LuCheck, LuClipboardCheck, LuLightbulb, LuPhone } from 'react-icons/lu'
 import InternalLink from '../InternalLink.jsx'
 import { FACTS, SUPPORT_CONTACTS, getScreeningGuidance, getTipOfTheDay } from '../../content/health.js'
 import { formatNewsDate, getRecentNews } from '../../content/news.js'
@@ -10,12 +10,19 @@ const SHORTCUTS = [
   { href: '/onde-buscar-ajuda', label: 'Onde buscar ajuda', text: 'UBS e telefones gratuitos' },
 ]
 
+const ASSESSMENT_BENEFITS = [
+  'Uma estimativa educativa de risco',
+  'Os fatores que mais pesaram nas suas respostas',
+  'Orientações para conversar com um profissional',
+]
+
+// Na home a fonte aparece na forma curta; o nome completo fica no título do link e nas páginas internas.
 function SourceNote({ source }) {
   return (
     <p className="home-source">
       Fonte:{' '}
-      <a href={source.url} target="_blank" rel="noopener noreferrer">
-        {source.label}
+      <a href={source.url} target="_blank" rel="noopener noreferrer" title={source.label}>
+        {source.short ?? source.label}
       </a>
     </p>
   )
@@ -26,9 +33,7 @@ export function TipBox() {
 
   return (
     <aside className="home-tip" aria-labelledby="home-tip-title">
-      <span className="home-tip__icon">
-        <LuLightbulb aria-hidden="true" />
-      </span>
+      <LuLightbulb className="home-tip__icon" aria-hidden="true" />
       <div className="home-tip__body">
         <h2 id="home-tip-title" className="home-tip__title">
           Você sabia?
@@ -45,52 +50,54 @@ export function TipBox() {
 }
 
 export function AssessmentCard({ hasAssessment, assessmentDate }) {
-  if (hasAssessment) {
-    return (
-      <section className="home-card home-card--featured" aria-labelledby="home-assessment-title">
-        <span className="home-card__icon">
-          <LuClipboardCheck aria-hidden="true" />
-        </span>
-        <p className="home-card__eyebrow">Avaliação de risco</p>
-        <h2 id="home-assessment-title" className="home-card__title">
-          Sua avaliação está salva
-        </h2>
-        <p className="home-card__text">
-          {assessmentDate ? `Feita em ${assessmentDate}. ` : ''}Veja o resultado e os fatores que mais pesaram nas suas
-          respostas.
-        </p>
-        <div className="home-card__actions">
-          <InternalLink className="home-button home-button--primary" href="/resultados">
-            Ver resultado
-            <LuArrowRight aria-hidden="true" />
-          </InternalLink>
-          <InternalLink className="home-button home-button--secondary" href="/formulario">
-            Refazer avaliação
-          </InternalLink>
-        </div>
-      </section>
-    )
-  }
-
   return (
     <section className="home-card home-card--featured" aria-labelledby="home-assessment-title">
       <span className="home-card__icon">
         <LuClipboardCheck aria-hidden="true" />
       </span>
       <p className="home-card__eyebrow">Avaliação de risco</p>
-      <h2 id="home-assessment-title" className="home-card__title">
-        Entenda seus fatores de risco
-      </h2>
-      <p className="home-card__text">
-        Responda a perguntas sobre seu histórico e seus hábitos e receba orientações. Leva cerca de 5 minutos.
-      </p>
-      <div className="home-card__actions">
-        <InternalLink className="home-button home-button--primary" href="/formulario">
-          Começar avaliação
-          <LuArrowRight aria-hidden="true" />
-        </InternalLink>
-      </div>
-      <p className="home-card__note">Educativa e gratuita. Não substitui consulta médica.</p>
+
+      {hasAssessment ? (
+        <>
+          <h2 id="home-assessment-title" className="home-card__title">
+            Sua avaliação está salva
+          </h2>
+          <p className="home-card__text">
+            {assessmentDate ? `Feita em ${assessmentDate}. ` : ''}Veja o resultado e os fatores que mais pesaram nas
+            suas respostas.
+          </p>
+          <div className="home-card__actions">
+            <InternalLink className="home-button home-button--light" href="/resultados">
+              Ver resultado
+              <LuArrowRight aria-hidden="true" />
+            </InternalLink>
+            <InternalLink className="home-button home-button--ghost" href="/formulario">
+              Refazer avaliação
+            </InternalLink>
+          </div>
+        </>
+      ) : (
+        <>
+          <h2 id="home-assessment-title" className="home-card__title">
+            O que você recebe
+          </h2>
+          <ul className="home-benefits">
+            {ASSESSMENT_BENEFITS.map((benefit) => (
+              <li key={benefit}>
+                <LuCheck aria-hidden="true" />
+                {benefit}
+              </li>
+            ))}
+          </ul>
+          <div className="home-card__actions">
+            <InternalLink className="home-button home-button--light" href="/formulario">
+              Começar avaliação
+              <LuArrowRight aria-hidden="true" />
+            </InternalLink>
+          </div>
+          <p className="home-card__note">Cerca de 5 minutos. Educativa e gratuita.</p>
+        </>
+      )}
     </section>
   )
 }
@@ -124,9 +131,6 @@ export function ScreeningCard({ age }) {
 
   return (
     <section className="home-card" aria-labelledby="home-screening-title">
-      <span className="home-card__icon home-card__icon--neutral">
-        <LuCalendarDays aria-hidden="true" />
-      </span>
       <p className="home-card__eyebrow">Quando fazer mamografia</p>
       {guidance ? (
         <>
@@ -165,9 +169,6 @@ export function SupportCard() {
 
   return (
     <section className="home-card home-card--support" aria-labelledby="home-support-title">
-      <span className="home-card__icon home-card__icon--neutral">
-        <LuLifeBuoy aria-hidden="true" />
-      </span>
       <p className="home-card__eyebrow">Apoio</p>
       <h2 id="home-support-title" className="home-card__title home-card__title--small">
         Precisa de ajuda?

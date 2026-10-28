@@ -4,28 +4,35 @@
 
 export const CONTENT_REVIEWED_AT = '2026-10-28'
 
+// label: nome completo (páginas internas e lista de fontes); short: versão curta usada na home.
 export const SOURCES = {
   incaBooklet: {
+    short: 'INCA, 2026',
     label: 'INCA — Câncer de mama: vamos falar sobre isso? (2026)',
     url: 'https://ninho.inca.gov.br/jspui/bitstream/123456789/18158/1/cartilha-mama-2026%20-%20DefesoEleitoral.pdf',
   },
   incaEstimate: {
+    short: 'INCA, Estimativa 2026–2028',
     label: 'INCA — Estimativa 2026–2028: síntese de resultados',
     url: 'https://www.gov.br/inca/pt-br/assuntos/cancer/numeros/estimativa/sintese-de-resultados-e-comentarios',
   },
   incaEstimateNews: {
+    short: 'INCA, 2026',
     label: 'INCA — Estimativa de casos novos de câncer 2026–2028 (04/02/2026)',
     url: 'https://www.gov.br/inca/pt-br/assuntos/noticias/2026/inca-estima-781-mil-novos-casos-de-cancer-por-ano-no-brasil-entre-2026-e-2028',
   },
   screeningNote: {
+    short: 'INCA / Ministério da Saúde, 2025',
     label: 'INCA — Ministério da Saúde padroniza informações para acesso à mamografia no SUS (29/09/2025)',
     url: 'https://www.gov.br/inca/pt-br/assuntos/noticias/2025/ministerio-da-saude-padroniza-informacoes-para-acesso-ao-exame-de-mamografia-no-sus',
   },
   law15284: {
+    short: 'Lei nº 15.284/2025',
     label: 'Ministério das Mulheres — Lei nº 15.284/2025 amplia o acesso à mamografia no SUS (19/12/2025)',
     url: 'https://www.gov.br/mulheres/pt-br/central-de-conteudos/noticias/2025/dezembro/sancionada-lei-que-amplia-acesso-das-mulheres-ao-exame-de-mamografia-fornecido-pelo-sus',
   },
   misinformation: {
+    short: 'Ministério das Mulheres, 2026',
     label: 'Ministério das Mulheres — Outubro Rosa: desinformação ainda dificulta a prevenção (19/10/2026)',
     url: 'https://www.gov.br/mulheres/pt-br/central-de-conteudos/noticias/2026/outubro-defeso-eleitoral/outubro-rosa-desinformacao-ainda-dificulta-a-prevencao-e-o-diagnostico-precoce-do-cancer-de-mama',
   },
