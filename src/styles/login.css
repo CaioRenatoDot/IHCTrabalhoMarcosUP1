@@ -9,48 +9,6 @@
   overflow: hidden;
 }
 
-.login-loading-page {
-  min-height: 100vh;
-  background: linear-gradient(180deg, #fffdfd 0%, #fff6f9 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.login-loading-dots {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.login-loading-dots span {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: #c74f7e;
-  animation: login-dot-pulse 0.75s ease-in-out infinite alternate;
-}
-
-.login-loading-dots span:nth-child(2) {
-  animation-delay: 0.15s;
-}
-
-.login-loading-dots span:nth-child(3) {
-  animation-delay: 0.3s;
-}
-
-@keyframes login-dot-pulse {
-  from {
-    opacity: 0.35;
-    transform: translateY(0);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(-8px);
-  }
-}
-
 .login-page::before,
 .login-page::after {
   content: "";
@@ -699,14 +657,6 @@
 
 .accessibility-root.is-high-contrast .login-warning {
   background: #121212;
-}
-
-.accessibility-root.is-high-contrast .login-loading-page {
-  background: #000;
-}
-
-.accessibility-root.is-high-contrast .login-loading-page .login-loading-dots span {
-  background: #ffeb3b;
 }
 
 @media (max-width: 560px) {

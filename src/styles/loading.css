@@ -1,0 +1,126 @@
+/* Tela de carregamento (src/components/RouteLoadingPage.jsx). Ver docs/design/logo.md. */
+.route-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  min-height: 100vh;
+  background: var(--rc-bg);
+}
+
+.route-loading__logo {
+  width: 112px;
+  height: 112px;
+}
+
+.route-loading__label {
+  color: var(--rc-ink-muted);
+  font-family: var(--rc-font-heading);
+  font-size: calc(0.95rem * var(--accessibility-font-scale, 1));
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+/* Versão em loop da animação da logo: desenha, segura um instante, esmaece e recomeça. */
+.rc-logo--loop {
+  animation: rc-logo-loop-fade 2.6s ease-in-out infinite;
+}
+
+.rc-logo--loop .rc-logo__ribbon,
+.rc-logo--loop .rc-logo__gap {
+  animation: rc-logo-loop-draw 2.6s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+
+.rc-logo--loop .rc-logo__fold {
+  animation: rc-logo-loop-fold 2.6s ease-out infinite;
+}
+
+.rc-logo--loop .rc-logo__tail {
+  animation: rc-logo-loop-tail 2.6s ease-out infinite;
+}
+
+.rc-logo--loop .rc-logo__hand {
+  animation: rc-logo-loop-hand 2.6s ease-out infinite;
+}
+
+@keyframes rc-logo-loop-fade {
+  0%,
+  85% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes rc-logo-loop-draw {
+  0% {
+    stroke-dashoffset: 1;
+  }
+
+  55%,
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes rc-logo-loop-fold {
+  0%,
+  20% {
+    stroke-dashoffset: 1;
+  }
+
+  45%,
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes rc-logo-loop-tail {
+  0% {
+    opacity: 0;
+  }
+
+  15%,
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes rc-logo-loop-hand {
+  0%,
+  45% {
+    opacity: 0;
+    transform: translateY(12%);
+  }
+
+  65%,
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rc-logo--loop,
+  .rc-logo--loop .rc-logo__ribbon,
+  .rc-logo--loop .rc-logo__gap,
+  .rc-logo--loop .rc-logo__fold,
+  .rc-logo--loop .rc-logo__tail,
+  .rc-logo--loop .rc-logo__hand {
+    animation: none;
+    opacity: 1;
+    stroke-dashoffset: 0;
+    transform: none;
+  }
+}
+
+.accessibility-root.is-high-contrast .route-loading {
+  background: #0d0d0d;
+}
+
+.accessibility-root.is-high-contrast .route-loading__label {
+  color: #fff;
+}
