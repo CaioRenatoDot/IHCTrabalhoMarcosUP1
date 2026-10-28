@@ -9,13 +9,19 @@ import {
   LuTriangleAlert,
   LuBookOpen,
   LuClipboardList,
+  LuExternalLink,
 } from 'react-icons/lu'
 import InternalLink from '../components/InternalLink.jsx'
+import { formatNewsDate, getRecentNews } from '../content/news.js'
 
 const SOURCES = {
   incaEstimate: {
     label: 'INCA, Estimativa 2026–2028',
-    url: 'https://ninho.inca.gov.br/jspui/bitstream/123456789/18044/1/INCA%20estima%20781%20mil%20novos%20casos%20de%20c%c3%a2ncer%20por%20ano%20no%20Brasil%20de%202026%20a%202028.pdf',
+    url: 'https://www.gov.br/inca/pt-br/assuntos/cancer/numeros/estimativa/sintese-de-resultados-e-comentarios',
+  },
+  incaEstimateNews: {
+    label: 'INCA, Estimativa 2026–2028',
+    url: 'https://www.gov.br/inca/pt-br/assuntos/noticias/2026/inca-estima-781-mil-novos-casos-de-cancer-por-ano-no-brasil-entre-2026-e-2028',
   },
   incaBooklet: {
     label: 'INCA, Câncer de mama: vamos falar sobre isso? (2026)',
@@ -38,7 +44,7 @@ const FACTS = [
   {
     value: '1º',
     text: 'tipo de câncer mais frequente entre as mulheres brasileiras, sem contar o de pele não melanoma',
-    source: SOURCES.incaEstimate,
+    source: SOURCES.incaEstimateNews,
   },
   {
     value: '5 a 10%',
@@ -160,6 +166,50 @@ function AssessmentPreview() {
       </div>
       <span className="home-preview__button">Continuar</span>
     </div>
+  )
+}
+
+function NewsSection() {
+  const news = getRecentNews(3)
+
+  if (!news.length) {
+    return null
+  }
+
+  return (
+    <section className="home-block" aria-labelledby="noticias-title">
+      <div className="home-container">
+        <div className="home-block__header">
+          <p className="home-eyebrow">Notícias</p>
+          <h2 id="noticias-title" className="section-title">
+            Notícias e atualizações
+          </h2>
+          <p className="section-sub">Novidades de fontes oficiais sobre prevenção e cuidado do câncer de mama.</p>
+        </div>
+
+        <ul className="home-news">
+          {news.map((item) => (
+            <li className="home-news__card" key={item.id}>
+              <div className="home-news__meta">
+                <span className="home-news__source">{item.source}</span>
+                <time dateTime={item.date}>{formatNewsDate(item.date)}</time>
+              </div>
+              <h3 className="home-news__title">
+                <a href={item.url} target="_blank" rel="noopener noreferrer">
+                  {item.title}
+                  <span className="visually-hidden"> (abre o site {item.source} em nova aba)</span>
+                </a>
+              </h3>
+              <p className="home-news__summary">{item.summary}</p>
+              <span className="home-news__more" aria-hidden="true">
+                Ler na fonte
+                <LuExternalLink />
+              </span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
   )
 }
 
@@ -306,6 +356,8 @@ function HomePage() {
           </ol>
         </div>
       </section>
+
+      <NewsSection />
 
       <section className="home-block home-block--surface" aria-labelledby="faq-title">
         <div className="home-container home-faq">
