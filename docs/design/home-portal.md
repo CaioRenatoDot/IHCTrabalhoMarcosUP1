@@ -1,6 +1,6 @@
 # Home como portal (próxima versão da home)
 
-> Decidido em 28/10/2026. Status: **planejado, ainda não implementado**.
+> Decidido em 28/10/2026. Status: **implementado** na branch `feat/front-home-redesign` (aguardando PR).
 > Itens no [CHECKLIST.md](../../CHECKLIST.md): FR-17 e CT-15 a CT-18.
 > Visual: [design-system.md](design-system.md).
 
@@ -91,7 +91,40 @@ Todas com o conteúdo já verificado, fonte visível e o mesmo design system.
 Avaliação · Sinais de alerta · Mamografia · Onde buscar ajuda · Sobre. Entrar/Sair e o botão principal continuam à
 direita.
 
-## 5. Critérios para considerar pronta
+## 5. Duas versões: visitante e logada
+
+A rota `/` mostra uma versão diferente conforme a sessão (`src/pages/HomePage.jsx`):
+
+- **Visitante → portal público:** abertura curta, "Você sabia?", card da avaliação ("Começar"), atalhos, regra geral
+  de mamografia, notícias, números e apoio.
+- **Logada → painel** (baseado na home do Stitch): "Olá, {nome}", "Você sabia?", card da avaliação no estado da
+  pessoa ("Ver resultado" e "Refazer"), mamografia **pela idade informada na avaliação**, atalhos, notícias, apoio
+  e números.
+
+### 5.1 O que foi aproveitado da referência do Stitch
+
+| Bloco do Stitch | No RiskCare |
+|---|---|
+| Saudação "Olá, Mariana!" | "Olá, {primeiro nome}" com o nome real da conta (só logada) |
+| "Dica de bem-estar · Hoje" | "Você sabia?": uma informação por dia, de uma lista conferida, sempre com fonte (`TIPS` em `src/content/health.js`) |
+| Card "Avaliação de Risco" com progresso | Card principal com estado real: "Começar" ou "Sua avaliação está salva" (data + ver resultado). Sem barra de progresso, porque o formulário ainda não salva rascunho |
+| Card "Informações & Guias" | "Comece por aqui": atalhos para as 4 páginas de conteúdo |
+| Lembrete de mamografia com contagem regressiva | "Quando fazer mamografia": regra geral (visitante) ou orientação pela idade (logada). Sem contagem regressiva |
+| Artigos recomendados com fotos | Notícias oficiais em lista, sem fotos |
+| Banner de apoio emocional | "Precisa de ajuda?" com Disque Saúde 136 e CVV 188 |
+| Layout em grade (bento) | Grade com o card da avaliação maior |
+
+### 5.2 O que ficou de fora, e por quê
+
+- **Classificação de risco na home:** o cálculo atual é o da v1; destacar o número na tela inicial reforçaria um
+  resultado que vai mudar com a avaliação v2. A home mostra a data e leva ao resultado.
+- **"Meu histórico":** a API só devolve a última avaliação. Entra quando existir o histórico (BK-07).
+- **"Check-in recomendado", "4 especialistas disponíveis", clínica, médica e laudos:** funcionalidades ou dados
+  inexistentes.
+- **Barra fixa de apoio no rodapé da tela:** disputaria espaço com o VLibras e os controles de acessibilidade.
+- **Laço em SVG, manchas, pulsos e fotos do Stitch:** a logo cumpre o papel de marca; as fotos não têm direito de uso.
+
+## 6. Critérios para considerar pronta
 
 - A home cabe em uma a duas telas no desktop.
 - Nenhum conteúdo informativo extenso fica só na home; tudo tem página própria.

@@ -26,9 +26,10 @@ Frentes: **FR** Front · **BK** Back · **FM** Formulário e resultado · **CT**
 _Atualizado em 28/10/2026._
 
 **Em andamento — Front** (branch `feat/front-home-redesign`, ainda sem PR):
-- Feito na branch: tokens novos (FR-11), cabeçalho e rodapé com a logo (FR-14, FR-16), home (FR-15) e notícias (CT-21).
-- **Próximo:** home como portal (FR-17) e páginas de conteúdo (CT-15 a CT-18), conforme
-  [docs/design/home-portal.md](docs/design/home-portal.md). O PR para a `develop` sai com o portal pronto.
+- Feito na branch: tokens novos (FR-11), cabeçalho e rodapé com a logo (FR-14, FR-16), notícias (CT-21), home como
+  portal para visitantes e painel para quem está logada (FR-17) e as páginas de conteúdo (CT-15 a CT-18).
+- **Próximo:** revisão do Caio e PR para a `develop`. O painel logado só foi validado por lint, build e código
+  (falta o Supabase de desenvolvimento, IN-05).
 
 **Na fila — Formulário e resultado / Back:** FM-01 a FM-05 e BK-01 (sugestão de branch: `fix/form-result-credibility`).
 
@@ -67,7 +68,7 @@ Observações:
 - [x] **FR-14** `Média` Estrutura de navegação nova: navbar com Avaliação · Aprenda · Números · Onde buscar ajuda · Metodologia ([Navbar.jsx](src/components/Navbar.jsx))
 - [x] **FR-15** `Média` Início redesenhado (atalhos para as áreas do site, números com fonte, sinais de alerta)
 - [x] **FR-16** `Média` Rodapé completo: mapa do site, fontes, aviso médico, contato ([Footer.jsx](src/components/Footer.jsx))
-- [ ] **FR-17** `Alta` **Home como portal**: abertura curta, grade de atalhos com destaque da avaliação (muda se logada), notícias em lista e coluna lateral com números e apoio; menu com as páginas novas ([docs/design/home-portal.md](docs/design/home-portal.md))
+- [x] **FR-17** `Alta` **Home como portal**: abertura curta, grade de atalhos com destaque da avaliação (muda se logada), notícias em lista e coluna lateral com números e apoio; menu com as páginas novas ([docs/design/home-portal.md](docs/design/home-portal.md))
 
 **Base técnica**
 - [ ] **FR-20** `Média` React Router com lazy loading no lugar do roteador manual ([App.jsx](src/App.jsx))
@@ -128,7 +129,7 @@ Observações:
 ## CT — Conteúdo e fontes
 
 **Infraestrutura de fontes**
-- [ ] **CT-01** `Média` Registro central `src/content/sources.js` (nome, link, ano, data de acesso)
+- [ ] **CT-01** `Média` Registro central de fontes (nome, link, ano, data de acesso). Iniciado em [src/content/health.js](src/content/health.js) (`SOURCES`); falta usar em todo o site
 - [ ] **CT-02** `Média` Componente `SourceCitation`: nota numerada e lista de referências
 - [ ] **CT-03** `Baixa` "Última revisão em …" em cada artigo
 
@@ -138,10 +139,10 @@ Observações:
 - [ ] **CT-12** `Baixa` `/onde-buscar-ajuda`: SUS, Disque Saúde 136, como pedir mamografia, ONGs
 - [ ] **CT-13** `Baixa` Seus direitos (Leis 12.732/2012 e 13.896/2019)
 - [ ] **CT-14** `Baixa` FAQ e glossário
-- [ ] **CT-15** `Alta` Página `/sinais-de-alerta` (conteúdo e fonte que hoje estão na home)
-- [ ] **CT-16** `Alta` Página `/mamografia`: quando fazer, conforme a nota técnica de 2025 e a Lei nº 15.284/2025
-- [ ] **CT-17** `Alta` Página `/onde-buscar-ajuda`: UBS, Disque Saúde 136, CVV 188
-- [ ] **CT-18** `Alta` Página `/perguntas-frequentes` (perguntas que hoje estão na home)
+- [x] **CT-15** `Alta` Página `/sinais-de-alerta` (conteúdo e fonte que hoje estão na home)
+- [x] **CT-16** `Alta` Página `/mamografia`: quando fazer, conforme a nota técnica de 2025 e a Lei nº 15.284/2025
+- [x] **CT-17** `Alta` Página `/onde-buscar-ajuda`: UBS, Disque Saúde 136, CVV 188
+- [x] **CT-18** `Alta` Página `/perguntas-frequentes` (perguntas que hoje estão na home)
 - [x] **CT-21** `Média` Seção de notícias na home com curadoria manual de fontes oficiais ([src/content/news.js](src/content/news.js))
 - [ ] **CT-22** `Baixa` Página `/noticias` com todas as notícias (ver PLANEJAMENTO 3.6)
 - [ ] **CT-20** `Baixa` `/numeros`: casos novos e mortalidade por UF e por idade
