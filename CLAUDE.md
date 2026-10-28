@@ -91,6 +91,8 @@ Este é um site de saúde, então estas regras valem mais do que qualquer prefer
   e evite cores soltas.
 - Acessibilidade é requisito: foco visível, `aria-*` corretos, `prefers-reduced-motion`
   respeitado, VLibras e os controles de zoom continuam funcionando.
+- **Não mexer no VLibras** (widget, CSS e preload no `index.html`). Nos recursos de acessibilidade
+  (zoom, alto contraste, teclado) só alterar o estritamente necessário, como limpar CSS de componente removido.
 - Qualquer mudança nos pesos ou na lógica do motor exige aumentar `RISK_MODEL_VERSION`.
 - Os payloads usam os rótulos das opções como valor, e `normalize.js` compara texto
   (`includes`, `startsWith`). Mudar um rótulo no front pode mudar o score sem nenhum aviso.

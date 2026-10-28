@@ -53,7 +53,7 @@ O redesenho das telas (FR-10 em diante) só começa depois de a direção visual
 - [ ] **FR-21** `F1` Trocar escapes `á` por UTF-8 nos arquivos que forem tocados
 - [ ] **FR-22** `F1` Quebrar os arquivos grandes: `ResultsPage.jsx`, `AssessmentFormPage.jsx`, `results.css`
 - [ ] **FR-23** `F2` SEO completo: `sitemap.xml`, `robots.txt`, dados estruturados
-- [ ] **FR-24** `F2` Carregar o VLibras só quando ativado
+- [ ] **FR-24** `F2` ~~Carregar o VLibras só quando ativado~~ **Suspenso:** o VLibras não deve ser alterado (decisão do Caio)
 
 ---
 
