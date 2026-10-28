@@ -4,7 +4,7 @@
 > Relacionado: [PLANEJAMENTO.md](../PLANEJAMENTO.md) (seção 3.1) e [CHECKLIST.md](../CHECKLIST.md) (itens FM-10 a FM-14).
 
 Este documento define **de onde vêm as fontes, quais são as etapas, quais perguntas são feitas e como o
-resultado usa cada resposta**, em três versões do formulário. Ele é a referência para implementar a avaliação v2 (Fase 3).
+resultado usa cada resposta**, em três versões do formulário. Ele é a referência para implementar a avaliação v2 (área Formulário e resultado + Back).
 
 ---
 
@@ -48,8 +48,8 @@ virar ✅ com URL, edição e data de acesso registradas no registro central de 
 
 | Versão | Quando | Resumo |
 |--------|--------|--------|
-| **v1** | Hoje + Fase 0 | Formulário atual (5 etapas, 20 campos, score por pesos). A Fase 0 só acrescenta o aviso de alerta (FM-04) e remove o nome completo (FM-05). |
-| **v2** | Fase 3 | Tela de boas-vindas + 7 etapas (ver 4.0). Quatro saídas independentes: **alerta**, **classificação por critérios** (risco habitual / elevado), **rastreamento** e **hábitos de proteção**. Códigos estáveis nas opções. |
+| **v1** | Hoje + ajustes de credibilidade | Formulário atual (5 etapas, 20 campos, score por pesos). Os ajustes só acrescentam o aviso de alerta (FM-04) e remove o nome completo (FM-05). |
+| **v2** | Próxima versão | Tela de boas-vindas + 7 etapas (ver 4.0). Quatro saídas independentes: **alerta**, **classificação por critérios** (risco habitual / elevado), **rastreamento** e **hábitos de proteção**. Códigos estáveis nas opções. |
 | **v3** | Futuro | v2 + número do **modelo de Gail** quando aplicável, "por que perguntamos isso?", salvar progresso, densidade mamária opcional. |
 
 ### 3.1 v1 — formulário atual (referência)
@@ -265,7 +265,7 @@ curta e fonte, sem compor pontuação.
 
 ---
 
-## 8. Implementação (Fase 3)
+## 8. Implementação da v2
 
 1. **Definição única do formulário** compartilhada entre front e back (ex.: `shared/assessment/formV2.js`):
    etapas, perguntas, opções com códigos, condições (P9/P10, P18), finalidade e fonte de cada pergunta.

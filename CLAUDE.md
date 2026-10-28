@@ -34,10 +34,11 @@ Ainda não existe suíte de testes. Ao mexer no motor de risco, adicione testes 
 
 ## Fluxo de trabalho
 
-O andamento do projeto está em [CHECKLIST.md](CHECKLIST.md) (itens com ID, como `FR-01`, e fase `F0`–`F7`).
+O andamento do projeto está em [CHECKLIST.md](CHECKLIST.md) (itens por área, com ID como `FR-01` e prioridade `Alta`/`Média`/`Baixa`).
 A visão e o roadmap estão em [PLANEJAMENTO.md](PLANEJAMENTO.md).
 
-1. Toda mudança de código sai de uma branch criada a partir da `develop` (ex.: `fase-0/front-credibilidade`).
+1. Toda mudança de código sai de uma branch criada a partir da `develop`, no formato `tipo/area-descricao`
+   (ex.: `feat/front-home-portal`, `fix/back-risk-sources`; tipos e áreas no CHECKLIST.md).
    Nunca commitar código direto na `develop` ou na `main`.
 2. Commits pequenos, em português, no formato `tipo: descrição` (`feat`, `fix`, `docs`, `refactor`, `ci`).
 3. Abrir PR para a `develop`. O CI ([.github/workflows/ci.yml](.github/workflows/ci.yml)) roda `npm ci`, `lint` e `build`
