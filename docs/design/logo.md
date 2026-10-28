@@ -66,6 +66,12 @@ Comportamento:
   [Navbar.jsx](../../src/components/Navbar.jsx) remonta o SVG (troca a `key`) e a animação toca de novo, no máximo
   uma vez a cada 2 s.
 - **Rodapé:** logo parada (`<RiskCareLogo />` sem `animated`).
+- **Tela de carregamento** ([RouteLoadingPage.jsx](../../src/components/RouteLoadingPage.jsx), usada ao verificar o
+  acesso, ao carregar a home, no login e no cadastro): logo grande (112 px) em **loop** — desenha, segura um instante,
+  esmaece e recomeça a cada 2,6 s (classe `rc-logo--loop`, em [src/styles/loading.css](../../src/styles/loading.css)).
+  Substituiu os três pontinhos que pulavam.
+
+  ![Quadros da animação em loop da tela de carregamento](logo/carregamento-quadros.png)
 - **Acessibilidade:** com `prefers-reduced-motion: reduce` a logo aparece pronta, sem animação. O SVG é decorativo
   (`aria-hidden`) porque o nome "RiskCare" está escrito ao lado; para usar sozinho, passe `title`.
 
@@ -75,6 +81,7 @@ Comportamento:
 |---------|-----|
 | [src/components/RiskCareLogo.jsx](../../src/components/RiskCareLogo.jsx) | Componente React (props `animated`, `className`, `title`) |
 | [src/styles/logo.css](../../src/styles/logo.css) | Cores, fio de separação, animação |
+| [src/styles/loading.css](../../src/styles/loading.css) | Tela de carregamento e animação em loop |
 | [public/riskcare-logo.svg](../../public/riskcare-logo.svg) | Versão estática com cores fixas, para favicon, PDF e compartilhamento |
 | [public/riskcare_logo.png](../../public/riskcare_logo.png) | Original; ainda usado no login, formulário, resultado e favicon (FR-25) |
 | [logo/comparacao.png](logo/comparacao.png) e [logo/animacao-quadros.png](logo/animacao-quadros.png) | Registro visual deste trabalho |
@@ -89,5 +96,5 @@ Comportamento:
 
 ## 7. Pendências
 
-- **FR-25:** usar o SVG também no login, no formulário, no resultado, no favicon e no PDF.
+- **FR-25:** usar o SVG também no cabeçalho do login, no formulário, no resultado, no favicon e no PDF (a tela de carregamento já usa).
 - Se um dia houver um designer, vale refinar a espessura variável do laço; a estrutura e a animação continuam iguais.

@@ -70,6 +70,8 @@ Observações:
 - [x] **FR-16** `Média` Rodapé completo: mapa do site, fontes, aviso médico, contato ([Footer.jsx](src/components/Footer.jsx))
 - [x] **FR-18** `Média` Logo animada: o laço é desenhado ao carregar e no hover/foco, respeitando `prefers-reduced-motion` ([docs/design/logo.md](docs/design/logo.md)). A primeira versão (batimento do PNG) foi descartada
 - [x] **FR-19** `Média` Logo redesenhada em SVG a partir do PNG ([RiskCareLogo.jsx](src/components/RiskCareLogo.jsx), [public/riskcare-logo.svg](public/riskcare-logo.svg))
+- [x] **FR-26** `Média` "Você sabia?" como carrossel manual (sem troca automática), começando pela dica do dia ([HomeBlocks.jsx](src/components/home/HomeBlocks.jsx))
+- [x] **FR-27** `Média` Tela de carregamento com a logo sendo desenhada em loop, usada também no login e no cadastro ([RouteLoadingPage.jsx](src/components/RouteLoadingPage.jsx))
 - [ ] **FR-25** `Média` Usar a logo em SVG também no login, formulário, resultado, favicon e PDF
 - [x] **FR-17** `Alta` **Home como portal**: abertura curta, grade de atalhos com destaque da avaliação (muda se logada), notícias em lista e coluna lateral com números e apoio; menu com as páginas novas ([docs/design/home-portal.md](docs/design/home-portal.md))
 

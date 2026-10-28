@@ -106,7 +106,7 @@ A rota `/` mostra uma versão diferente conforme a sessão (`src/pages/HomePage.
 | Bloco do Stitch | No RiskCare |
 |---|---|
 | Saudação "Olá, Mariana!" | "Olá, {primeiro nome}" com o nome real da conta (só logada) |
-| "Dica de bem-estar · Hoje" | "Você sabia?": uma informação por dia, de uma lista conferida, sempre com fonte (`TIPS` em `src/content/health.js`) |
+| "Dica de bem-estar · Hoje" | "Você sabia?": carrossel **manual** (setas e "1 de 5", sem troca automática) que começa pela dica do dia; lista conferida, sempre com fonte (`TIPS` em `src/content/health.js`) |
 | Card "Avaliação de Risco" com progresso | Card principal com estado real: "Começar" ou "Sua avaliação está salva" (data + ver resultado). Sem barra de progresso, porque o formulário ainda não salva rascunho |
 | Card "Informações & Guias" | "Comece por aqui": atalhos para as 4 páginas de conteúdo |
 | Lembrete de mamografia com contagem regressiva | "Quando fazer mamografia": regra geral (visitante) ou orientação pela idade (logada). Sem contagem regressiva |

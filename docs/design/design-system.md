@@ -49,6 +49,8 @@ apoio 14. O zoom de texto da acessibilidade continua multiplicando essa escala.
   **Lucide** via `react-icons/lu` (já instalado). Nada de Material Symbols nem ícone dentro de círculo pastel em cada bloco.
 - **Efeitos decorativos:** sem manchas desfocadas de fundo, sem `pulse`/`ping`, sem brilhos.
   Animações curtas e discretas, sempre respeitando `prefers-reduced-motion`.
+- **Carrossel que passa sozinho.** Só carrossel manual (botões anterior/próxima, contador, anúncio para leitor de
+  tela). Troca automática atrapalha a leitura e a acessibilidade, e quase ninguém vê além do primeiro item.
 - **Etiquetas em todos os cantos** ("Biblioteca Médica", "Agendado"…). Só quando informam algo útil.
 - **Texto emotivo demais.** Acolhedor, mas direto e objetivo.
 - **Estrutura de landing page.** A home é um portal (atalhos, notícias, apoio), não uma sequência de seções de
