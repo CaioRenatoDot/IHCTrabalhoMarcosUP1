@@ -1,127 +1,167 @@
-import FeatureCard from '../components/FeatureCard.jsx'
-import ObservationBanner from '../components/ObservationBanner.jsx'
-import ConscientizacaoPrevencaoSection from '../components/ConscientizacaoPrevencaoSection.jsx'
-import HowItWorksSection from '../components/HowItWorksSection.jsx'
+import { LuArrowRight, LuPhone, LuTriangleAlert } from 'react-icons/lu'
+import InternalLink from '../components/InternalLink.jsx'
 
-const ClipboardCheckIcon = () => (
-  <svg
-    width="30"
-    height="30"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth={2}
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2" />
-    <rect x="9" y="3" width="6" height="4" rx="1" />
-    <path d="M9 14l2 2 4-4" />
-  </svg>
-)
+const WARNING_SIGNS = [
+  'Nódulo (caroço), geralmente endurecido e indolor',
+  'Pele da mama avermelhada, retraída ou parecida com casca de laranja',
+  'Alterações no bico do peito (mamilo)',
+  'Saída espontânea de líquido anormal pelos mamilos',
+  'Pequenos nódulos nas axilas ou no pescoço',
+]
 
-const QuestionIcon = () => (
-  <svg
-    width="30"
-    height="30"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth={2}
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <circle cx="12" cy="12" r="10" />
-    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
-    <line x1="12" y1="17" x2="12.01" y2="17" />
-  </svg>
-)
+const STEPS = [
+  {
+    title: 'Responda ao questionário',
+    text: 'Entre ou crie sua conta e responda a perguntas sobre idade, histórico pessoal e familiar, fatores hormonais e hábitos. Leva cerca de 5 minutos.',
+  },
+  {
+    title: 'Veja seu resultado',
+    text: 'Você recebe uma estimativa educativa e vê quais fatores mais pesaram nas suas respostas.',
+  },
+  {
+    title: 'Converse com um profissional',
+    text: 'Leve o resultado para a sua consulta e tire dúvidas com quem acompanha a sua saúde.',
+  },
+]
 
-const TrendLineIcon = () => (
-  <svg
-    width="30"
-    height="30"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth={2}
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M3 3v18h18" />
-    <path d="M7 16l4-8 4 4 4-6" />
-  </svg>
-)
+const SUPPORT_CONTACTS = [
+  {
+    name: 'Disque Saúde',
+    number: '136',
+    description: 'Ministério da Saúde: informações sobre saúde e serviços do SUS. Ligação gratuita.',
+  },
+  {
+    name: 'CVV',
+    number: '188',
+    description: 'Centro de Valorização da Vida: apoio emocional, 24 horas. Ligação gratuita.',
+  },
+]
+
+const INCA_BOOKLET_URL =
+  'https://ninho.inca.gov.br/jspui/bitstream/123456789/18158/1/cartilha-mama-2026%20-%20DefesoEleitoral.pdf'
 
 function HomePage() {
-  const stagger = (index) => ({ '--stagger-index': index })
-
   return (
-    <main id="main-content" className="wireframe-page" tabIndex={-1}>
-      <section
-        id="avaliacao"
-        className="home-section home-section--hero stagger-fade"
-        tabIndex={-1}
-        style={stagger(0)}
-      >
-        <div className="home-section__inner">
-          <ConscientizacaoPrevencaoSection />
-        </div>
-      </section>
-
-      <section className="home-section home-section--cards stagger-fade" style={stagger(1)}>
-        <div className="home-section__inner">
-          <section className="cards-block">
-            <div className="cards-block__grid">
-              <div>
-                <FeatureCard
-                  icon={<ClipboardCheckIcon />}
-                  title={'An\u00E1lise r\u00E1pida'}
-                  description={
-                    'Responda um breve question\u00E1rio e receba uma estimativa preliminar sobre seus fatores de risco.'
-                  }
-                />
-              </div>
-              <div>
-                <FeatureCard
-                  icon={<QuestionIcon />}
-                  title={'Question\u00E1rio detalhado'}
-                  description={
-                    'An\u00E1lise aprofundada considerando hist\u00F3rico familiar, h\u00E1bitos e caracter\u00EDsticas pessoais.'
-                  }
-                />
-              </div>
-              <div>
-                <FeatureCard
-                  icon={<TrendLineIcon />}
-                  title={'Estat\u00EDsticas de risco'}
-                  description={
-                    'Visualize seus resultados com gr\u00E1ficos claros e orienta\u00E7\u00F5es personalizadas para cada perfil.'
-                  }
-                />
-              </div>
+    <main id="main-content" className="home-page" tabIndex={-1}>
+      <section className="home-hero" aria-labelledby="home-hero-title">
+        <div className="home-container home-hero__grid">
+          <div className="home-hero__content">
+            <p className="home-eyebrow">Avaliação educativa de risco</p>
+            <h1 id="home-hero-title" className="home-hero__title">
+              Entenda seus fatores de risco para o câncer de mama
+            </h1>
+            <p className="home-hero__lead">
+              Responda a perguntas sobre sua saúde, seu histórico familiar e seus hábitos e receba orientações claras,
+              baseadas em fontes oficiais.
+            </p>
+            <div className="home-hero__actions">
+              <InternalLink className="home-button home-button--primary" href="/formulario">
+                Fazer avaliação
+                <LuArrowRight aria-hidden="true" />
+              </InternalLink>
+              <InternalLink className="home-button home-button--secondary" href="/#como-funciona">
+                Como funciona
+              </InternalLink>
             </div>
-          </section>
+            <p className="home-hero__note">Gratuito. Não substitui consulta médica.</p>
+          </div>
+
+          <div className="home-hero__visual" aria-hidden="true">
+            <img src="/riskcare_logo.png" alt="" />
+          </div>
         </div>
       </section>
 
-      <section
-        id="como-funciona"
-        className="home-section home-section--how stagger-fade"
-        style={stagger(2)}
-      >
-        <div className="home-section__inner">
-          <HowItWorksSection />
+      <section id="sinais" className="home-block home-block--surface" aria-labelledby="sinais-title" tabIndex={-1}>
+        <div className="home-container home-signs">
+          <div className="home-block__header">
+            <h2 id="sinais-title" className="section-title">
+              Sinais que merecem avaliação
+            </h2>
+            <p className="section-sub">
+              Conhecer o próprio corpo ajuda a perceber mudanças. Fique atenta a estas alterações:
+            </p>
+          </div>
+
+          <ul className="home-signs__list">
+            {WARNING_SIGNS.map((sign) => (
+              <li key={sign}>{sign}</li>
+            ))}
+          </ul>
+
+          <div className="home-callout" role="note">
+            <LuTriangleAlert className="home-callout__icon" aria-hidden="true" />
+            <p>
+              Se você notar alguma dessas alterações, <strong>procure uma unidade de saúde</strong> para avaliação. A
+              maioria das alterações não é câncer, mas todas devem ser investigadas.
+            </p>
+          </div>
+
+          <p className="home-source">
+            Fonte:{' '}
+            <a href={INCA_BOOKLET_URL} target="_blank" rel="noopener noreferrer">
+              INCA, Câncer de mama: vamos falar sobre isso? (2026)
+            </a>
+          </p>
         </div>
       </section>
 
-      <section
-        id="sobre"
-        className="home-section home-section--notice stagger-fade"
-        style={stagger(3)}
-      >
-        <div className="home-section__inner">
-          <ObservationBanner />
+      <section id="como-funciona" className="home-block" aria-labelledby="como-funciona-title" tabIndex={-1}>
+        <div className="home-container">
+          <div className="home-block__header">
+            <h2 id="como-funciona-title" className="section-title">
+              Como funciona
+            </h2>
+            <p className="section-sub">Três passos para entender melhor seus fatores de risco.</p>
+          </div>
+
+          <ol className="home-steps">
+            {STEPS.map((step, index) => (
+              <li className="how-step" key={step.title}>
+                <span className="how-step-num" aria-hidden="true">
+                  {index + 1}
+                </span>
+                <h3>{step.title}</h3>
+                <p>{step.text}</p>
+              </li>
+            ))}
+          </ol>
+
+          <InternalLink className="home-button home-button--primary home-steps__cta" href="/formulario">
+            Começar agora
+            <LuArrowRight aria-hidden="true" />
+          </InternalLink>
+        </div>
+      </section>
+
+      <section id="apoio" className="home-block home-block--surface" aria-labelledby="apoio-title" tabIndex={-1}>
+        <div className="home-container home-support">
+          <div className="home-block__header">
+            <h2 id="apoio-title" className="section-title">
+              Onde buscar ajuda
+            </h2>
+            <p className="section-sub">
+              Para dúvidas sobre exames e atendimento, procure a unidade básica de saúde mais próxima. Você também pode
+              ligar gratuitamente:
+            </p>
+          </div>
+
+          <ul className="home-support__list">
+            {SUPPORT_CONTACTS.map((contact) => (
+              <li className="home-support__item" key={contact.number}>
+                <LuPhone className="home-support__icon" aria-hidden="true" />
+                <div>
+                  <p className="home-support__name">
+                    {contact.name}{' '}
+                    <a href={`tel:${contact.number}`} aria-label={`Ligar para ${contact.name}, ${contact.number}`}>
+                      {contact.number}
+                    </a>
+                  </p>
+                  <p className="home-support__desc">{contact.description}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
     </main>
