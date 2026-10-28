@@ -25,7 +25,8 @@ A parte de front da Fase 0 (FR-01 a FR-04) já está na `develop` (PR #18).
 - A tela de resultado e o formulário exigem login, que não funciona localmente sem Supabase de desenvolvimento (IN-05).
   Até lá, essa parte é validada por lint, build e leitura do código.
 - Direção visual definida (FR-10): [docs/design/design-system.md](docs/design/design-system.md). O redesenho segue na branch `fase-2/home-redesenho`.
-- Na branch `fase-2/home-redesenho`: tokens novos (FR-11), cabeçalho e rodapé com a logo (FR-14, FR-16) e home nova (FR-15). Falta revisão do Caio e PR.
+- Na branch `fase-2/home-redesenho`: tokens novos (FR-11), cabeçalho e rodapé com a logo (FR-14, FR-16), home nova (FR-15) e notícias (CT-21).
+- **Próximo:** transformar a home em portal (FR-17) e criar as páginas de conteúdo (CT-15 a CT-18), conforme [docs/design/home-portal.md](docs/design/home-portal.md).
 - Ainda sem a logo: tela de resultado (entra quando ela for refeita). Termos e privacidade têm cabeçalho próprio.
 - Os previews da Vercel pedem login (projeto na conta do Caio Renato). Conferir localmente com `npm run dev:full`.
 
@@ -58,6 +59,7 @@ A parte de front da Fase 0 (FR-01 a FR-04) já está na `develop` (PR #18).
 - [x] **FR-14** `F2` Estrutura de navegação nova: navbar com Avaliação · Aprenda · Números · Onde buscar ajuda · Metodologia ([Navbar.jsx](src/components/Navbar.jsx))
 - [x] **FR-15** `F2` Início redesenhado (atalhos para as áreas do site, números com fonte, sinais de alerta)
 - [x] **FR-16** `F2` Rodapé completo: mapa do site, fontes, aviso médico, contato ([Footer.jsx](src/components/Footer.jsx))
+- [ ] **FR-17** `F2` **Home como portal**: abertura curta, grade de atalhos com destaque da avaliação (muda se logada), notícias em lista e coluna lateral com números e apoio; menu com as páginas novas ([docs/design/home-portal.md](docs/design/home-portal.md))
 
 **Base técnica**
 - [ ] **FR-20** `F1` React Router com lazy loading no lugar do roteador manual ([App.jsx](src/App.jsx))
@@ -128,6 +130,10 @@ A parte de front da Fase 0 (FR-01 a FR-04) já está na `develop` (PR #18).
 - [ ] **CT-12** `F4` `/onde-buscar-ajuda`: SUS, Disque Saúde 136, como pedir mamografia, ONGs
 - [ ] **CT-13** `F4` Seus direitos (Leis 12.732/2012 e 13.896/2019)
 - [ ] **CT-14** `F4` FAQ e glossário
+- [ ] **CT-15** `F2` Página `/sinais-de-alerta` (conteúdo e fonte que hoje estão na home)
+- [ ] **CT-16** `F2` Página `/mamografia`: quando fazer, conforme a nota técnica de 2025 e a Lei nº 15.284/2025
+- [ ] **CT-17** `F2` Página `/onde-buscar-ajuda`: UBS, Disque Saúde 136, CVV 188
+- [ ] **CT-18** `F2` Página `/perguntas-frequentes` (perguntas que hoje estão na home)
 - [x] **CT-21** `F2` Seção de notícias na home com curadoria manual de fontes oficiais ([src/content/news.js](src/content/news.js))
 - [ ] **CT-22** `F4` Página `/noticias` com todas as notícias (ver PLANEJAMENTO 3.6)
 - [ ] **CT-20** `F5` `/numeros`: casos novos e mortalidade por UF e por idade
@@ -162,7 +168,7 @@ Pontos encontrados durante a Fase 0 que não eram escopo dela:
 
 ## Decisões em aberto
 
-- [x] **Formato do site:** painel com conteúdo integrado (referência: [docs/design/home/](docs/design/home/)); tom neutro com rosa de acento (28/10/2026). o redesenho segue como site de conteúdo com páginas e navegação própria, ou um "painel" mais próximo de um aplicativo? (define FR-10 a FR-16)
+- [x] **Formato do site:** painel com conteúdo integrado (referência: [docs/design/home/](docs/design/home/)); tom neutro com rosa de acento (28/10/2026). Home como portal: [docs/design/home-portal.md](docs/design/home-portal.md).
 - [ ] Gail no cliente (privacidade total) ou no servidor (versão central)?
 - [ ] Quem revisa o conteúdo médico? Ter um profissional de saúde como revisor dá muita credibilidade.
 - [ ] O site atende também homens na avaliação ou só no conteúdo?

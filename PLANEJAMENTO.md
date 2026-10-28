@@ -229,15 +229,10 @@ Decisão em aberto: como aprovar (painel simples, campo no banco ou aprovação 
 
 ### 4.2 Home nova
 
-1. **Hero**: título forte, subtítulo, CTA "Fazer avaliação (5 min, sem cadastro)" e uma ilustração no lugar do card falso.
-2. **Faixa de números reais** com fonte (por exemplo, casos novos por ano segundo o INCA).
-3. **"O que você encontra aqui"**: Avaliação, Aprenda, Números e Onde buscar ajuda, em cards que levam a páginas reais.
-4. **Sinais de alerta**: um bloco visual curto ("procure atendimento se notar…").
-5. **Como funciona** (3 passos, sem "crie seu perfil").
-6. **Artigos em destaque** do hub.
-7. **Metodologia e fontes**: "Como calculamos" e logos ou nomes das fontes.
-8. **FAQ** curto.
-9. **Rodapé completo**: mapa do site, fontes, aviso médico, privacidade e repositório.
+**Atualizado em 28/10/2026:** a home deixa de ser uma landing page e passa a ser um **portal** (abertura curta,
+grade de atalhos, notícias em lista, coluna com números e apoio), com o conteúdo informativo em páginas próprias.
+Especificação completa em [docs/design/home-portal.md](docs/design/home-portal.md). A lista anterior desta seção
+(hero grande, faixa de números, FAQ na home) foi substituída por esse documento.
 
 ### 4.3 Resultado novo
 

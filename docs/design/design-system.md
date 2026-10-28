@@ -51,6 +51,8 @@ apoio 14. O zoom de texto da acessibilidade continua multiplicando essa escala.
   Animações curtas e discretas, sempre respeitando `prefers-reduced-motion`.
 - **Etiquetas em todos os cantos** ("Biblioteca Médica", "Agendado"…). Só quando informam algo útil.
 - **Texto emotivo demais.** Acolhedor, mas direto e objetivo.
+- **Estrutura de landing page.** A home é um portal (atalhos, notícias, apoio), não uma sequência de seções de
+  venda. Ver [home-portal.md](home-portal.md).
 - **Conteúdo fictício.** Nada de nomes de médicos, clínicas, serviços ou números que não existem (ver regras de
   conteúdo no [CLAUDE.md](../../CLAUDE.md)).
 
