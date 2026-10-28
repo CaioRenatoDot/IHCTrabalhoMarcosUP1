@@ -70,9 +70,9 @@ apoio 14. O zoom de texto da acessibilidade continua multiplicando essa escala.
 - **Fotos:** só de bancos com licença livre para uso comercial (Pexels, Unsplash sem "+"), mostrando pessoas de forma
   positiva e sem sugerir que estejam doentes ou que endossem o site. Crédito visível junto da foto, mesmo quando a
   licença não exige, e registro na tabela abaixo. Arquivos em `public/images/`, até ~1200 px de largura.
-- **Logo animada:** "batimento" suave do coração ao carregar a página e ao passar o mouse/focar (`navbar.css`),
-  desligado com `prefers-reduced-motion`. Uma versão vetorial (SVG) permitiria animar o laço sendo desenhado;
-  depende do arquivo vetorial da logo (FR-19).
+- **Logo:** redesenhada em SVG a partir do PNG original, com o laço sendo desenhado ao carregar e ao passar o
+  mouse/focar a marca; parada para quem prefere menos movimento. Detalhes, comparação com o original e como editar:
+  [logo.md](logo.md).
 
 | Arquivo | Uso | Autor / fonte | Licença |
 |---------|-----|---------------|---------|

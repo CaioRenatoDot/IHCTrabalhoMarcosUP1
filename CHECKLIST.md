@@ -68,8 +68,9 @@ Observações:
 - [x] **FR-14** `Média` Estrutura de navegação nova: navbar com Avaliação · Aprenda · Números · Onde buscar ajuda · Metodologia ([Navbar.jsx](src/components/Navbar.jsx))
 - [x] **FR-15** `Média` Início redesenhado (atalhos para as áreas do site, números com fonte, sinais de alerta)
 - [x] **FR-16** `Média` Rodapé completo: mapa do site, fontes, aviso médico, contato ([Footer.jsx](src/components/Footer.jsx))
-- [x] **FR-18** `Média` Logo animada: batimento suave ao carregar e no hover, respeitando `prefers-reduced-motion` ([navbar.css](src/styles/navbar.css))
-- [ ] **FR-19** `Baixa` Logo em SVG (vetorizar a logo atual) para animar o laço sendo desenhado e melhorar a nitidez
+- [x] **FR-18** `Média` Logo animada: o laço é desenhado ao carregar e no hover/foco, respeitando `prefers-reduced-motion` ([docs/design/logo.md](docs/design/logo.md)). A primeira versão (batimento do PNG) foi descartada
+- [x] **FR-19** `Média` Logo redesenhada em SVG a partir do PNG ([RiskCareLogo.jsx](src/components/RiskCareLogo.jsx), [public/riskcare-logo.svg](public/riskcare-logo.svg))
+- [ ] **FR-25** `Média` Usar a logo em SVG também no login, formulário, resultado, favicon e PDF
 - [x] **FR-17** `Alta` **Home como portal**: abertura curta, grade de atalhos com destaque da avaliação (muda se logada), notícias em lista e coluna lateral com números e apoio; menu com as páginas novas ([docs/design/home-portal.md](docs/design/home-portal.md))
 
 **Base técnica**
