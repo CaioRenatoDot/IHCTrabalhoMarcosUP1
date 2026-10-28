@@ -20,10 +20,6 @@
     max-width: 100%;
   }
 
-  .risk-card {
-    width: min(320px, 100%);
-  }
-
   .cards-block__grid {
     grid-template-columns: 1fr;
     max-width: 480px;
@@ -35,16 +31,6 @@
     grid-template-columns: 1fr;
     max-width: 400px;
     margin: 0 auto;
-  }
-
-  .indicator-list {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 24px;
-  }
-
-  .indicator-item:nth-child(2) .indicator-separator,
-  .indicator-separator {
-    display: none;
   }
 
   .site-footer__inner {
@@ -117,11 +103,6 @@
     text-align: center;
   }
 
-  .home-section--metrics .home-section__inner {
-    padding-top: 40px;
-    padding-bottom: 40px;
-  }
-
   .home-section--cards .home-section__inner,
   .home-section--how .home-section__inner {
     padding-top: 56px;
@@ -152,21 +133,5 @@
 
   .cover-block__head h2 {
     font-size: 0.84rem;
-  }
-}
-
-@media (max-width: 560px) {
-  .indicator-list {
-    grid-template-columns: 1fr;
-    gap: 0;
-  }
-
-  .indicator-item {
-    padding-top: 16px;
-    padding-bottom: 16px;
-  }
-
-  .indicator-separator {
-    display: none !important;
   }
 }

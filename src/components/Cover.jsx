@@ -1,14 +1,14 @@
-﻿const publicoAlvo = [
+const publicoAlvo = [
   'Mulheres acima de 18 anos',
-  'Homens interessados em preven\u00e7\u00e3o',
-  'Pessoas com ou sem hist\u00f3rico familiar',
-  'Quem busca informa\u00e7\u00e3o inicial antes da consulta',
+  'Homens interessados em prevenção',
+  'Pessoas com ou sem histórico familiar',
+  'Quem busca informação inicial antes da consulta',
 ]
 
 const integrantes = [
   { initials: 'CG', name: 'Caio Gabriel Pereira de Menezes Correia' },
   { initials: 'CR', name: 'Caio Renato dos Santos Claudino' },
-  { initials: 'JF', name: 'Jos\u00e9 Francisco de Araujo Neto' },
+  { initials: 'JF', name: 'José Francisco de Araujo Neto' },
   { initials: 'TP', name: 'Thalita Pereira de Andrade' },
 ]
 
@@ -50,7 +50,7 @@ function BrandIcon() {
 
 function Cover() {
   return (
-    <section className="cover stagger-fade" aria-label="Capa do projeto RiskCare">
+    <section className="cover stagger-fade" aria-label="Sobre o RiskCare">
       <aside className="cover__left">
         <div className="cover-brand">
           <span className="cover-brand__icon">
@@ -62,20 +62,20 @@ function Cover() {
         <span className="cover-chip">Sobre o projeto</span>
 
         <h1 className="cover-title">
-          {'Informa\u00e7\u00e3o que protege, conhecimento que acolhe'}
+          {'Informação que protege, conhecimento que acolhe'}
         </h1>
 
         <p className="cover-subtitle">
           {
-            'Uma plataforma educativa criada para conscientizar e informar sobre fatores de risco do c\u00e2ncer de mama, promovendo preven\u00e7\u00e3o atrav\u00e9s da informa\u00e7\u00e3o acess\u00edvel.'
+            'Uma plataforma educativa criada para conscientizar e informar sobre fatores de risco do câncer de mama, promovendo prevenção através da informação acessível.'
           }
         </p>
 
         <ul className="cover-tag-list" aria-label="Temas do projeto">
           <li>Educativo</li>
-          <li>{'Preven\u00e7\u00e3o'}</li>
-          <li>{'Sa\u00fade da mulher'}</li>
-          <li>IHC</li>
+          <li>{'Prevenção'}</li>
+          <li>{'Saúde da mulher'}</li>
+          <li>Acessibilidade</li>
         </ul>
       </aside>
 
@@ -87,7 +87,7 @@ function Cover() {
           </div>
           <p>
             {
-              'O RiskCare nasce da necessidade de tornar a informa\u00e7\u00e3o sobre preven\u00e7\u00e3o do c\u00e2ncer de mama mais acess\u00edvel, clara e acolhedora. Atrav\u00e9s de question\u00e1rios intuitivos e feedback visual, ajudamos usu\u00e1rios a entenderem melhor seus fatores de risco e a tomarem decis\u00f5es informadas sobre sua sa\u00fade.'
+              'O RiskCare nasce da necessidade de tornar a informação sobre prevenção do câncer de mama mais acessível, clara e acolhedora. Através de questionários intuitivos e feedback visual, ajudamos usuários a entenderem melhor seus fatores de risco e a tomarem decisões informadas sobre sua saúde.'
             }
           </p>
 
@@ -95,9 +95,9 @@ function Cover() {
             <WarningIcon />
             <p>
               {'Esta ferramenta '}
-              <strong>{'n\u00e3o realiza diagn\u00f3stico m\u00e9dico'}</strong>
+              <strong>{'não realiza diagnóstico médico'}</strong>
               {
-                '. Os resultados s\u00e3o estimativas baseadas em fatores de risco gerais e n\u00e3o substituem consulta com profissional de sa\u00fade.'
+                '. Os resultados são estimativas baseadas em fatores de risco gerais e não substituem consulta com profissional de saúde.'
               }
             </p>
           </section>
@@ -105,7 +105,7 @@ function Cover() {
 
         <section className="cover-block" style={{ '--stagger-index': 2 }}>
           <div className="cover-block__head">
-            <h2>{'P\u00daBLICO-ALVO'}</h2>
+            <h2>{'PÚBLICO-ALVO'}</h2>
             <span />
           </div>
           <ul className="cover-audience">
@@ -122,7 +122,7 @@ function Cover() {
           </div>
           <p>
             {
-              'O acesso \u00e0 informa\u00e7\u00e3o clara sobre preven\u00e7\u00e3o do c\u00e2ncer de mama ainda \u00e9 um desafio. Muitas pessoas desconhecem fatores de risco b\u00e1sicos ou adiam a busca por orienta\u00e7\u00e3o m\u00e9dica por falta de informa\u00e7\u00e3o acess\u00edvel. O RiskCare preenche essa lacuna com uma ferramenta educativa gratuita, emp\u00e1tica e respaldada por dados.'
+              'O acesso à informação clara sobre prevenção do câncer de mama ainda é um desafio. Muitas pessoas desconhecem fatores de risco básicos ou adiam a busca por orientação médica por falta de informação acessível. O RiskCare preenche essa lacuna com uma ferramenta educativa gratuita, empática e respaldada por dados.'
             }
           </p>
         </section>

@@ -375,38 +375,6 @@
   );
 }
 
-.accessibility-root .risk-card__title {
-  font-size: calc(12px * var(--accessibility-font-scale));
-}
-
-.accessibility-root .risk-card__value {
-  font-size: calc(1.9rem * var(--accessibility-font-scale));
-}
-
-.accessibility-root .risk-card__level {
-  font-size: calc(0.82rem * var(--accessibility-font-scale));
-}
-
-.accessibility-root .risk-card__row {
-  font-size: calc(0.76rem * var(--accessibility-font-scale));
-}
-
-.accessibility-root .risk-card__row strong {
-  font-size: calc(0.8rem * var(--accessibility-font-scale));
-}
-
-.accessibility-root .indicator-value {
-  font-size: clamp(
-    calc(1.75rem * var(--accessibility-font-scale)),
-    calc(3vw * var(--accessibility-font-scale)),
-    calc(2.5rem * var(--accessibility-font-scale))
-  );
-}
-
-.accessibility-root .indicator-label {
-  font-size: calc(0.9rem * var(--accessibility-font-scale));
-}
-
 .accessibility-root .cards-block h3 {
   font-size: calc(1.08rem * var(--accessibility-font-scale)) !important;
 }
@@ -495,7 +463,6 @@
 .accessibility-root.is-high-contrast .site-navbar,
 .accessibility-root.is-high-contrast .home-section,
 .accessibility-root.is-high-contrast .home-section--hero,
-.accessibility-root.is-high-contrast .home-section--metrics,
 .accessibility-root.is-high-contrast .home-section--cards,
 .accessibility-root.is-high-contrast .home-section--how,
 .accessibility-root.is-high-contrast .home-section--notice,
@@ -511,7 +478,6 @@
 .accessibility-root.is-high-contrast .awareness-description,
 .accessibility-root.is-high-contrast .section-title,
 .accessibility-root.is-high-contrast .section-sub,
-.accessibility-root.is-high-contrast .indicator-label,
 .accessibility-root.is-high-contrast .observation-banner__text,
 .accessibility-root.is-high-contrast .site-footer__left,
 .accessibility-root.is-high-contrast .site-footer__center,
@@ -572,53 +538,10 @@
   border-color: #fff;
 }
 
-.accessibility-root.is-high-contrast .risk-card {
-  background: #000;
-  border-color: #333;
-}
-
-.accessibility-root.is-high-contrast .risk-card__title,
-.accessibility-root.is-high-contrast .risk-card__level,
-.accessibility-root.is-high-contrast .risk-card__row,
-.accessibility-root.is-high-contrast .risk-card__row strong {
-  color: #fff;
-}
-
-.accessibility-root.is-high-contrast .risk-card__row {
-  background: #1a1a1a;
-}
-
-.accessibility-root.is-high-contrast .risk-card__row span {
-  color: #d4d4d4;
-}
-
-.accessibility-root.is-high-contrast .risk-high,
-.accessibility-root.is-high-contrast .risk-medium,
-.accessibility-root.is-high-contrast .risk-low {
-  color: #fff !important;
-}
-
-.accessibility-root.is-high-contrast .risk-card__ring {
-  background: conic-gradient(#ffeb3b 0 115deg, #333 115deg 360deg);
-}
-
-.accessibility-root.is-high-contrast .risk-card__ring::after {
-  background: #000;
-}
-
-.accessibility-root.is-high-contrast .risk-card__value,
 .accessibility-root.is-high-contrast .site-navbar__nav a:hover,
 .accessibility-root.is-high-contrast .login-card a,
 .accessibility-root.is-high-contrast .cards-block h3 {
   color: #ffeb3b;
-}
-
-.accessibility-root.is-high-contrast .indicator-value {
-  color: #fff;
-}
-
-.accessibility-root.is-high-contrast .indicator-separator {
-  background: #333;
 }
 
 .accessibility-root.is-high-contrast .feature-card-panel {

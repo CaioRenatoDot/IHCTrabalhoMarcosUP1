@@ -1,5 +1,4 @@
 import FeatureCard from '../components/FeatureCard.jsx'
-import Indicadores from '../components/Indicadores.jsx'
 import ObservationBanner from '../components/ObservationBanner.jsx'
 import ConscientizacaoPrevencaoSection from '../components/ConscientizacaoPrevencaoSection.jsx'
 import HowItWorksSection from '../components/HowItWorksSection.jsx'
@@ -70,24 +69,7 @@ function HomePage() {
         </div>
       </section>
 
-      <section
-        id="saiba-mais"
-        className="home-section home-section--metrics stagger-fade"
-        tabIndex={-1}
-        aria-labelledby="fatores-de-risco-heading"
-        style={stagger(1)}
-      >
-        <div className="home-section__inner">
-          <h2 id="fatores-de-risco-heading" className="visually-hidden">
-            Fatores de risco
-          </h2>
-          <div id="fatores-de-risco">
-            <Indicadores />
-          </div>
-        </div>
-      </section>
-
-      <section className="home-section home-section--cards stagger-fade" style={stagger(2)}>
+      <section className="home-section home-section--cards stagger-fade" style={stagger(1)}>
         <div className="home-section__inner">
           <section className="cards-block">
             <div className="cards-block__grid">
@@ -126,7 +108,7 @@ function HomePage() {
       <section
         id="como-funciona"
         className="home-section home-section--how stagger-fade"
-        style={stagger(3)}
+        style={stagger(2)}
       >
         <div className="home-section__inner">
           <HowItWorksSection />
@@ -136,7 +118,7 @@ function HomePage() {
       <section
         id="sobre"
         className="home-section home-section--notice stagger-fade"
-        style={stagger(4)}
+        style={stagger(3)}
       >
         <div className="home-section__inner">
           <ObservationBanner />

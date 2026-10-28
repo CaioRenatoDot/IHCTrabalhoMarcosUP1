@@ -10,12 +10,14 @@ function Footer() {
     <footer className="site-footer" aria-label="Rodapé">
       <div className="site-footer__inner">
         <p className="site-footer__left site-footer__text">
-          Desenvolvido por <strong>Estudantes</strong>
+          Conteúdo educativo. <strong>Não substitui consulta médica.</strong>
         </p>
         <p className="site-footer__center site-footer__text">
           © {copyrightYears} <strong>RiskCare</strong>
         </p>
-        <p className="site-footer__right site-footer__text">Projeto acadêmico de IHC</p>
+        <p className="site-footer__right site-footer__text">
+          <InternalLink href="/sobre-projeto">Sobre o projeto e a equipe</InternalLink>
+        </p>
       </div>
       <div className="site-footer__links" aria-label="Links legais">
         <InternalLink href="/termos-de-uso">Termos de uso</InternalLink>

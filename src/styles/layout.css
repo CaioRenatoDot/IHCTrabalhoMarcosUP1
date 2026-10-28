@@ -133,15 +133,6 @@
   padding-bottom: 0;
 }
 
-.home-section--metrics {
-  background: var(--rc-rose-bg);
-}
-
-.home-section--metrics .home-section__inner {
-  padding-top: 60px;
-  padding-bottom: 60px;
-}
-
 .home-section--cards {
   background: var(--rc-white);
 }
