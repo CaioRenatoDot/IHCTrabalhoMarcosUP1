@@ -17,8 +17,15 @@ Frentes: **FR** Front · **BK** Back · **FM** Formulário e resultado · **CT**
 
 ## Agora
 
-**Branch:** `fase-0/front-credibilidade` — tirar do ar tudo o que é falso ou sem fonte e o tom acadêmico (FR-01 a FR-04, FM-01 a FM-04).
-O redesenho das telas (FR-10 em diante) só começa depois de a direção visual ser definida (ver Decisões).
+_Atualizado em 28/10/2026._
+
+**Próximo passo:** criar a branch `fase-0/resultado-credibilidade` a partir da `develop` e fazer **FM-01 a FM-05** e **BK-01**.
+A parte de front da Fase 0 (FR-01 a FR-04) já está na `develop` (PR #18).
+
+- A tela de resultado e o formulário exigem login, que não funciona localmente sem Supabase de desenvolvimento (IN-05).
+  Até lá, essa parte é validada por lint, build e leitura do código.
+- O redesenho das telas (FR-10 em diante) só começa depois de a direção visual ser definida (ver Decisões).
+- Os previews da Vercel pedem login (projeto na conta do Caio Renato). Conferir localmente com `npm run dev:full`.
 
 ---
 
@@ -28,6 +35,8 @@ O redesenho das telas (FR-10 em diante) só começa depois de a direção visual
 - [x] Docs da fase acadêmica arquivados em `docs/historico/`
 - [x] Branches antigas removidas; fluxo `develop` → `main` definido
 - [x] CI de lint e build no GitHub Actions (PR #16)
+- [x] Fase 0, parte do front: FR-01 a FR-04 (PR #18)
+- [x] Regra registrada: VLibras não é alterado; acessibilidade só muda se necessário (FR-24 suspenso)
 
 ---
 
@@ -131,6 +140,16 @@ O redesenho das telas (FR-10 em diante) só começa depois de a direção visual
 - [ ] **IN-06** `F7` README como estudo de caso (prints, decisões); Lighthouse acima de 90
 - [ ] **IN-07** `F1` Pedir ao dono a proteção de branch exigindo o check `check` verde
 - [ ] **IN-08** `F1` Docker para desenvolvimento: `Dockerfile` + `docker-compose.yml` (Node 22, `node_modules` em volume, polling para o hot-reload no Windows) e Supabase local via CLI (`supabase start`). Fazer junto com o IN-05
+
+---
+
+## Observações para o redesenho
+
+Pontos encontrados durante a Fase 0 que não eram escopo dela:
+- O botão **"Saiba mais"** do hero leva para `/login`, e não para uma explicação.
+- O **GSAP** deixou de ser usado (só o card removido usava), mas segue no `package.json`. Decidir no redesenho se volta a ser usado ou sai.
+- A imagem do **Open Graph** é o logo, no domínio atual da Vercel. Trocar por uma imagem de compartilhamento própria quando houver domínio novo.
+- A home ficou com hero, cards, "Como funciona" e aviso: espaço reservado para os números oficiais com fonte (FR-02 voltará no FR-15).
 
 ---
 
