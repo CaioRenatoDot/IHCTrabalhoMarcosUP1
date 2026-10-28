@@ -1,4 +1,5 @@
 import InternalLink from './InternalLink.jsx'
+import RiskCareLogo from './RiskCareLogo.jsx'
 
 function Footer() {
   const startYear = 2026
@@ -10,7 +11,7 @@ function Footer() {
       <div className="site-footer__inner">
         <div className="site-footer__brand">
           <InternalLink className="site-footer__logo" href="/">
-            <img src="/riskcare_logo.png" alt="" aria-hidden="true" />
+            <RiskCareLogo className="site-footer__logo-mark" />
             <span>RiskCare</span>
           </InternalLink>
           <p className="site-footer__desc">

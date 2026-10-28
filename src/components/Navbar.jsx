@@ -1,8 +1,12 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { LuMenu, LuX } from 'react-icons/lu'
 import { useAuth } from '../contexts/AuthContext.jsx'
 import ConfirmModal from './ConfirmModal.jsx'
+import RiskCareLogo from './RiskCareLogo.jsx'
 import { getAssessmentStorageKey, readStoredAssessment } from '../lib/riskAssessmentStorage.js'
+
+// Intervalo mínimo entre repetições da animação da logo ao passar o mouse.
+const LOGO_REPLAY_INTERVAL_MS = 2000
 
 const NAV_LINKS = [
   { href: '/sinais-de-alerta', label: 'Sinais de alerta', activePaths: ['/sinais-de-alerta'] },
@@ -16,6 +20,8 @@ function Navbar({ onNavigate, currentPath }) {
   const { latestAssessment, session, signOut } = useAuth()
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [logoKey, setLogoKey] = useState(0)
+  const lastLogoReplayRef = useRef(0)
   const storageKey = session?.user?.id ? getAssessmentStorageKey(session.user.id) : null
   const localAssessment = storageKey ? readStoredAssessment(storageKey) : null
   const hasSavedAssessment = Boolean(latestAssessment || localAssessment)
@@ -34,6 +40,17 @@ function Navbar({ onNavigate, currentPath }) {
     onNavigate(href)
   }
 
+  // Remontar o SVG reinicia a animação do laço uma única vez.
+  const replayLogo = () => {
+    const now = Date.now()
+    if (now - lastLogoReplayRef.current < LOGO_REPLAY_INTERVAL_MS) {
+      return
+    }
+
+    lastLogoReplayRef.current = now
+    setLogoKey((key) => key + 1)
+  }
+
   const handleLogout = async () => {
     const result = await signOut()
 
@@ -46,8 +63,14 @@ function Navbar({ onNavigate, currentPath }) {
   return (
     <header className={`site-navbar${isMenuOpen ? ' is-menu-open' : ''}`}>
       <div className="site-navbar__inner">
-        <a className="site-navbar__brand" href="/" onClick={(event) => handleNavigate(event, '/')}>
-          <img className="site-navbar__brand-logo" src="/riskcare_logo.png" alt="" aria-hidden="true" />
+        <a
+          className="site-navbar__brand"
+          href="/"
+          onClick={(event) => handleNavigate(event, '/')}
+          onMouseEnter={replayLogo}
+          onFocus={replayLogo}
+        >
+          <RiskCareLogo key={logoKey} animated className="site-navbar__brand-logo" />
           <span>RiskCare</span>
         </a>
 

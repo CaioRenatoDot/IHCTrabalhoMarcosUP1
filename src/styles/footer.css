@@ -29,10 +29,11 @@
   text-decoration: none;
 }
 
-.site-footer__logo img {
+.site-footer__logo-mark {
+  --rc-logo-gap: var(--rc-surface);
+
   width: 34px;
   height: 34px;
-  object-fit: contain;
 }
 
 .site-footer__desc {
