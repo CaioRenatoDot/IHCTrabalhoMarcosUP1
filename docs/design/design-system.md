@@ -65,7 +65,20 @@ apoio 14. O zoom de texto da acessibilidade continua multiplicando essa escala.
   e qualquer barra fixa não podem cobri-los.
 - **Aviso de que o conteúdo é educativo**, no rodapé.
 
-## 6. Formas e espaçamento
+## 6. Imagens e animação da logo
+
+- **Fotos:** só de bancos com licença livre para uso comercial (Pexels, Unsplash sem "+"), mostrando pessoas de forma
+  positiva e sem sugerir que estejam doentes ou que endossem o site. Crédito visível junto da foto, mesmo quando a
+  licença não exige, e registro na tabela abaixo. Arquivos em `public/images/`, até ~1200 px de largura.
+- **Logo animada:** "batimento" suave do coração ao carregar a página e ao passar o mouse/focar (`navbar.css`),
+  desligado com `prefers-reduced-motion`. Uma versão vetorial (SVG) permitiria animar o laço sendo desenhado;
+  depende do arquivo vetorial da logo (FR-19).
+
+| Arquivo | Uso | Autor / fonte | Licença |
+|---------|-----|---------------|---------|
+| `public/images/home-consulta.jpg` | Abertura da home | [Thirdman / Pexels](https://www.pexels.com/photo/doctor-consulting-a-patient-7659873/) | [Licença Pexels](https://www.pexels.com/license/): uso comercial livre, crédito opcional |
+
+## 7. Formas e espaçamento
 
 - Raio: 8 px em campos e botões pequenos, 12–16 px em cards. Pílula só em etiquetas e botões principais.
 - Sombra: uma só, bem leve, neutra (não rosa), apenas em cards clicáveis.
