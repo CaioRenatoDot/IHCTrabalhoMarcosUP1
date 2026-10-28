@@ -212,7 +212,7 @@ Qualquer sinal marcado → aviso em destaque no topo: procurar uma unidade de sa
 | 50 a 74 anos | Mamografia a cada 2 anos; "em dia" se P25 = `under_1y` ou `1_to_2y` (S4) |
 | 40 a 49 anos | Pode fazer pelo SUS por demanda, após orientação do profissional sobre riscos e benefícios; garantido pela Lei nº 15.284/2025 (S4) |
 | Abaixo de 40 | Rastreamento não indicado para risco habitual; atenção aos sinais de alerta |
-| Acima de 74 | Avaliação individual com o profissional (S4 ⚠️) |
+| Acima de 74 | Exame por demanda, após orientação do profissional (S4) |
 
 ### 5.4 Hábitos de proteção (P20–P23)
 Índice de 0 a 100 apenas com fatores modificáveis: IMC (com mais peso após a menopausa, conforme S5),
