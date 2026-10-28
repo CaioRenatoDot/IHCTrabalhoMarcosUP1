@@ -81,6 +81,7 @@ A parte de front da Fase 0 (FR-01 a FR-04) já está na `develop` (PR #18).
 - [ ] **BK-09** `F1` Validação do payload com `zod`
 - [ ] **BK-10** `F3` `fullName` deixa de ser obrigatório no [schema.prisma](prisma/schema.prisma) + migration
 - [ ] **BK-11** `F3` Migrations para os campos do Gail
+- [ ] **BK-13** `F4` Busca automática de notícias no back: coleta em fontes oficiais, tabela `NewsItem` com aprovação, Vercel Cron e fallback para a lista manual (ver PLANEJAMENTO 3.6)
 - [ ] **BK-12** `F1` Decidir o destino de `data/datasets/` (não servem para pontuar o questionário)
 
 ---
@@ -127,6 +128,8 @@ A parte de front da Fase 0 (FR-01 a FR-04) já está na `develop` (PR #18).
 - [ ] **CT-12** `F4` `/onde-buscar-ajuda`: SUS, Disque Saúde 136, como pedir mamografia, ONGs
 - [ ] **CT-13** `F4` Seus direitos (Leis 12.732/2012 e 13.896/2019)
 - [ ] **CT-14** `F4` FAQ e glossário
+- [x] **CT-21** `F2` Seção de notícias na home com curadoria manual de fontes oficiais ([src/content/news.js](src/content/news.js))
+- [ ] **CT-22** `F4` Página `/noticias` com todas as notícias (ver PLANEJAMENTO 3.6)
 - [ ] **CT-20** `F5` `/numeros`: casos novos e mortalidade por UF e por idade
 
 **Fontes a levantar** (a tabela completa está na seção 6 do planejamento; confirmar a edição vigente antes de citar)

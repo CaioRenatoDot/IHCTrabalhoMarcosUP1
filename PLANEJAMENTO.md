@@ -191,6 +191,29 @@ Legenda: **P0** = essencial · **P1** = alto impacto · **P2** = desejável
 - [ ] **P2** Exportar e excluir os próprios dados (direitos do titular na LGPD).
 - [ ] **P2** Login social (os botões já existem na interface).
 
+### 3.6 Notícias
+
+**Hoje (implementado):** curadoria manual em [src/content/news.js](src/content/news.js). Só entram fontes
+oficiais (INCA, Ministério da Saúde, Ministério das Mulheres), com data, resumo e link conferidos. A home mostra
+as 3 mais recentes, e a seção some sozinha se a mais recente tiver mais de 12 meses.
+
+**Próximo passo: busca automática no back.**
+- [ ] **P2** Endpoint `GET /api/news` no Express, devolvendo as notícias mais recentes já filtradas, com cache.
+- [ ] **P2** Coleta a partir de **fontes oficiais em lista fechada** (allowlist de domínios gov.br: INCA, Ministério da
+      Saúde, Ministério das Mulheres). Verificar quais páginas de notícias oferecem RSS; se não houver, ler a listagem
+      da página de notícias.
+- [ ] **P2** Filtro por assunto: "câncer de mama", "mamografia", "Outubro Rosa", "rastreamento".
+- [ ] **P2** Tabela `NewsItem` (Prisma): URL única, título, resumo, data, fonte e **status** (`pending`,
+      `approved`, `hidden`). Itens novos entram como `pending`; só os aprovados aparecem no site.
+- [ ] **P2** Atualização diária por **Vercel Cron**, chamando uma rota protegida por segredo
+      (`POST /api/news/refresh`).
+- [ ] **P2** Se a coleta falhar ou não houver itens aprovados, o front usa a lista manual de `news.js`.
+- [ ] **P2** Página `/noticias` com todas as notícias aprovadas.
+
+Por que com aprovação: notícias aparecem como conteúdo endossado por um site de saúde. A coleta automática
+economiza o trabalho de procurar; a aprovação garante que nada impreciso ou fora do tema seja publicado.
+Decisão em aberto: como aprovar (painel simples, campo no banco ou aprovação automática só para o INCA).
+
 ---
 
 ## 4. Redesign do front-end
