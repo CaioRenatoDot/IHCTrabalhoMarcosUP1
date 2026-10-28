@@ -24,7 +24,7 @@ A parte de front da Fase 0 (FR-01 a FR-04) já está na `develop` (PR #18).
 
 - A tela de resultado e o formulário exigem login, que não funciona localmente sem Supabase de desenvolvimento (IN-05).
   Até lá, essa parte é validada por lint, build e leitura do código.
-- O redesenho das telas (FR-10 em diante) só começa depois de a direção visual ser definida (ver Decisões).
+- Direção visual definida (FR-10): [docs/design/design-system.md](docs/design/design-system.md). O redesenho segue na branch `fase-2/home-redesenho`.
 - Os previews da Vercel pedem login (projeto na conta do Caio Renato). Conferir localmente com `npm run dev:full`.
 
 ---
@@ -49,7 +49,7 @@ A parte de front da Fase 0 (FR-01 a FR-04) já está na `develop` (PR #18).
 - [x] **FR-04** `F0` `index.html`: título, meta description e Open Graph ([index.html](index.html))
 
 **Redesenho das telas** (sair do formato "landing page")
-- [ ] **FR-10** `F2` **Definir a direção visual** antes de codar: referências, wireframes das telas-chave (início, avaliação, resultado, conteúdo) e decisão sobre o formato do site (ver Decisões)
+- [x] **FR-10** `F2` **Definir a direção visual** — decidido: neutro com rosa de acento, ver [docs/design/design-system.md](docs/design/design-system.md) antes de codar: referências, wireframes das telas-chave (início, avaliação, resultado, conteúdo) e decisão sobre o formato do site (ver Decisões)
 - [ ] **FR-11** `F2` Design system: tokens de cor (com uma cor de apoio além do rosa), tipografia e espaçamento; modo escuro ([base.css](src/styles/base.css))
 - [ ] **FR-12** `F2` Componentes base: `Button`, `Card`, `Callout`, `Badge`, `Accordion`, `Tabs`, `StatCard`, `SourceCitation`
 - [ ] **FR-13** `F2` Ícones padronizados (`react-icons`) e ilustrações num estilo único
@@ -157,7 +157,7 @@ Pontos encontrados durante a Fase 0 que não eram escopo dela:
 
 ## Decisões em aberto
 
-- [ ] **Formato do site:** o redesenho segue como site de conteúdo com páginas e navegação própria, ou um "painel" mais próximo de um aplicativo? (define FR-10 a FR-16)
+- [x] **Formato do site:** painel com conteúdo integrado (referência: [docs/design/home/](docs/design/home/)); tom neutro com rosa de acento (28/10/2026). o redesenho segue como site de conteúdo com páginas e navegação própria, ou um "painel" mais próximo de um aplicativo? (define FR-10 a FR-16)
 - [ ] Gail no cliente (privacidade total) ou no servidor (versão central)?
 - [ ] Quem revisa o conteúdo médico? Ter um profissional de saúde como revisor dá muita credibilidade.
 - [ ] O site atende também homens na avaliação ou só no conteúdo?

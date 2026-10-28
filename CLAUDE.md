@@ -89,6 +89,8 @@ Este é um site de saúde, então estas regras valem mais do que qualquer prefer
 - Módulos ESM (`import`/`export`) em todo o projeto.
 - Um arquivo CSS por área em `src/styles/`, importado em `global.css`. Use os tokens `--rc-*`
   e evite cores soltas.
+- **Visual:** siga [docs/design/design-system.md](docs/design/design-system.md) (neutro com rosa de acento,
+  poucos cards, ícones Lucide só onde ajudam, sem efeitos decorativos). A logo do RiskCare aparece em todas as telas.
 - Acessibilidade é requisito: foco visível, `aria-*` corretos, `prefers-reduced-motion`
   respeitado, VLibras e os controles de zoom continuam funcionando.
 - **Não mexer no VLibras** (widget, CSS e preload no `index.html`). Nos recursos de acessibilidade
