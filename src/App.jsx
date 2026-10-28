@@ -8,6 +8,10 @@ import TermsPage from './pages/TermsPage.jsx'
 import PrivacyPage from './pages/PrivacyPage.jsx'
 import ResultsPage from './pages/ResultsPage.jsx'
 import AssessmentFormPage from './pages/AssessmentFormPage.jsx'
+import WarningSignsPage from './pages/WarningSignsPage.jsx'
+import MammographyPage from './pages/MammographyPage.jsx'
+import HelpPage from './pages/HelpPage.jsx'
+import FaqPage from './pages/FaqPage.jsx'
 import Navbar from './components/Navbar.jsx'
 import Footer from './components/Footer.jsx'
 import AccessibilityControls from './components/accessibility/AccessibilityControls.jsx'
@@ -168,6 +172,14 @@ function App() {
     showFooter = false
   } else if (route.path === '/sobre-projeto' || route.path === '/cover') {
     page = <CoverPage />
+  } else if (route.path === '/sinais-de-alerta') {
+    page = <WarningSignsPage />
+  } else if (route.path === '/mamografia') {
+    page = <MammographyPage />
+  } else if (route.path === '/onde-buscar-ajuda') {
+    page = <HelpPage />
+  } else if (route.path === '/perguntas-frequentes') {
+    page = <FaqPage />
   } else if (route.path === '/resultados') {
     page = <ResultsPage />
     showNavbar = false
