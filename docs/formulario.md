@@ -1,6 +1,6 @@
 # Planejamento do formulário de avaliação
 
-> Documento vivo. Última revisão: 28/10/2026.
+> Documento vivo. Última revisão: 28/10/2026 (nomes das etapas).
 > Relacionado: [PLANEJAMENTO.md](../PLANEJAMENTO.md) (seção 3.1) e [CHECKLIST.md](../CHECKLIST.md) (itens FM-10 a FM-14).
 
 Este documento define **de onde vêm as fontes, quais são as etapas, quais perguntas são feitas e como o
@@ -49,7 +49,7 @@ virar ✅ com URL, edição e data de acesso registradas no registro central de 
 | Versão | Quando | Resumo |
 |--------|--------|--------|
 | **v1** | Hoje + Fase 0 | Formulário atual (5 etapas, 20 campos, score por pesos). A Fase 0 só acrescenta o aviso de alerta (FM-04) e remove o nome completo (FM-05). |
-| **v2** | Fase 3 | 8 etapas. Quatro saídas independentes: **alerta**, **classificação por critérios** (risco habitual / elevado), **rastreamento** e **hábitos de proteção**. Códigos estáveis nas opções. |
+| **v2** | Fase 3 | Tela de boas-vindas + 7 etapas (ver 4.0). Quatro saídas independentes: **alerta**, **classificação por critérios** (risco habitual / elevado), **rastreamento** e **hábitos de proteção**. Códigos estáveis nas opções. |
 | **v3** | Futuro | v2 + número do **modelo de Gail** quando aplicável, "por que perguntamos isso?", salvar progresso, densidade mamária opcional. |
 
 ### 3.1 v1 — formulário atual (referência)
@@ -69,10 +69,37 @@ coleta nome sem uso; payload com rótulos de texto comparados por `includes`/`st
 
 ## 4. v2 — etapas e perguntas
 
+### 4.0 Nomes e organização das etapas
+
+Cada etapa tem um **rótulo curto** (barra de progresso), um **título** (topo da tela) e uma **frase de apoio**
+(logo abaixo do título, explicando por que aquelas perguntas importam). A tela de boas-vindas não conta como etapa
+na barra de progresso: a pessoa vê **"Etapa 1 de 7"** a partir de "Sobre você".
+
+| # | Rótulo (progresso) | Título da tela | Frase de apoio | Perguntas | Tempo estimado |
+|---|--------------------|----------------|----------------|-----------|----------------|
+| 0 | — | Antes de começar | Esta avaliação é educativa e leva cerca de 5 minutos. Ela não substitui uma consulta. | P0 | — |
+| 1 | Sobre você | Sobre você | Sua idade ajuda a indicar quais exames são recomendados para você. | P1–P2 | 15 s |
+| 2 | Sinais | Sinais nas mamas | Algumas alterações merecem avaliação, independentemente do resultado. | P3 | 30 s |
+| 3 | Seu histórico | Seu histórico de saúde | Alguns diagnósticos e tratamentos anteriores mudam o tipo de acompanhamento indicado. | P4–P7 | 45 s |
+| 4 | Família | Histórico familiar | O histórico das suas parentes mais próximas é um dos fatores mais importantes. | P8–P13 | 1 min |
+| 5 | Ciclo e hormônios | Ciclo, gestação e hormônios | Fatores da sua vida reprodutiva também se relacionam ao risco. | P14–P19 | 1 min |
+| 6 | Hábitos | Hábitos do dia a dia | Estes são fatores que você pode mudar, e o resultado mostra como. | P20–P24 | 45 s |
+| 7 | Exames | Seus exames | Vamos ver se sua mamografia está em dia para a sua idade. | P25 | 15 s |
+| — | — | Seu resultado | — | — | — |
+
+Regras de fluxo entre etapas:
+- **Etapa 2 (Sinais):** se algum sinal for marcado, o aviso aparece na própria etapa e a pessoa segue normalmente.
+- **Etapa 3 (Seu histórico):** se P4 = `yes` (câncer de mama prévio), o formulário vai direto para o resultado,
+  com orientação de acompanhamento. As etapas 4 a 7 não são exibidas.
+- **Etapa 4 (Família):** P9 e P10 só aparecem se P8 indicar ao menos uma parente com câncer de mama.
+- **Etapa 5 (Ciclo e hormônios):** P18 só aparece se P15 indicar menopausa.
+- Os tempos são estimativas para orientar o texto "faltam cerca de X minutos"; total aproximado de 5 minutos.
+  Medir com pessoas reais quando a v2 estiver pronta.
+
 Legenda da coluna **Uso**: **A** alerta · **C** critério de risco elevado · **R** rastreamento ·
 **H** hábito de proteção · **F** fator de risco informativo (aparece no resultado, não classifica) · **—** controle do fluxo.
 
-### Etapa 0 — Antes de começar
+### Etapa 0 — Antes de começar (boas-vindas)
 
 | # | Pergunta | Tipo | Opções (código) | Obrig. | Uso | Fonte |
 |---|----------|------|-----------------|--------|-----|-------|
@@ -87,7 +114,7 @@ Texto da etapa: para quem é a avaliação (mulheres a partir de 18 anos) e link
 | P1 | Qual a sua idade? | número 18–100 | — | sim | R, F | S1, S4 |
 | P2 | Em qual estado você mora? | UF | sigla | não | contexto regional | — |
 
-### Etapa 2 — Sinais de alerta
+### Etapa 2 — Sinais nas mamas
 
 | # | Pergunta | Tipo | Opções (código) | Obrig. | Uso | Fonte |
 |---|----------|------|-----------------|--------|-----|-------|
@@ -96,7 +123,7 @@ Texto da etapa: para quem é a avaliação (mulheres a partir de 18 anos) e link
 - Qualquer opção diferente de `none` mostra **imediatamente** o aviso "procure uma unidade de saúde para avaliação", e a avaliação continua.
 - A dor não é perguntada: vira um texto educativo (dor isolada raramente é sinal de câncer). ⚠️ confirmar redação em S1.
 
-### Etapa 3 — Histórico pessoal
+### Etapa 3 — Seu histórico de saúde
 
 | # | Pergunta | Tipo | Opções (código) | Obrig. | Uso | Fonte |
 |---|----------|------|-----------------|--------|-----|-------|
@@ -119,7 +146,7 @@ acompanhamento com a equipe de saúde.
 | P12 | Algum homem da sua família teve câncer de mama? | única | `yes` · `no` · `unknown` | sim | C | S2, S3 |
 | P13 | Alguém da sua família tem mutação BRCA1/2 confirmada por teste? | única | `yes` · `no` · `unknown` | sim | C | S6 |
 
-### Etapa 5 — Fatores reprodutivos e hormonais
+### Etapa 5 — Ciclo, gestação e hormônios
 
 | # | Pergunta | Tipo | Opções (código) | Obrig. | Uso | Fonte |
 |---|----------|------|-----------------|--------|-----|-------|
@@ -130,7 +157,7 @@ acompanhamento com a equipe de saúde.
 | P18 | *(se P15 = before_55/55_or_later)* Fez reposição hormonal depois da menopausa? | única | `never` · `under_5y` · `5y_or_more` | sim | F | S5 |
 | P19 | Usa ou usou anticoncepcional hormonal? | única | `never` · `past` · `current` | sim | F | S5 |
 
-### Etapa 6 — Estilo de vida
+### Etapa 6 — Hábitos do dia a dia
 
 | # | Pergunta | Tipo | Opções (código) | Obrig. | Uso | Fonte |
 |---|----------|------|-----------------|--------|-----|-------|
@@ -143,7 +170,7 @@ acompanhamento com a equipe de saúde.
 O IMC é calculado a partir de P20 e P21 (não é perguntado como faixa). P24 não entra no índice de hábitos:
 a relação com câncer de mama é mais fraca; o resultado só oferece orientação geral de saúde.
 
-### Etapa 7 — Rastreamento
+### Etapa 7 — Seus exames
 
 | # | Pergunta | Tipo | Opções (código) | Obrig. | Uso | Fonte |
 |---|----------|------|-----------------|--------|-----|-------|
