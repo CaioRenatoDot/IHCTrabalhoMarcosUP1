@@ -20,6 +20,10 @@ import SmoothScrollProvider from './components/smooth-scroll/SmoothScrollProvide
 import RouteLoadingPage from './components/RouteLoadingPage.jsx'
 import { useAuth } from './contexts/AuthContext.jsx'
 
+// TEMPORÁRIO: segura a tela de carregamento por alguns segundos ao abrir o site, só em desenvolvimento
+// (import.meta.env.DEV), para visualizar a animação da logo. Não afeta produção. Remover quando não for mais útil.
+const DEV_SPLASH_MS = import.meta.env.DEV ? 6000 : 0
+
 const AUTH_ROUTES = new Set(['/login', '/cadastro'])
 const PROTECTED_ROUTES = new Set(['/formulario', '/resultados'])
 
@@ -56,6 +60,16 @@ function App() {
   const [route, setRoute] = useState(parseLocation)
   const previousPathRef = useRef(route.path)
   const { latestAssessmentLoading, session, loading: authLoading } = useAuth()
+  const [showDevSplash, setShowDevSplash] = useState(DEV_SPLASH_MS > 0)
+
+  useEffect(() => {
+    if (!showDevSplash) {
+      return undefined
+    }
+
+    const timer = window.setTimeout(() => setShowDevSplash(false), DEV_SPLASH_MS)
+    return () => window.clearTimeout(timer)
+  }, [showDevSplash])
 
   const navigate = useCallback(
     (href) => {
@@ -195,8 +209,8 @@ function App() {
     (AUTH_ROUTES.has(route.path) && Boolean(session))
   const pageTransitionKey = route.path
 
-  if (shouldShowAuthLoader) {
-    page = <RouteLoadingPage label="Verificando acesso" />
+  if (shouldShowAuthLoader || showDevSplash) {
+    page = <RouteLoadingPage label={showDevSplash ? 'Carregando' : 'Verificando acesso'} />
     showNavbar = false
     showFooter = false
   }
