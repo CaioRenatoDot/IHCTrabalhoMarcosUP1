@@ -1,29 +1,45 @@
 :root {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  color: #7b4d5d;
-  background-color: #fffdfd;
+  /* Design system: docs/design/design-system.md (neutro com rosa de acento) */
+  --rc-font-heading: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --rc-font-body: 'Inter', system-ui, sans-serif;
+  --rc-bg: #ffffff;
+  --rc-surface: #f7f5f4;
+  --rc-surface-soft: #fbfaf9;
+  --rc-border: #e7e2e0;
+  --rc-ink: #1f2430;
+  --rc-ink-muted: #5b5f6b;
+  --rc-brand: #c4517a;
+  --rc-brand-soft: #f6e4eb;
+  --rc-action: #a63d66;
+  --rc-action-hover: #8a2f53;
+  --rc-info: #1d4e89;
+
+  /* Tokens antigos, apontando para a paleta nova até cada tela ser refeita */
+  --rc-rose: var(--rc-action);
+  --rc-rose-dark: var(--rc-action-hover);
+  --rc-rose-light: var(--rc-brand-soft);
+  --rc-rose-bg: var(--rc-surface);
+  --rc-rose-bg-soft: var(--rc-surface-soft);
+  --rc-white: var(--rc-bg);
+  --rc-text: var(--rc-ink-muted);
+  --rc-text-dark: var(--rc-ink);
+  --rc-success: #2e7d4f;
+  --rc-warning: #b25e09;
+  --rc-danger: #b42318;
+  --rc-alert: #f5c842;
+  --rc-alert-bg: #fff8e8;
+  --rc-shadow-sm: 0 1px 3px rgba(31, 36, 48, 0.06), 0 1px 2px rgba(31, 36, 48, 0.04);
+  --rc-shadow-md: 0 4px 12px rgba(31, 36, 48, 0.08);
+  --rc-shadow-lg: 0 12px 32px rgba(31, 36, 48, 0.12);
+
+  font-family: var(--rc-font-body);
+  color: var(--rc-ink);
+  background-color: var(--rc-bg);
   line-height: 1.5;
   font-weight: 400;
   --focus-ring-color: #005fcc;
   --focus-ring-width: 3px;
   --focus-ring-offset: 2px;
-  --rc-rose: #c4517a;
-  --rc-rose-dark: #a73d6e;
-  --rc-rose-light: #f5dce8;
-  --rc-rose-bg: #fff6f9;
-  --rc-rose-bg-soft: #fffafc;
-  --rc-white: #ffffff;
-  --rc-text: #8a6070;
-  --rc-text-dark: #2d1b26;
-  --rc-success: #3d8a52;
-  --rc-warning: #c47020;
-  --rc-danger: #b83030;
-  --rc-alert: #f5c842;
-  --rc-alert-bg: #fff8e8;
-  --rc-border: #f0e2e8;
-  --rc-shadow-sm: 0 2px 8px rgba(196, 81, 122, 0.08);
-  --rc-shadow-md: 0 4px 20px rgba(196, 81, 122, 0.12);
-  --rc-shadow-lg: 0 8px 40px rgba(196, 81, 122, 0.18);
   --rc-radius: 12px;
   --rc-radius-card: 20px;
   --rc-radius-lg: 28px;
@@ -94,8 +110,18 @@ html {
 body {
   min-width: 320px;
   min-height: 100vh;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  background: var(--rc-white);
+  font-family: var(--rc-font-body);
+  background: var(--rc-bg);
+  color: var(--rc-ink);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--rc-font-heading);
 }
 
 #root {
