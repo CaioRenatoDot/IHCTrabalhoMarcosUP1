@@ -153,11 +153,11 @@ export const TIPS = [
   },
 ]
 
-// Uma dica por dia, estável durante o dia todo.
-export function getTipOfTheDay(today = new Date()) {
+// Índice da dica do dia, estável durante o dia todo (ponto de partida do carrossel da home).
+export function getTipOfTheDayIndex(today = new Date()) {
   const startOfYear = new Date(today.getFullYear(), 0, 0)
   const dayOfYear = Math.floor((today - startOfYear) / 86400000)
-  return TIPS[dayOfYear % TIPS.length]
+  return dayOfYear % TIPS.length
 }
 
 export const FAQ = [

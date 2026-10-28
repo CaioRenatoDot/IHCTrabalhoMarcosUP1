@@ -1,6 +1,15 @@
-import { LuArrowRight, LuCheck, LuClipboardCheck, LuLightbulb, LuPhone } from 'react-icons/lu'
+import { useState } from 'react'
+import {
+  LuArrowRight,
+  LuCheck,
+  LuChevronLeft,
+  LuChevronRight,
+  LuClipboardCheck,
+  LuLightbulb,
+  LuPhone,
+} from 'react-icons/lu'
 import InternalLink from '../InternalLink.jsx'
-import { FACTS, SUPPORT_CONTACTS, getScreeningGuidance, getTipOfTheDay } from '../../content/health.js'
+import { FACTS, SUPPORT_CONTACTS, TIPS, getScreeningGuidance, getTipOfTheDayIndex } from '../../content/health.js'
 import { formatNewsDate, getRecentNews } from '../../content/news.js'
 
 const SHORTCUTS = [
@@ -28,24 +37,45 @@ function SourceNote({ source }) {
   )
 }
 
+// "Você sabia?": carrossel manual (sem troca automática), começando pela dica do dia.
 export function TipBox() {
-  const tip = getTipOfTheDay()
+  const [index, setIndex] = useState(() => getTipOfTheDayIndex())
+  const total = TIPS.length
+  const tip = TIPS[index]
+
+  const goTo = (step) => setIndex((current) => (current + step + total) % total)
 
   return (
-    <aside className="home-tip" aria-labelledby="home-tip-title">
+    <section className="home-tip" aria-roledescription="carrossel" aria-labelledby="home-tip-title">
       <LuLightbulb className="home-tip__icon" aria-hidden="true" />
       <div className="home-tip__body">
         <h2 id="home-tip-title" className="home-tip__title">
           Você sabia?
         </h2>
-        <p className="home-tip__text">{tip.text}</p>
-        <SourceNote source={tip.source} />
+        <div aria-live="polite" aria-atomic="true">
+          <span className="visually-hidden">
+            Informação {index + 1} de {total}:{' '}
+          </span>
+          <p className="home-tip__text">{tip.text}</p>
+          <SourceNote source={tip.source} />
+        </div>
+        <InternalLink className="home-tip__more" href={tip.link.href}>
+          {tip.link.label}
+          <LuArrowRight aria-hidden="true" />
+        </InternalLink>
       </div>
-      <InternalLink className="home-tip__link" href={tip.link.href}>
-        {tip.link.label}
-        <LuArrowRight aria-hidden="true" />
-      </InternalLink>
-    </aside>
+      <div className="home-tip__controls">
+        <button type="button" className="home-tip__nav" aria-label="Informação anterior" onClick={() => goTo(-1)}>
+          <LuChevronLeft aria-hidden="true" />
+        </button>
+        <span className="home-tip__count" aria-hidden="true">
+          {index + 1} de {total}
+        </span>
+        <button type="button" className="home-tip__nav" aria-label="Próxima informação" onClick={() => goTo(1)}>
+          <LuChevronRight aria-hidden="true" />
+        </button>
+      </div>
+    </section>
   )
 }
 
