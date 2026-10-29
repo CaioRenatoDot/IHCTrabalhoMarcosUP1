@@ -36,7 +36,7 @@ _Atualizado em 29/10/2026._
   O PR para a `develop` sai quando a home for aprovada. Se a revisão demorar, a alternativa é juntar o que já está
   pronto e continuar a home numa branch nova (`feat/front-home-v2`).
 - O painel logado só foi validado por lint, build e código (falta o Supabase de desenvolvimento, IN-05).
-- **Temporário:** a espera de 6 s na tela de carregamento em desenvolvimento (FR-28) está commitada; remover quando
+- **Temporário:** o tempo mínimo de 3,5 s da abertura em desenvolvimento (FR-28) está commitado; remover quando
   não for mais útil.
 
 **Na fila — Formulário e resultado / Back:** FM-01 a FM-05 e BK-01 (sugestão de branch: `fix/form-result-credibility`).
@@ -82,7 +82,9 @@ Observações:
 - [x] **FR-27** `Média` Tela de carregamento com a logo sendo desenhada em loop, usada também no login e no cadastro ([RouteLoadingPage.jsx](src/components/RouteLoadingPage.jsx))
 - [x] **FR-30** `Média` Fotos alternando no fundo da abertura da home, com pausa e sem movimento para quem prefere menos movimento ([PortalSections.jsx](src/components/home/PortalSections.jsx))
 - [ ] **FR-29** `Alta` Botão principal "Verificar sinais" (cabeçalho e home) quando o formulário simplificado estiver pronto
-- [ ] **FR-28** `Média` Remover a espera temporária de 6 s da tela de carregamento em desenvolvimento (`DEV_SPLASH_MS` em [src/App.jsx](src/App.jsx))
+- [ ] **FR-28** `Média` Remover o tempo mínimo temporário de 3,5 s da abertura em desenvolvimento (`INTRO_MIN_MS` em [src/App.jsx](src/App.jsx))
+- [x] **FR-31** `Média` Abertura do site: logo carregando e, ao final, o nome RiskCare surgindo letra por letra (primeira visita da sessão)
+- [x] **FR-32** `Média` Logo do cabeçalho em loop lento (redesenha a cada 9 s), sem depender do mouse
 - [ ] **FR-25** `Média` Usar a logo em SVG também no login, formulário, resultado, favicon e PDF
 - [x] **FR-17** `Alta` **Home como portal**: abertura curta, grade de atalhos com destaque da avaliação (muda se logada), notícias em lista e coluna lateral com números e apoio; menu com as páginas novas ([docs/design/home-portal.md](docs/design/home-portal.md))
 

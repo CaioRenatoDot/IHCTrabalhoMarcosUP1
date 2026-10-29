@@ -124,5 +124,6 @@ Este é um site de saúde, então estas regras valem mais do que qualquer prefer
 Copie `.env.example` (front) e `server/.env.example` (back). Sem `SUPABASE_URL` e
 `SUPABASE_PUBLISHABLE_KEY`, o back sobe, mas login e cadastro não funcionam.
 
-**Temporário:** em desenvolvimento, a tela de carregamento fica 6 s ao abrir o site (`DEV_SPLASH_MS` em
-[src/App.jsx](src/App.jsx)) para visualizar a logo. Não afeta produção; remover quando não for mais útil (FR-28).
+**Abertura do site:** a tela de carregamento com a logo e o nome RiskCare aparece na primeira visita da sessão
+([src/App.jsx](src/App.jsx)). **Temporário:** em desenvolvimento ela aparece sempre, com tempo mínimo de 3,5 s
+(`INTRO_MIN_MS`), para visualizar a animação; remover o tempo mínimo quando não for mais útil (FR-28).

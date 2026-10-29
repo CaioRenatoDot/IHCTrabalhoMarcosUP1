@@ -62,14 +62,18 @@ usam `pathLength="1"`; a animação leva `stroke-dashoffset` de 1 (invisível) a
 
 Comportamento:
 
-- **Cabeçalho:** anima ao carregar o site. Ao passar o mouse ou focar a marca pelo teclado, o
-  [Navbar.jsx](../../src/components/Navbar.jsx) remonta o SVG (troca a `key`) e a animação toca de novo, no máximo
-  uma vez a cada 2 s.
+- **Cabeçalho:** loop lento, sem depender do mouse (classe `rc-logo--loop-slow`): a cada **9 s** o laço é
+  redesenhado (cerca de 1,9 s de animação) e, no resto do ciclo, a logo fica completa. O intervalo longo evita
+  movimento constante ao lado do conteúdo. (Até 29/10/2026 a animação tocava só ao carregar e ao passar o mouse.)
 - **Rodapé:** logo parada (`<RiskCareLogo />` sem `animated`).
 - **Tela de carregamento** ([RouteLoadingPage.jsx](../../src/components/RouteLoadingPage.jsx), usada ao verificar o
   acesso, ao carregar a home, no login e no cadastro): logo grande (112 px) em **loop** — desenha, segura um instante,
   esmaece e recomeça a cada 2,6 s (classe `rc-logo--loop`, em [src/styles/loading.css](../../src/styles/loading.css)).
   Substituiu os três pontinhos que pulavam.
+- **Abertura do site** ([App.jsx](../../src/App.jsx)): ao abrir o site, a tela de carregamento mostra a logo com
+  "Carregando…"; quando o carregamento termina, a logo fica completa e o texto dá lugar ao nome **RiskCare**, que
+  surge letra por letra (~1,1 s) antes de o site aparecer. Em produção acontece só na primeira visita da sessão
+  (`sessionStorage`); em desenvolvimento acontece sempre, com tempo mínimo de 3,5 s para visualizar (FR-28).
 
   ![Quadros da animação em loop da tela de carregamento](logo/carregamento-quadros.png)
 - **Acessibilidade:** com `prefers-reduced-motion: reduce` a logo aparece pronta, sem animação. O SVG é decorativo
