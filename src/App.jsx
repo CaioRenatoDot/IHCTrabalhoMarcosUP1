@@ -12,6 +12,7 @@ import WarningSignsPage from './pages/WarningSignsPage.jsx'
 import MammographyPage from './pages/MammographyPage.jsx'
 import HelpPage from './pages/HelpPage.jsx'
 import FaqPage from './pages/FaqPage.jsx'
+import NewsPage from './pages/NewsPage.jsx'
 import Navbar from './components/Navbar.jsx'
 import Footer from './components/Footer.jsx'
 import AccessibilityControls from './components/accessibility/AccessibilityControls.jsx'
@@ -194,6 +195,8 @@ function App() {
     page = <HelpPage />
   } else if (route.path === '/perguntas-frequentes') {
     page = <FaqPage />
+  } else if (route.path === '/noticias') {
+    page = <NewsPage />
   } else if (route.path === '/resultados') {
     page = <ResultsPage />
     showNavbar = false
