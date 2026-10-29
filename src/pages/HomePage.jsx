@@ -1,6 +1,4 @@
-import { LuArrowRight } from 'react-icons/lu'
 import { useAuth } from '../contexts/AuthContext.jsx'
-import InternalLink from '../components/InternalLink.jsx'
 import RouteLoadingPage from '../components/RouteLoadingPage.jsx'
 import {
   AssessmentCard,
@@ -11,6 +9,14 @@ import {
   SupportCard,
   TipBox,
 } from '../components/home/HomeBlocks.jsx'
+import {
+  FeaturedNews,
+  HelpCard,
+  NextSteps,
+  NumbersPanel,
+  PortalHero,
+  StartHereBand,
+} from '../components/home/PortalSections.jsx'
 import { getAssessmentStorageKey, readStoredAssessment } from '../lib/riskAssessmentStorage.js'
 
 function getFirstName(user) {
@@ -42,60 +48,25 @@ function getAssessmentAge(assessment) {
   return Number.isFinite(age) ? age : null
 }
 
-// Home de quem não entrou: portal público.
+// Home de quem não entrou: portal público (docs/design/home-v2/referencia.png).
 function PortalHome() {
   return (
-    <main id="main-content" className="home-page" tabIndex={-1}>
-      <div className="home-container">
-        <header className="home-intro home-intro--hero">
-          <div className="home-intro__content">
-            <h1 className="home-intro__title">Câncer de mama: informação confiável e avaliação educativa de risco</h1>
-            <p className="home-intro__lead">
-              Entenda seus fatores de risco, conheça os sinais de alerta e saiba quando fazer exames, com base em fontes
-              oficiais.
-            </p>
-            <div className="home-intro__actions">
-              <InternalLink className="home-button home-button--primary" href="/formulario">
-                Começar avaliação
-                <LuArrowRight aria-hidden="true" />
-              </InternalLink>
-              <InternalLink className="home-button home-button--secondary" href="/sinais-de-alerta">
-                Ver sinais de alerta
-              </InternalLink>
-            </div>
-          </div>
-          <figure className="home-intro__media">
-            <img
-              src="/images/home-consulta.jpg"
-              alt="Médica conversa com uma paciente durante uma consulta"
-              width="1200"
-              height="800"
-            />
-            <figcaption>
-              Foto:{' '}
-              <a href="https://www.pexels.com/photo/doctor-consulting-a-patient-7659873/" target="_blank" rel="noopener noreferrer">
-                Thirdman / Pexels
-              </a>
-            </figcaption>
-          </figure>
-        </header>
+    <main id="main-content" className="home-page home-page--portal" tabIndex={-1}>
+      <PortalHero />
 
-        <div className="home-grid">
-          <AssessmentCard hasAssessment={false} />
-          <ShortcutsCard />
-          <ScreeningCard age={null} />
-        </div>
-
+      <div className="portal-container portal-stack">
+        <StartHereBand />
         <TipBox />
-
-        <div className="home-columns">
-          <NewsList />
-          <aside className="home-aside" aria-label="Números e apoio">
-            <FactsCard />
-            <SupportCard />
+        <div className="portal-columns">
+          <FeaturedNews />
+          <aside className="portal-aside" aria-label="Números e ajuda">
+            <NumbersPanel />
+            <HelpCard />
           </aside>
         </div>
       </div>
+
+      <NextSteps />
     </main>
   )
 }

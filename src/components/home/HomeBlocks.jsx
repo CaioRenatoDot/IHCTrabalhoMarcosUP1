@@ -5,6 +5,7 @@ import {
   LuChevronLeft,
   LuChevronRight,
   LuClipboardCheck,
+  LuExternalLink,
   LuLightbulb,
   LuPhone,
 } from 'react-icons/lu'
@@ -32,6 +33,8 @@ function SourceNote({ source }) {
       Fonte:{' '}
       <a href={source.url} target="_blank" rel="noopener noreferrer" title={source.label}>
         {source.short ?? source.label}
+        <LuExternalLink aria-hidden="true" />
+        <span className="visually-hidden"> (abre em nova aba)</span>
       </a>
     </p>
   )
@@ -47,29 +50,33 @@ export function TipBox() {
 
   return (
     <section className="home-tip" aria-roledescription="carrossel" aria-labelledby="home-tip-title">
-      <LuLightbulb className="home-tip__icon" aria-hidden="true" />
-      <div className="home-tip__body">
+      <div className="home-tip__label">
+        <LuLightbulb className="home-tip__icon" aria-hidden="true" />
         <h2 id="home-tip-title" className="home-tip__title">
           Você sabia?
         </h2>
+      </div>
+      <div className="home-tip__body">
         <div aria-live="polite" aria-atomic="true">
           <span className="visually-hidden">
             Informação {index + 1} de {total}:{' '}
           </span>
           <p className="home-tip__text">{tip.text}</p>
-          <SourceNote source={tip.source} />
         </div>
-        <InternalLink className="home-tip__more" href={tip.link.href}>
-          {tip.link.label}
-          <LuArrowRight aria-hidden="true" />
-        </InternalLink>
+        <div className="home-tip__meta">
+          <SourceNote source={tip.source} />
+          <InternalLink className="home-tip__more" href={tip.link.href}>
+            Saiba mais
+            <LuArrowRight aria-hidden="true" />
+          </InternalLink>
+        </div>
       </div>
       <div className="home-tip__controls">
         <button type="button" className="home-tip__nav" aria-label="Informação anterior" onClick={() => goTo(-1)}>
           <LuChevronLeft aria-hidden="true" />
         </button>
         <span className="home-tip__count" aria-hidden="true">
-          {index + 1} de {total}
+          {index + 1} / {total}
         </span>
         <button type="button" className="home-tip__nav" aria-label="Próxima informação" onClick={() => goTo(1)}>
           <LuChevronRight aria-hidden="true" />

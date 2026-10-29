@@ -84,8 +84,8 @@
 .home-tip {
   display: flex;
   align-items: center;
-  gap: 1rem 1.25rem;
-  padding: 1.1rem 1.4rem;
+  gap: 1rem 2rem;
+  padding: 1.25rem 1.6rem;
   border: 1px solid var(--rc-border);
   border-radius: 14px;
   background: var(--rc-surface);
@@ -98,9 +98,36 @@
   color: var(--rc-brand);
 }
 
+.home-tip__label {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 160px;
+}
+
 .home-tip__body {
   flex: 1;
   min-width: 0;
+}
+
+.home-tip__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem 1.25rem;
+  margin-top: 0.3rem;
+}
+
+.home-source a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.home-source svg {
+  width: 13px;
+  height: 13px;
 }
 
 .home-tip__title {
@@ -112,7 +139,7 @@
 }
 
 .home-tip__text {
-  margin-top: 0.2rem;
+  margin-top: 0;
   color: var(--rc-ink);
   font-size: calc(1rem * var(--home-scale));
   font-weight: 500;
@@ -120,14 +147,13 @@
 }
 
 .home-tip .home-source {
-  margin-top: 0.25rem;
+  margin-top: 0;
 }
 
 .home-tip__more {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  margin-top: 0.5rem;
   color: var(--rc-action);
   font-family: var(--rc-font-heading);
   font-size: calc(0.9rem * var(--home-scale));
@@ -682,6 +708,11 @@
 
   .home-tip {
     flex-wrap: wrap;
+  }
+
+  .home-tip__label,
+  .home-tip__body {
+    flex-basis: 100%;
   }
 
   .home-tip__controls {
