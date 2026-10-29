@@ -3,8 +3,8 @@
 
   width: 100%;
   margin-top: 0;
-  border-top: 1px solid var(--rc-border);
-  background: var(--rc-surface);
+  border-top: 1px solid #ddd5d1;
+  background: var(--rc-surface-strong);
   color: var(--rc-ink-muted);
 }
 
@@ -31,7 +31,7 @@
 }
 
 .site-footer__logo-mark {
-  --rc-logo-gap: var(--rc-surface);
+  --rc-logo-gap: var(--rc-surface-strong);
 
   width: 34px;
   height: 34px;
@@ -95,7 +95,7 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: 1.25rem clamp(1rem, 3vw, 2rem) 2rem;
-  border-top: 1px solid var(--rc-border);
+  border-top: 1px solid #ddd5d1;
 }
 
 .site-footer__legal {
