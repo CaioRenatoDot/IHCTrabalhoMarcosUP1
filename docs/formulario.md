@@ -3,6 +3,12 @@
 > Documento vivo. Última revisão: 28/10/2026 (nomes das etapas).
 > Relacionado: [PLANEJAMENTO.md](../PLANEJAMENTO.md) (seção 3.1) e [CHECKLIST.md](../CHECKLIST.md) (itens FM-10 a FM-14).
 
+> **Decisão de 29/10/2026:** o fluxo inicial do site será o **formulário simplificado** de
+> [formulario-simplificado-v2.md](formulario-simplificado-v2.md) (5 perguntas: sinais, idade, UF/município e
+> mamografia, sem login e sem classificação). **Este documento passa a especificar a "avaliação ampliada"**:
+> opcional, oferecida depois do formulário curto, para quem quiser entender seus fatores de risco. As perguntas
+> em comum (P0, P1, P2, P3 e P25 daqui) usam os mesmos códigos nos dois fluxos.
+
 Este documento define **de onde vêm as fontes, quais são as etapas, quais perguntas são feitas e como o
 resultado usa cada resposta**, em três versões do formulário. Ele é a referência para implementar a avaliação v2 (área Formulário e resultado + Back).
 

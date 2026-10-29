@@ -1,5 +1,9 @@
 # Proposta — formulário simplificado v2
 
+> **Status: aprovado em 29/10/2026 como o fluxo inicial do RiskCare.** A avaliação detalhada de
+> [formulario.md](formulario.md) passa a ser a "avaliação ampliada", opcional e posterior. Itens no
+> [CHECKLIST.md](../CHECKLIST.md): FM-40, FM-41, FM-42, BK-14, CT-23 a CT-25 e FR-29.
+
 > Rascunho para avaliação de produto. Não substitui o planejamento detalhado em [formulario.md](formulario.md).
 > 
 > Objetivo: validar uma versão curta do fluxo principal do RiskCare antes de decidir pela implementação do formulário completo de 25 perguntas.
