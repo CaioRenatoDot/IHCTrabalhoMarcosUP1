@@ -32,6 +32,7 @@ _Atualizado em 29/10/2026._
   a logo (FR-27).
 - **29/10:** home pública refeita conforme a referência do Caio ([docs/design/home-v2/referencia.png](docs/design/home-v2/referencia.png)), com a página `/noticias` (CT-22).
 - **Situação:** aguardando a avaliação do Caio sobre essa nova versão.
+- **Decisão 29/10:** o fluxo inicial passa a ser o **formulário simplificado** (sinais e encaminhamento, sem login, sem score). A avaliação de risco detalhada vira a "avaliação ampliada", opcional e posterior.
   O PR para a `develop` sai quando a home for aprovada. Se a revisão demorar, a alternativa é juntar o que já está
   pronto e continuar a home numa branch nova (`feat/front-home-v2`).
 - O painel logado só foi validado por lint, build e código (falta o Supabase de desenvolvimento, IN-05).
@@ -79,6 +80,7 @@ Observações:
 - [x] **FR-19** `Média` Logo redesenhada em SVG a partir do PNG ([RiskCareLogo.jsx](src/components/RiskCareLogo.jsx), [public/riskcare-logo.svg](public/riskcare-logo.svg))
 - [x] **FR-26** `Média` "Você sabia?" como carrossel manual (sem troca automática), começando pela dica do dia ([HomeBlocks.jsx](src/components/home/HomeBlocks.jsx))
 - [x] **FR-27** `Média` Tela de carregamento com a logo sendo desenhada em loop, usada também no login e no cadastro ([RouteLoadingPage.jsx](src/components/RouteLoadingPage.jsx))
+- [ ] **FR-29** `Alta` Botão principal "Verificar sinais" (cabeçalho e home) quando o formulário simplificado estiver pronto
 - [ ] **FR-28** `Média` Remover a espera temporária de 6 s da tela de carregamento em desenvolvimento (`DEV_SPLASH_MS` em [src/App.jsx](src/App.jsx))
 - [ ] **FR-25** `Média` Usar a logo em SVG também no login, formulário, resultado, favicon e PDF
 - [x] **FR-17** `Alta` **Home como portal**: abertura curta, grade de atalhos com destaque da avaliação (muda se logada), notícias em lista e coluna lateral com números e apoio; menu com as páginas novas ([docs/design/home-portal.md](docs/design/home-portal.md))
@@ -96,15 +98,16 @@ Observações:
 
 - [ ] **BK-01** `Alta` Remover `sourcesUsed: ['INCA','SEER']` fixo; as fontes passam a vir do modelo ativo ([score.js](server/lib/riskAssessment/score.js))
 - [ ] **BK-02** `Média` Parar de pontuar sintomas e mamografia como risco ([normalize.js](server/lib/riskAssessment/normalize.js), [weights.js](server/lib/riskAssessment/weights.js))
-- [ ] **BK-03** `Média` Implementar o **modelo de Gail** (risco em 5 anos e ao longo da vida), testado contra valores de referência do NCI
-- [ ] **BK-04** `Média` Score atual renomeado para "índice de hábitos de proteção"
+- [ ] **BK-03** `Baixa` _(avaliação ampliada)_ Implementar o **modelo de Gail** (risco em 5 anos e ao longo da vida), testado contra valores de referência do NCI
+- [ ] **BK-04** `Baixa` _(avaliação ampliada)_ Score atual renomeado para "índice de hábitos de proteção"
 - [ ] **BK-05** `Média` Subir `RISK_MODEL_VERSION` a cada mudança de modelo ([version.js](server/lib/riskAssessment/version.js))
-- [ ] **BK-06** `Média` Endpoint de avaliação **sem login**, com rate limit ([riskAssessment.js](server/routes/riskAssessment.js))
+- [ ] **BK-06** `Alta` Endpoint de avaliação **sem login**, com rate limit ([riskAssessment.js](server/routes/riskAssessment.js))
+- [ ] **BK-14** `Alta` Fluxo público do formulário simplificado (cálculo no cliente ou endpoint sem login), sem salvar dados por padrão
 - [ ] **BK-07** `Baixa` Histórico: listar todas as avaliações, não só a última
 - [ ] **BK-08** `Baixa` Exportar e excluir os dados da pessoa (LGPD)
 - [ ] **BK-09** `Média` Validação do payload com `zod`
 - [ ] **BK-10** `Média` `fullName` deixa de ser obrigatório no [schema.prisma](prisma/schema.prisma) + migration
-- [ ] **BK-11** `Média` Migrations para os campos do Gail
+- [ ] **BK-11** `Baixa` _(avaliação ampliada)_ Migrations para os campos do Gail
 - [ ] **BK-13** `Baixa` Busca automática de notícias no back: coleta em fontes oficiais, tabela `NewsItem` com aprovação, Vercel Cron e fallback para a lista manual (ver PLANEJAMENTO 3.6)
 - [ ] **BK-12** `Média` Decidir o destino de `data/datasets/` (não servem para pontuar o questionário)
 
@@ -119,18 +122,23 @@ Observações:
 - [ ] **FM-04** `Alta` Aviso mínimo de "procure atendimento" quando houver nódulo ou secreção, independente do score
 - [ ] **FM-05** `Alta` Remover "Nome completo" do questionário (decidir se fica só no cadastro) ([AssessmentFormPage.jsx](src/pages/AssessmentFormPage.jsx))
 
-**Questionário v2** — especificação completa em [docs/formulario.md](docs/formulario.md)
+**Formulário simplificado (fluxo inicial, decidido em 29/10/2026)** — [docs/formulario-simplificado-v2.md](docs/formulario-simplificado-v2.md)
+- [ ] **FM-40** `Alta` Formulário de 5 perguntas em 3 etapas, sem login (aceite, idade, UF e município opcionais, sinais, mamografia)
+- [ ] **FM-41** `Alta` Resultado por prioridade, sem score: alerta → próximo passo (UBS, 136, localizador) → orientação de rastreamento
+- [ ] **FM-42** `Baixa` Convite no fim do resultado para a avaliação ampliada (quando ela existir)
+
+**Avaliação ampliada (opcional, depois)** — especificação em [docs/formulario.md](docs/formulario.md)
 - [x] **FM-14** `Média` Planejar o formulário: fontes, etapas, perguntas e versões ([docs/formulario.md](docs/formulario.md))
 - [ ] **FM-15** `Média` Resolver as pendências da seção 9 do docs/formulario.md (fontes a confirmar, pesos do índice de hábitos)
-- [ ] **FM-10** `Média` Perguntas do Gail: idade no primeiro parto, biópsias, hiperplasia atípica, raça/etnia
+- [ ] **FM-10** `Baixa` _(avaliação ampliada)_ Perguntas do Gail: idade no primeiro parto, biópsias, hiperplasia atípica, raça/etnia
 - [ ] **FM-11** `Média` Separar sintomas (alerta) de fatores de risco
 - [ ] **FM-12** `Média` Valores estáveis (`"first_degree"`) no lugar de rótulos em texto
 - [ ] **FM-13** `Média` "Por que perguntamos isso?" em cada pergunta; salvar progresso; tempo restante
 
-**Resultado v2**
-- [ ] **FM-20** `Média` Novo layout: sinais de alerta → plano de ação → o que mais influenciou → rastreamento → fontes
-- [ ] **FM-21** `Média` Gráfico do risco da pessoa contra a média da idade (dados do próprio modelo)
-- [ ] **FM-22** `Média` **Plano de ação** personalizado, cada recomendação com fonte
+**Resultado da avaliação ampliada**
+- [ ] **FM-20** `Baixa` _(avaliação ampliada)_ Novo layout: sinais de alerta → plano de ação → o que mais influenciou → rastreamento → fontes
+- [ ] **FM-21** `Baixa` _(avaliação ampliada)_ Gráfico do risco da pessoa contra a média da idade (dados do próprio modelo)
+- [ ] **FM-22** `Baixa` _(avaliação ampliada)_ **Plano de ação** personalizado, cada recomendação com fonte
 - [ ] **FM-23** `Média` "Perguntas para levar à consulta"
 
 **PDF**
@@ -157,6 +165,9 @@ Observações:
 - [x] **CT-17** `Alta` Página `/onde-buscar-ajuda`: UBS, Disque Saúde 136, CVV 188
 - [x] **CT-18** `Alta` Página `/perguntas-frequentes` (perguntas que hoje estão na home)
 - [x] **CT-21** `Média` Seção de notícias na home com curadoria manual de fontes oficiais ([src/content/news.js](src/content/news.js))
+- [ ] **CT-23** `Alta` Página "O que é câncer de mama?", com fontes oficiais
+- [ ] **CT-24** `Média` Localizador, etapa 1: orientação por UF (UBS, Disque Saúde 136), sem listar serviços
+- [ ] **CT-25** `Baixa` Localizador, etapa 2: lista por município a partir de base oficial verificada (cadastro de estabelecimentos do DATASUS, a confirmar), com fonte e data de verificação
 - [x] **CT-22** `Baixa` Página `/noticias` com todas as notícias (ver PLANEJAMENTO 3.6)
 - [ ] **CT-20** `Baixa` `/numeros`: casos novos e mortalidade por UF e por idade
 
