@@ -99,13 +99,100 @@
   }
 }
 
+/* Loop lento (cabeçalho): a cada 9 s o laço é redesenhado; na maior parte do tempo a logo fica completa.
+   Etapas do ciclo: ponta clara 0–5%, laço 2–17%, dobra 7–14%, mão 14–21%, logo completa até 93%,
+   esmaece 93–98% e recomeça. */
+.rc-logo--loop-slow {
+  animation: rc-logo-slow-fade 9s ease-in-out infinite;
+}
+
+.rc-logo--loop-slow .rc-logo__ribbon,
+.rc-logo--loop-slow .rc-logo__gap {
+  animation: rc-logo-slow-draw 9s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+
+.rc-logo--loop-slow .rc-logo__fold {
+  animation: rc-logo-slow-fold 9s ease-out infinite;
+}
+
+.rc-logo--loop-slow .rc-logo__tail {
+  animation: rc-logo-slow-tail 9s ease-out infinite;
+}
+
+.rc-logo--loop-slow .rc-logo__hand {
+  animation: rc-logo-slow-hand 9s ease-out infinite;
+}
+
+@keyframes rc-logo-slow-fade {
+  0%,
+  93% {
+    opacity: 1;
+  }
+
+  98%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes rc-logo-slow-draw {
+  0%,
+  2% {
+    stroke-dashoffset: 1;
+  }
+
+  17%,
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes rc-logo-slow-fold {
+  0%,
+  7% {
+    stroke-dashoffset: 1;
+  }
+
+  14%,
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes rc-logo-slow-tail {
+  0% {
+    opacity: 0;
+  }
+
+  5%,
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes rc-logo-slow-hand {
+  0%,
+  14% {
+    opacity: 0;
+    transform: translateY(12%);
+  }
+
+  21%,
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* Quem pediu menos movimento vê a logo pronta, sem animação. */
 @media (prefers-reduced-motion: reduce) {
   .rc-logo--animated .rc-logo__ribbon,
   .rc-logo--animated .rc-logo__gap,
   .rc-logo--animated .rc-logo__fold,
   .rc-logo--animated .rc-logo__tail,
-  .rc-logo--animated .rc-logo__hand {
+  .rc-logo--animated .rc-logo__hand,
+  .rc-logo--loop-slow,
+  .rc-logo--loop-slow * {
     animation: none;
     opacity: 1;
     stroke-dashoffset: 0;
