@@ -15,7 +15,7 @@ import InternalLink from '../InternalLink.jsx'
 import { FACTS, SUPPORT_CONTACTS } from '../../content/health.js'
 import { formatNewsDate, getRecentNews } from '../../content/news.js'
 
-// Fotos da abertura (todas da mesma sessão, licença Pexels; ver docs/design/design-system.md).
+// Fotos da abertura (licença Pexels; créditos em docs/design/design-system.md).
 const HERO_SLIDES = [
   {
     src: '/images/home-consulta.jpg',
@@ -23,14 +23,14 @@ const HERO_SLIDES = [
     credit: { label: 'Thirdman / Pexels', url: 'https://www.pexels.com/photo/doctor-consulting-a-patient-7659873/' },
   },
   {
-    src: '/images/home-laco.jpg',
-    position: '100% 6%',
-    credit: { label: 'Thirdman / Pexels', url: 'https://www.pexels.com/photo/a-healthcare-professional-holding-a-pink-ribbon-7659779/' },
+    src: '/images/home-acolhimento.jpg',
+    position: '62% 30%',
+    credit: { label: 'RDNE Stock project / Pexels', url: 'https://www.pexels.com/photo/smiling-patient-and-doctor-shaking-hands-8313224/' },
   },
   {
-    src: '/images/home-anotacoes.jpg',
-    position: '22% 30%',
-    credit: { label: 'Thirdman / Pexels', url: 'https://www.pexels.com/photo/a-doctor-taking-notes-7659868/' },
+    src: '/images/home-conversa.jpg',
+    position: '50% 32%',
+    credit: { label: 'Cedric Fauntleroy / Pexels', url: 'https://www.pexels.com/photo/a-woman-talking-to-a-doctor-4266944/' },
   },
 ]
 
