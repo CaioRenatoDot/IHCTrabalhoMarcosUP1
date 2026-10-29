@@ -80,6 +80,7 @@ Observações:
 - [x] **FR-19** `Média` Logo redesenhada em SVG a partir do PNG ([RiskCareLogo.jsx](src/components/RiskCareLogo.jsx), [public/riskcare-logo.svg](public/riskcare-logo.svg))
 - [x] **FR-26** `Média` "Você sabia?" como carrossel manual (sem troca automática), começando pela dica do dia ([HomeBlocks.jsx](src/components/home/HomeBlocks.jsx))
 - [x] **FR-27** `Média` Tela de carregamento com a logo sendo desenhada em loop, usada também no login e no cadastro ([RouteLoadingPage.jsx](src/components/RouteLoadingPage.jsx))
+- [x] **FR-30** `Média` Fotos alternando no fundo da abertura da home, com pausa e sem movimento para quem prefere menos movimento ([PortalSections.jsx](src/components/home/PortalSections.jsx))
 - [ ] **FR-29** `Alta` Botão principal "Verificar sinais" (cabeçalho e home) quando o formulário simplificado estiver pronto
 - [ ] **FR-28** `Média` Remover a espera temporária de 6 s da tela de carregamento em desenvolvimento (`DEV_SPLASH_MS` em [src/App.jsx](src/App.jsx))
 - [ ] **FR-25** `Média` Usar a logo em SVG também no login, formulário, resultado, favicon e PDF

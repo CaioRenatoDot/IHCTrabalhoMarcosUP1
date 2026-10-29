@@ -28,6 +28,12 @@ Onde a implementação difere da referência, e por quê:
 
 Também entrou a página `/noticias` para o link "Ver todas as notícias" (CT-22).
 
+**Abertura com fotos alternando (29/10/2026):** três fotos da mesma sessão (Thirdman / Pexels, fundo rosa) se
+alternam no fundo a cada 7 s, com dissolução; o título, o texto e os botões ficam fixos. Há pontos para escolher a
+foto e botão de pausar; a troca para com mouse ou foco na abertura e não acontece com `prefers-reduced-motion`.
+O crédito embaixo acompanha a foto exibida. Foi escolhida esta versão, e não um carrossel com textos diferentes
+por slide, para manter a mensagem principal sempre visível.
+
 ## 1. Problema
 
 A home atual segue a estrutura de **landing page**:

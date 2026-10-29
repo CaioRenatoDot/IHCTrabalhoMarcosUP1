@@ -51,6 +51,9 @@ apoio 14. O zoom de texto da acessibilidade continua multiplicando essa escala.
   Animações curtas e discretas, sempre respeitando `prefers-reduced-motion`.
 - **Carrossel que passa sozinho.** Só carrossel manual (botões anterior/próxima, contador, anúncio para leitor de
   tela). Troca automática atrapalha a leitura e a acessibilidade, e quase ninguém vê além do primeiro item.
+  **Exceção aprovada (29/10/2026):** fotos decorativas no fundo da abertura podem se alternar sozinhas, desde que
+  o texto fique fixo, haja botão de pausar visível, a troca pare com mouse/foco na área e não haja movimento com
+  `prefers-reduced-motion` (WCAG 2.2.2).
 - **Etiquetas em todos os cantos** ("Biblioteca Médica", "Agendado"…). Só quando informam algo útil.
 - **Texto emotivo demais.** Acolhedor, mas direto e objetivo.
 - **Estrutura de landing page.** A home é um portal (atalhos, notícias, apoio), não uma sequência de seções de
@@ -78,7 +81,9 @@ apoio 14. O zoom de texto da acessibilidade continua multiplicando essa escala.
 
 | Arquivo | Uso | Autor / fonte | Licença |
 |---------|-----|---------------|---------|
-| `public/images/home-consulta.jpg` | Abertura da home | [Thirdman / Pexels](https://www.pexels.com/photo/doctor-consulting-a-patient-7659873/) | [Licença Pexels](https://www.pexels.com/license/): uso comercial livre, crédito opcional |
+| `public/images/home-consulta.jpg` | Abertura da home (foto 1) | [Thirdman / Pexels](https://www.pexels.com/photo/doctor-consulting-a-patient-7659873/) | [Licença Pexels](https://www.pexels.com/license/): uso comercial livre, crédito opcional |
+| `public/images/home-laco.jpg` | Abertura da home (foto 2) | [Thirdman / Pexels](https://www.pexels.com/photo/a-healthcare-professional-holding-a-pink-ribbon-7659779/) | Licença Pexels |
+| `public/images/home-anotacoes.jpg` | Abertura da home (foto 3) | [Thirdman / Pexels](https://www.pexels.com/photo/a-doctor-taking-notes-7659868/) | Licença Pexels |
 
 ## 7. Formas e espaçamento
 
