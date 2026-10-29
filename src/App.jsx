@@ -21,9 +21,32 @@ import SmoothScrollProvider from './components/smooth-scroll/SmoothScrollProvide
 import RouteLoadingPage from './components/RouteLoadingPage.jsx'
 import { useAuth } from './contexts/AuthContext.jsx'
 
-// TEMPORÁRIO: segura a tela de carregamento por alguns segundos ao abrir o site, só em desenvolvimento
-// (import.meta.env.DEV), para visualizar a animação da logo. Não afeta produção. Remover quando não for mais útil.
-const DEV_SPLASH_MS = import.meta.env.DEV ? 6000 : 0
+// Abertura do site: logo sendo desenhada com "Carregando…" e, ao terminar, o nome RiskCare surgindo.
+// Em produção roda só na primeira visita da sessão; em desenvolvimento roda sempre, com um tempo mínimo
+// (TEMPORÁRIO, para visualizar a animação; remover quando não for mais útil — FR-28).
+const INTRO_MIN_MS = import.meta.env.DEV ? 3500 : 0
+const INTRO_REVEAL_MS = 1100
+const INTRO_SEEN_KEY = 'riskcare:intro-seen'
+
+function shouldPlayIntro() {
+  if (import.meta.env.DEV) {
+    return true
+  }
+
+  try {
+    return window.sessionStorage.getItem(INTRO_SEEN_KEY) !== '1'
+  } catch {
+    return false
+  }
+}
+
+function markIntroSeen() {
+  try {
+    window.sessionStorage.setItem(INTRO_SEEN_KEY, '1')
+  } catch {
+    // Sem armazenamento disponível: a abertura pode repetir, o que não quebra nada.
+  }
+}
 
 const AUTH_ROUTES = new Set(['/login', '/cadastro'])
 const PROTECTED_ROUTES = new Set(['/formulario', '/resultados'])
@@ -61,16 +84,35 @@ function App() {
   const [route, setRoute] = useState(parseLocation)
   const previousPathRef = useRef(route.path)
   const { latestAssessmentLoading, session, loading: authLoading } = useAuth()
-  const [showDevSplash, setShowDevSplash] = useState(DEV_SPLASH_MS > 0)
+  // 'loading' → 'reveal' (nome aparece) → 'done'
+  const [introPhase, setIntroPhase] = useState(() => (shouldPlayIntro() ? 'loading' : 'done'))
+  const [introMinElapsed, setIntroMinElapsed] = useState(INTRO_MIN_MS === 0)
 
   useEffect(() => {
-    if (!showDevSplash) {
+    if (introMinElapsed) {
       return undefined
     }
 
-    const timer = window.setTimeout(() => setShowDevSplash(false), DEV_SPLASH_MS)
+    const timer = window.setTimeout(() => setIntroMinElapsed(true), INTRO_MIN_MS)
     return () => window.clearTimeout(timer)
-  }, [showDevSplash])
+  }, [introMinElapsed])
+
+  useEffect(() => {
+    if (introPhase === 'loading' && introMinElapsed && !authLoading) {
+      setIntroPhase('reveal')
+      return undefined
+    }
+
+    if (introPhase !== 'reveal') {
+      return undefined
+    }
+
+    const timer = window.setTimeout(() => {
+      markIntroSeen()
+      setIntroPhase('done')
+    }, INTRO_REVEAL_MS)
+    return () => window.clearTimeout(timer)
+  }, [authLoading, introMinElapsed, introPhase])
 
   const navigate = useCallback(
     (href) => {
@@ -212,8 +254,12 @@ function App() {
     (AUTH_ROUTES.has(route.path) && Boolean(session))
   const pageTransitionKey = route.path
 
-  if (shouldShowAuthLoader || showDevSplash) {
-    page = <RouteLoadingPage label={showDevSplash ? 'Carregando' : 'Verificando acesso'} />
+  if (introPhase !== 'done') {
+    page = <RouteLoadingPage label="Carregando" revealed={introPhase === 'reveal'} />
+    showNavbar = false
+    showFooter = false
+  } else if (shouldShowAuthLoader) {
+    page = <RouteLoadingPage label="Verificando acesso" />
     showNavbar = false
     showFooter = false
   }

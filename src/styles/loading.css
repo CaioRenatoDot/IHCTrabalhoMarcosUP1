@@ -14,12 +14,53 @@
   height: 112px;
 }
 
+.route-loading__label,
+.route-loading__name {
+  display: flex;
+  align-items: center;
+  min-height: 2.5rem;
+}
+
 .route-loading__label {
   color: var(--rc-ink-muted);
   font-family: var(--rc-font-heading);
   font-size: calc(0.95rem * var(--accessibility-font-scale, 1));
   font-weight: 600;
   letter-spacing: 0.02em;
+}
+
+/* Nome RiskCare surgindo letra por letra quando o site terminou de carregar */
+.route-loading__name {
+  color: var(--rc-action);
+  font-family: var(--rc-font-heading);
+  font-size: calc(2rem * var(--accessibility-font-scale, 1));
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.route-loading__name span {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(0.4em);
+  animation: rc-name-letter 0.45s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  animation-delay: calc(var(--letter-index) * 55ms);
+}
+
+@keyframes rc-name-letter {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Quando o nome aparece, a logo para de repetir e fica completa. */
+.route-loading.is-revealed .rc-logo--loop,
+.route-loading.is-revealed .rc-logo--loop * {
+  animation: none;
+  opacity: 1;
+  stroke-dashoffset: 0;
+  transform: none;
 }
 
 /* Versão em loop da animação da logo: desenha, segura um instante, esmaece e recomeça. */
@@ -104,6 +145,12 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .route-loading__name span {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+
   .rc-logo--loop,
   .rc-logo--loop .rc-logo__ribbon,
   .rc-logo--loop .rc-logo__gap,
@@ -123,4 +170,8 @@
 
 .accessibility-root.is-high-contrast .route-loading__label {
   color: #fff;
+}
+
+.accessibility-root.is-high-contrast .route-loading__name {
+  color: #ffeb3b;
 }
