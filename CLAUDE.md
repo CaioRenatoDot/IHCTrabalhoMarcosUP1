@@ -14,7 +14,8 @@ Produção: https://riskcare-psi.vercel.app/
 ## Stack
 
 - **Front:** React 18 + Vite 5, JavaScript (sem TypeScript), CSS puro com tokens `--rc-*`
-  ([src/styles/base.css](src/styles/base.css)), Recharts, GSAP, Lenis.
+  ([src/styles/base.css](src/styles/base.css)), Recharts, Lenis, ícones Lucide (`react-icons/lu`). O GSAP segue instalado,
+  mas sem uso desde a remoção do card antigo da home.
 - **Back:** Express 5 em [server/](server/). Na Vercel, roda como função única em
   [api/index.js](api/index.js); `vercel.json` reescreve `/api/*` para ela.
 - **Dados:** Supabase (Auth + Postgres), Prisma 7 (`prisma.config.ts`, adapter `pg`),
@@ -63,6 +64,23 @@ DATABASE_URL=postgresql://u:p@localhost:5432/db DIRECT_URL=postgresql://u:p@loca
   chamadas ao back. Toda chamada mutável manda o token CSRF.
 - [src/pages/AssessmentFormPage.jsx](src/pages/AssessmentFormPage.jsx): questionário em etapas.
 - [src/pages/ResultsPage.jsx](src/pages/ResultsPage.jsx): resultado (arquivo grande; separe em componentes ao mexer).
+- [src/pages/HomePage.jsx](src/pages/HomePage.jsx) + [src/components/home/HomeBlocks.jsx](src/components/home/HomeBlocks.jsx):
+  home em duas versões, portal público (visitante) e painel (logada). Ver [docs/design/home-portal.md](docs/design/home-portal.md).
+- Páginas de conteúdo: `/sinais-de-alerta`, `/mamografia`, `/onde-buscar-ajuda`, `/perguntas-frequentes`
+  ([src/pages/](src/pages/)), todas sobre o layout comum [src/components/ContentPage.jsx](src/components/ContentPage.jsx).
+- [src/content/health.js](src/content/health.js): **textos de saúde e fontes verificadas** (sinais, regras de mamografia,
+  contatos, perguntas frequentes, "Você sabia?", números do INCA). Todo dado novo entra aqui com fonte.
+- [src/content/news.js](src/content/news.js): notícias oficiais com curadoria manual (somem se a mais recente tiver mais
+  de 12 meses).
+- [src/components/RiskCareLogo.jsx](src/components/RiskCareLogo.jsx): logo em SVG com o laço animado; tela de carregamento em
+  [src/components/RouteLoadingPage.jsx](src/components/RouteLoadingPage.jsx). Ver [docs/design/logo.md](docs/design/logo.md).
+
+Documentação de apoio:
+
+- [docs/design/design-system.md](docs/design/design-system.md): cores, tipografia, o que evitar, imagens e créditos.
+- [docs/design/home-portal.md](docs/design/home-portal.md) e [docs/design/logo.md](docs/design/logo.md): decisões da home e da logo.
+- [docs/design/home/](docs/design/home/): referência da home exportada do Stitch (só estrutura; não copiar conteúdo fictício).
+- [docs/formulario.md](docs/formulario.md): fontes, etapas e perguntas do formulário (v1, v2 e v3).
 - [server/lib/riskAssessment/](server/lib/riskAssessment/): motor de risco.
   `fieldMapping` → `normalize` → `weights` → `score` → `classification`; versão em `version.js`.
 - [server/middleware/](server/middleware/): CSRF, rate limit, exigência de sessão.
@@ -105,3 +123,6 @@ Este é um site de saúde, então estas regras valem mais do que qualquer prefer
 
 Copie `.env.example` (front) e `server/.env.example` (back). Sem `SUPABASE_URL` e
 `SUPABASE_PUBLISHABLE_KEY`, o back sobe, mas login e cadastro não funcionam.
+
+**Temporário:** em desenvolvimento, a tela de carregamento fica 6 s ao abrir o site (`DEV_SPLASH_MS` em
+[src/App.jsx](src/App.jsx)) para visualizar a logo. Não afeta produção; remover quando não for mais útil (FR-28).
