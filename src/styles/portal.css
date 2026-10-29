@@ -543,7 +543,9 @@
 /* O que fazer agora? */
 .portal-steps {
   padding: clamp(2.5rem, 5vw, 3.5rem) 0;
-  background: var(--rc-surface);
+  border-top: 1px solid #e6d3da;
+  border-bottom: 1px solid #e6d3da;
+  background: var(--rc-surface-rose);
 }
 
 .portal-steps__lead {
@@ -571,7 +573,7 @@
 }
 
 .portal-steps__item + .portal-steps__item {
-  border-left: 1px solid var(--rc-border);
+  border-left: 1px solid #dcc6cf;
 }
 
 .portal-steps__number {
@@ -582,7 +584,7 @@
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  background: var(--rc-brand-soft);
+  background: var(--rc-bg);
   color: var(--rc-action);
   font-family: var(--rc-font-heading);
   font-size: calc(1.1rem * var(--portal-scale));
@@ -650,7 +652,7 @@
 
   .portal-steps__item + .portal-steps__item {
     padding-top: 1.5rem;
-    border-top: 1px solid var(--rc-border);
+    border-top: 1px solid #dcc6cf;
     border-left: 0;
   }
 }
