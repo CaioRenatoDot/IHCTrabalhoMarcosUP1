@@ -82,8 +82,8 @@ apoio 14. O zoom de texto da acessibilidade continua multiplicando essa escala.
 | Arquivo | Uso | Autor / fonte | Licença |
 |---------|-----|---------------|---------|
 | `public/images/home-consulta.jpg` | Abertura da home (foto 1) | [Thirdman / Pexels](https://www.pexels.com/photo/doctor-consulting-a-patient-7659873/) | [Licença Pexels](https://www.pexels.com/license/): uso comercial livre, crédito opcional |
-| `public/images/home-laco.jpg` | Abertura da home (foto 2) | [Thirdman / Pexels](https://www.pexels.com/photo/a-healthcare-professional-holding-a-pink-ribbon-7659779/) | Licença Pexels |
-| `public/images/home-anotacoes.jpg` | Abertura da home (foto 3) | [Thirdman / Pexels](https://www.pexels.com/photo/a-doctor-taking-notes-7659868/) | Licença Pexels |
+| `public/images/home-acolhimento.jpg` | Abertura da home (foto 2) | [RDNE Stock project / Pexels](https://www.pexels.com/photo/smiling-patient-and-doctor-shaking-hands-8313224/) | Licença Pexels |
+| `public/images/home-conversa.jpg` | Abertura da home (foto 3) | [Cedric Fauntleroy / Pexels](https://www.pexels.com/photo/a-woman-talking-to-a-doctor-4266944/) | Licença Pexels |
 
 ## 7. Formas e espaçamento
 
