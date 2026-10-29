@@ -1,4 +1,5 @@
 // Blocos da home pública (visitante), conforme docs/design/home-v2/referencia.png.
+import { useEffect, useState } from 'react'
 import {
   LuArrowRight,
   LuBookOpen,
@@ -6,11 +7,49 @@ import {
   LuExternalLink,
   LuMapPin,
   LuNewspaper,
+  LuPause,
   LuPhone,
+  LuPlay,
 } from 'react-icons/lu'
 import InternalLink from '../InternalLink.jsx'
 import { FACTS, SUPPORT_CONTACTS } from '../../content/health.js'
 import { formatNewsDate, getRecentNews } from '../../content/news.js'
+
+// Fotos da abertura (todas da mesma sessão, licença Pexels; ver docs/design/design-system.md).
+const HERO_SLIDES = [
+  {
+    src: '/images/home-consulta.jpg',
+    position: '30% 35%',
+    credit: { label: 'Thirdman / Pexels', url: 'https://www.pexels.com/photo/doctor-consulting-a-patient-7659873/' },
+  },
+  {
+    src: '/images/home-laco.jpg',
+    position: '100% 6%',
+    credit: { label: 'Thirdman / Pexels', url: 'https://www.pexels.com/photo/a-healthcare-professional-holding-a-pink-ribbon-7659779/' },
+  },
+  {
+    src: '/images/home-anotacoes.jpg',
+    position: '22% 30%',
+    credit: { label: 'Thirdman / Pexels', url: 'https://www.pexels.com/photo/a-doctor-taking-notes-7659868/' },
+  },
+]
+
+const HERO_INTERVAL_MS = 7000
+
+function usePrefersReducedMotion() {
+  const [reduced, setReduced] = useState(
+    () => typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+  )
+
+  useEffect(() => {
+    const query = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const update = () => setReduced(query.matches)
+    query.addEventListener('change', update)
+    return () => query.removeEventListener('change', update)
+  }, [])
+
+  return reduced
+}
 
 const START_LINKS = [
   {
@@ -64,9 +103,41 @@ function ExternalSource({ source }) {
   )
 }
 
+// Abertura: o texto é fixo; só as fotos de fundo se alternam (com pausa, e paradas para quem prefere menos movimento).
 export function PortalHero() {
+  const reducedMotion = usePrefersReducedMotion()
+  const [index, setIndex] = useState(0)
+  const [isPausedByUser, setIsPausedByUser] = useState(false)
+  const [isInteracting, setIsInteracting] = useState(false)
+  const isRunning = !reducedMotion && !isPausedByUser && !isInteracting
+
+  useEffect(() => {
+    if (!isRunning) {
+      return undefined
+    }
+
+    const timer = window.setInterval(() => {
+      setIndex((current) => (current + 1) % HERO_SLIDES.length)
+    }, HERO_INTERVAL_MS)
+
+    return () => window.clearInterval(timer)
+  }, [isRunning])
+
+  const activeSlide = HERO_SLIDES[index]
+
   return (
-    <section className="portal-hero" aria-labelledby="portal-hero-title">
+    <section
+      className="portal-hero"
+      aria-labelledby="portal-hero-title"
+      onMouseEnter={() => setIsInteracting(true)}
+      onMouseLeave={() => setIsInteracting(false)}
+      onFocus={() => setIsInteracting(true)}
+      onBlur={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget)) {
+          setIsInteracting(false)
+        }
+      }}
+    >
       <div className="portal-hero__inner">
         <div className="portal-hero__content">
           <p className="portal-eyebrow">RiskCare · Saúde das mamas</p>
@@ -88,16 +159,44 @@ export function PortalHero() {
         </div>
       </div>
       <figure className="portal-hero__media">
-        <img
-          src="/images/home-consulta.jpg"
-          alt="Médica conversa com uma paciente durante uma consulta"
-          width="1200"
-          height="800"
-        />
+        {HERO_SLIDES.map((slide, slideIndex) => (
+          <img
+            key={slide.src}
+            className={`portal-hero__slide${slideIndex === index ? ' is-active' : ''}`}
+            src={slide.src}
+            alt=""
+            aria-hidden="true"
+            style={{ objectPosition: slide.position }}
+          />
+        ))}
+
+        <div className="portal-hero__controls" role="group" aria-label="Imagens de fundo">
+          {HERO_SLIDES.map((slide, slideIndex) => (
+            <button
+              key={slide.src}
+              type="button"
+              className={`portal-hero__dot${slideIndex === index ? ' is-active' : ''}`}
+              aria-label={`Mostrar imagem ${slideIndex + 1} de ${HERO_SLIDES.length}`}
+              aria-pressed={slideIndex === index}
+              onClick={() => setIndex(slideIndex)}
+            />
+          ))}
+          {!reducedMotion ? (
+            <button
+              type="button"
+              className="portal-hero__pause"
+              aria-label={isPausedByUser ? 'Retomar a troca de imagens' : 'Pausar a troca de imagens'}
+              onClick={() => setIsPausedByUser((paused) => !paused)}
+            >
+              {isPausedByUser ? <LuPlay aria-hidden="true" /> : <LuPause aria-hidden="true" />}
+            </button>
+          ) : null}
+        </div>
+
         <figcaption>
           Foto:{' '}
-          <a href="https://www.pexels.com/photo/doctor-consulting-a-patient-7659873/" target="_blank" rel="noopener noreferrer">
-            Thirdman / Pexels
+          <a href={activeSlide.credit.url} target="_blank" rel="noopener noreferrer">
+            {activeSlide.credit.label}
           </a>
         </figcaption>
       </figure>
