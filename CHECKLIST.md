@@ -23,13 +23,19 @@ Frentes: **FR** Front · **BK** Back · **FM** Formulário e resultado · **CT**
 
 ## Agora
 
-_Atualizado em 28/10/2026._
+_Atualizado em 29/10/2026._
 
-**Em andamento — Front** (branch `feat/front-home-redesign`, ainda sem PR):
-- Feito na branch: tokens novos (FR-11), cabeçalho e rodapé com a logo (FR-14, FR-16), notícias (CT-21), home como
-  portal para visitantes e painel para quem está logada (FR-17) e as páginas de conteúdo (CT-15 a CT-18).
-- **Próximo:** revisão do Caio e PR para a `develop`. O painel logado só foi validado por lint, build e código
-  (falta o Supabase de desenvolvimento, IN-05).
+**Em andamento — Front** (branch `feat/front-home-redesign`, enviada ao GitHub, ainda sem PR):
+- Feito na branch: tokens novos (FR-11), cabeçalho e rodapé (FR-14, FR-16), notícias (CT-21), home como portal para
+  visitantes e painel para quem está logada (FR-17), páginas de conteúdo (CT-15 a CT-18), foto na abertura, logo em
+  SVG com o laço sendo desenhado (FR-18, FR-19), "Você sabia?" em carrossel manual (FR-26) e tela de carregamento com
+  a logo (FR-27).
+- **Situação:** a home **ainda não foi aprovada** pelo Caio; os próximos ajustes dependem do que ele quiser mudar.
+  O PR para a `develop` sai quando a home for aprovada. Se a revisão demorar, a alternativa é juntar o que já está
+  pronto e continuar a home numa branch nova (`feat/front-home-v2`).
+- O painel logado só foi validado por lint, build e código (falta o Supabase de desenvolvimento, IN-05).
+- **Temporário:** a espera de 6 s na tela de carregamento em desenvolvimento (FR-28) está commitada; remover quando
+  não for mais útil.
 
 **Na fila — Formulário e resultado / Back:** FM-01 a FM-05 e BK-01 (sugestão de branch: `fix/form-result-credibility`).
 
@@ -72,6 +78,7 @@ Observações:
 - [x] **FR-19** `Média` Logo redesenhada em SVG a partir do PNG ([RiskCareLogo.jsx](src/components/RiskCareLogo.jsx), [public/riskcare-logo.svg](public/riskcare-logo.svg))
 - [x] **FR-26** `Média` "Você sabia?" como carrossel manual (sem troca automática), começando pela dica do dia ([HomeBlocks.jsx](src/components/home/HomeBlocks.jsx))
 - [x] **FR-27** `Média` Tela de carregamento com a logo sendo desenhada em loop, usada também no login e no cadastro ([RouteLoadingPage.jsx](src/components/RouteLoadingPage.jsx))
+- [ ] **FR-28** `Média` Remover a espera temporária de 6 s da tela de carregamento em desenvolvimento (`DEV_SPLASH_MS` em [src/App.jsx](src/App.jsx))
 - [ ] **FR-25** `Média` Usar a logo em SVG também no login, formulário, resultado, favicon e PDF
 - [x] **FR-17** `Alta` **Home como portal**: abertura curta, grade de atalhos com destaque da avaliação (muda se logada), notícias em lista e coluna lateral com números e apoio; menu com as páginas novas ([docs/design/home-portal.md](docs/design/home-portal.md))
 
