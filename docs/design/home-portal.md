@@ -4,6 +4,30 @@
 > Itens no [CHECKLIST.md](../../CHECKLIST.md): FR-17 e CT-15 a CT-18.
 > Visual: [design-system.md](design-system.md).
 
+## 0. Versão atual da home pública (29/10/2026)
+
+A home de **visitante** foi refeita a partir da referência enviada pelo Caio:
+[home-v2/referencia.png](home-v2/referencia.png). Componentes em
+[src/components/home/PortalSections.jsx](../../src/components/home/PortalSections.jsx), estilos em
+[src/styles/portal.css](../../src/styles/portal.css). O painel de quem está logada continua como descrito na seção 5.
+
+Estrutura: abertura com foto em largura total → faixa escura "Comece por aqui" (sinais, mamografia, onde buscar
+atendimento) → "Você sabia?" (carrossel manual) → notícias em destaque + "Em números" e "Precisa de ajuda?" →
+faixa "O que fazer agora?" em 3 passos → rodapé com fontes oficiais.
+
+Onde a implementação difere da referência, e por quê:
+
+| Na referência | Implementado | Motivo |
+|---|---|---|
+| Botão principal "Verificar sinais" | **"Fazer avaliação"** (secundário "Entender os sinais") | O site não analisa sintomas; "verificar sinais" passaria essa ideia |
+| 73 mil casos (2023–2025) e 66% a partir dos 50 anos | 78.610 casos (2026–2028) e "1º entre as mulheres", com fonte | Números da referência não verificados; usamos os da Estimativa INCA vigente |
+| Notícias de 2024 com fotos | Notícias oficiais reais (`news.js`) com miniatura de ícone e nome da fonte | Sem direito de uso das fotos; conteúdo real |
+| "Disque Saúde 136 … 24 horas por dia" | Descrição verificada + CVV 188 (24 h) | Horário do 136 não confirmado |
+| Dica "a mamografia pode identificar alterações…" | Dicas da lista verificada (`TIPS`) | Toda dica precisa de fonte registrada |
+| Foto de outra consulta | Foto já licenciada (Thirdman / Pexels) | Mesma composição, licença registrada |
+
+Também entrou a página `/noticias` para o link "Ver todas as notícias" (CT-22).
+
 ## 1. Problema
 
 A home atual segue a estrutura de **landing page**:

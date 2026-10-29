@@ -30,7 +30,8 @@ _Atualizado em 29/10/2026._
   visitantes e painel para quem está logada (FR-17), páginas de conteúdo (CT-15 a CT-18), foto na abertura, logo em
   SVG com o laço sendo desenhado (FR-18, FR-19), "Você sabia?" em carrossel manual (FR-26) e tela de carregamento com
   a logo (FR-27).
-- **Situação:** a home **ainda não foi aprovada** pelo Caio; os próximos ajustes dependem do que ele quiser mudar.
+- **29/10:** home pública refeita conforme a referência do Caio ([docs/design/home-v2/referencia.png](docs/design/home-v2/referencia.png)), com a página `/noticias` (CT-22).
+- **Situação:** aguardando a avaliação do Caio sobre essa nova versão.
   O PR para a `develop` sai quando a home for aprovada. Se a revisão demorar, a alternativa é juntar o que já está
   pronto e continuar a home numa branch nova (`feat/front-home-v2`).
 - O painel logado só foi validado por lint, build e código (falta o Supabase de desenvolvimento, IN-05).
@@ -156,7 +157,7 @@ Observações:
 - [x] **CT-17** `Alta` Página `/onde-buscar-ajuda`: UBS, Disque Saúde 136, CVV 188
 - [x] **CT-18** `Alta` Página `/perguntas-frequentes` (perguntas que hoje estão na home)
 - [x] **CT-21** `Média` Seção de notícias na home com curadoria manual de fontes oficiais ([src/content/news.js](src/content/news.js))
-- [ ] **CT-22** `Baixa` Página `/noticias` com todas as notícias (ver PLANEJAMENTO 3.6)
+- [x] **CT-22** `Baixa` Página `/noticias` com todas as notícias (ver PLANEJAMENTO 3.6)
 - [ ] **CT-20** `Baixa` `/numeros`: casos novos e mortalidade por UF e por idade
 
 **Fontes a levantar** (a tabela completa está na seção 6 do planejamento; confirmar a edição vigente antes de citar)
