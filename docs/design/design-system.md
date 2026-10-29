@@ -23,7 +23,8 @@ sentimental.
 | `--rc-action` | `#A63D66` | Botões, links e foco de ação (texto branco sobre ele também passa) | ~6,0:1 ✅ |
 | `--rc-action-hover` | `#8A2F53` | Hover/pressionado | ✅ |
 | `--rc-brand-soft` | `#F6E4EB` | Fundo de destaque leve (uso pontual) | — |
-| `--rc-surface-rose` | `#F1E4E9` | Faixa de destaque mais escura ("O que fazer agora?" na home), para se separar do rodapé | texto secundário ~5:1 ✅ |
+| `--rc-surface-warm` | `#F5F2F0` | Off-white quente da faixa "O que fazer agora?" na home (cor escolhida pelo Caio) | texto secundário ~5,9:1 ✅ |
+| `--rc-surface-strong` | `#ECE7E4` | Fundo do rodapé, um pouco mais escuro para se separar da faixa acima | texto secundário ~5,2:1 ✅ |
 | `--rc-danger` | `#B42318` | Sinais de alerta, erros | ~6,3:1 ✅ |
 | `--rc-info` | `#1D4E89` | Informação, notas de fonte | ~8,4:1 ✅ |
 
