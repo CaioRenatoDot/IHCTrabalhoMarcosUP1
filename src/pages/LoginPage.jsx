@@ -6,6 +6,7 @@ import LoginHeader from '../components/login/LoginHeader.jsx'
 import LoginWarning from '../components/login/LoginWarning.jsx'
 import SocialLoginButtons from '../components/login/SocialLoginButtons.jsx'
 import InternalLink from '../components/InternalLink.jsx'
+import RouteLoadingPage from '../components/RouteLoadingPage.jsx'
 import { useAuth } from '../contexts/AuthContext.jsx'
 import { handleSpaLinkClick, navigateWithoutReload } from '../utils/navigation.js'
 
@@ -43,15 +44,7 @@ function LoginPage({ onToast }) {
   }
 
   if (isLoading) {
-    return (
-      <main className="login-loading-page" aria-live="polite">
-        <div className="login-loading-dots" aria-label="Carregando">
-          <span />
-          <span />
-          <span />
-        </div>
-      </main>
-    )
+    return <RouteLoadingPage label="Carregando" />
   }
 
   return (

@@ -3,8 +3,14 @@
 > Documento vivo. Última revisão: 28/10/2026 (nomes das etapas).
 > Relacionado: [PLANEJAMENTO.md](../PLANEJAMENTO.md) (seção 3.1) e [CHECKLIST.md](../CHECKLIST.md) (itens FM-10 a FM-14).
 
+> **Decisão de 29/10/2026:** o fluxo inicial do site será o **formulário simplificado** de
+> [formulario-simplificado-v2.md](formulario-simplificado-v2.md) (5 perguntas: sinais, idade, UF/município e
+> mamografia, sem login e sem classificação). **Este documento passa a especificar a "avaliação ampliada"**:
+> opcional, oferecida depois do formulário curto, para quem quiser entender seus fatores de risco. As perguntas
+> em comum (P0, P1, P2, P3 e P25 daqui) usam os mesmos códigos nos dois fluxos.
+
 Este documento define **de onde vêm as fontes, quais são as etapas, quais perguntas são feitas e como o
-resultado usa cada resposta**, em três versões do formulário. Ele é a referência para implementar a avaliação v2 (Fase 3).
+resultado usa cada resposta**, em três versões do formulário. Ele é a referência para implementar a avaliação v2 (área Formulário e resultado + Back).
 
 ---
 
@@ -33,7 +39,7 @@ Status: ✅ conferida (trecho localizado) · ⚠️ a confirmar no texto oficial
 | S1 | INCA — cartilha *Câncer de mama: vamos falar sobre isso?* (11ª ed., 2026). [PDF](https://ninho.inca.gov.br/jspui/bitstream/123456789/18158/1/cartilha-mama-2026%20-%20DefesoEleitoral.pdf) | Sinais e sintomas (nódulo, pele em "casca de laranja", alterações e secreção no mamilo, nódulos na axila/pescoço); fatores de risco; 5–10% dos casos hereditários; mama densa | ✅ trechos · ⚠️ redação final |
 | S2 | INCA — *Controle do Câncer de Mama: Documento de Consenso* (2004). [PDF (cópia SES-SP)](https://www.saude.sp.gov.br/resources/ses/perfil/profissional-da-saude/homepage//consenso_para_controle_do_cancer_de_mama.pdf) | Critérios de **risco elevado** e conduta (exame clínico e mamografia anual a partir dos 35 anos) | ✅ critérios · ⚠️ documento de 2004, verificar se há versão mais nova |
 | S3 | INCA — *Parâmetros técnicos para programação de ações de detecção precoce do câncer de mama*. [PDF](https://ninho.inca.gov.br/jspui/bitstream/123456789/12746/1/Par%c3%a2metros%20t%c3%a9cnicos%20para%20programa%c3%a7%c3%a3o%20de%20a%c3%a7%c3%b5es%20de%20detec%c3%a7%c3%a3o%20precoce%20do%20c%c3%a2ncer%20de%20mama..pdf) | Reproduz os critérios ampliados de risco elevado | ✅ |
-| S4 | Ministério da Saúde — nova orientação de rastreamento mamográfico (set/2025) | 50–74 anos: mamografia a cada 2 anos; 40–49: acesso por decisão compartilhada; acima de 74: avaliação individual | ⚠️ conferido em notícias ([Poder360](https://www.poder360.com.br/poder-saude/saude-passa-a-recomendar-mamografia-a-partir-dos-40-anos/), [Jornal de Brasília](https://jornaldebrasilia.com.br/noticias/saude/faixa-etaria-da-mamografia-e-ampliada-no-sus-exame-passa-a-ser-indicado-ate-os-74-anos/)); falta o texto oficial no gov.br |
+| S4 | Ministério da Saúde — Nota Técnica de rastreamento mamográfico ([notícia do INCA, 29/09/2025](https://www.gov.br/inca/pt-br/assuntos/noticias/2025/ministerio-da-saude-padroniza-informacoes-para-acesso-ao-exame-de-mamografia-no-sus)) e Lei nº 15.284/2025 ([Ministério das Mulheres, 19/12/2025](https://www.gov.br/mulheres/pt-br/central-de-conteudos/noticias/2025/dezembro/sancionada-lei-que-amplia-acesso-das-mulheres-ao-exame-de-mamografia-fornecido-pelo-sus)) | 50–74 anos: rastreamento a cada 2 anos; 40–49 e acima de 74: exame por demanda, após orientação sobre riscos e benefícios; a lei assegura a mamografia pelo SUS a partir dos 40 anos, mesmo sem sintomas | ✅ (texto integral da nota técnica ainda não lido) |
 | S5 | INCA — página de fatores de risco do câncer de mama (gov.br/inca) | Fatores reprodutivos/hormonais (menarca precoce, menopausa tardia, primeira gestação após 30, não ter tido filhos, contraceptivo hormonal, reposição hormonal pós-menopausa) e comportamentais (excesso de peso após a menopausa, sedentarismo, álcool, radiação ionizante) | ⚠️ localizar URL e redação vigentes |
 | S6 | Diretrizes internacionais de alto risco (ex.: NCCN, ACR) | Mutação BRCA1/2 e radioterapia no tórax antes dos 30 como risco elevado (não constam no consenso do INCA) | ⚠️ escolher a diretriz e citar a edição |
 | S7 | OMS — recomendações de atividade física e classificação de IMC | Faixas de IMC; 150 min/semana de atividade moderada | ⚠️ |
@@ -48,8 +54,8 @@ virar ✅ com URL, edição e data de acesso registradas no registro central de 
 
 | Versão | Quando | Resumo |
 |--------|--------|--------|
-| **v1** | Hoje + Fase 0 | Formulário atual (5 etapas, 20 campos, score por pesos). A Fase 0 só acrescenta o aviso de alerta (FM-04) e remove o nome completo (FM-05). |
-| **v2** | Fase 3 | Tela de boas-vindas + 7 etapas (ver 4.0). Quatro saídas independentes: **alerta**, **classificação por critérios** (risco habitual / elevado), **rastreamento** e **hábitos de proteção**. Códigos estáveis nas opções. |
+| **v1** | Hoje + ajustes de credibilidade | Formulário atual (5 etapas, 20 campos, score por pesos). Os ajustes só acrescentam o aviso de alerta (FM-04) e remove o nome completo (FM-05). |
+| **v2** | Próxima versão | Tela de boas-vindas + 7 etapas (ver 4.0). Quatro saídas independentes: **alerta**, **classificação por critérios** (risco habitual / elevado), **rastreamento** e **hábitos de proteção**. Códigos estáveis nas opções. |
 | **v3** | Futuro | v2 + número do **modelo de Gail** quando aplicável, "por que perguntamos isso?", salvar progresso, densidade mamária opcional. |
 
 ### 3.1 v1 — formulário atual (referência)
@@ -209,10 +215,10 @@ Qualquer sinal marcado → aviso em destaque no topo: procurar uma unidade de sa
 | Situação | Orientação |
 |----------|------------|
 | Risco elevado | Acompanhamento específico com profissional (ver 5.2) |
-| 50 a 74 anos | Mamografia a cada 2 anos; "em dia" se P25 = `under_1y` ou `1_to_2y` (S4 ⚠️) |
-| 40 a 49 anos | Pode fazer pelo SUS por decisão compartilhada com o profissional (S4 ⚠️) |
+| 50 a 74 anos | Mamografia a cada 2 anos; "em dia" se P25 = `under_1y` ou `1_to_2y` (S4) |
+| 40 a 49 anos | Pode fazer pelo SUS por demanda, após orientação do profissional sobre riscos e benefícios; garantido pela Lei nº 15.284/2025 (S4) |
 | Abaixo de 40 | Rastreamento não indicado para risco habitual; atenção aos sinais de alerta |
-| Acima de 74 | Avaliação individual com o profissional (S4 ⚠️) |
+| Acima de 74 | Exame por demanda, após orientação do profissional (S4) |
 
 ### 5.4 Hábitos de proteção (P20–P23)
 Índice de 0 a 100 apenas com fatores modificáveis: IMC (com mais peso após a menopausa, conforme S5),
@@ -265,7 +271,7 @@ curta e fonte, sem compor pontuação.
 
 ---
 
-## 8. Implementação (Fase 3)
+## 8. Implementação da v2
 
 1. **Definição única do formulário** compartilhada entre front e back (ex.: `shared/assessment/formV2.js`):
    etapas, perguntas, opções com códigos, condições (P9/P10, P18), finalidade e fonte de cada pergunta.
@@ -282,7 +288,7 @@ curta e fonte, sem compor pontuação.
 
 ## 9. Pendências antes de implementar
 
-- [ ] Confirmar no texto oficial a orientação de rastreamento de 2025 (S4).
+- [x] Confirmar em fonte oficial a orientação de rastreamento de 2025 (S4): notícia do INCA de 29/09/2025 e Lei nº 15.284/2025.
 - [ ] Verificar se existe versão mais recente que o consenso de 2004 (S2), inclusive a conduta para risco elevado.
 - [ ] Escolher e citar a diretriz internacional para BRCA e radioterapia (S6).
 - [ ] Localizar a página vigente de fatores de risco do INCA (S5) e conferir as faixas (menarca, menopausa).

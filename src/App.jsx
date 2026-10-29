@@ -8,6 +8,11 @@ import TermsPage from './pages/TermsPage.jsx'
 import PrivacyPage from './pages/PrivacyPage.jsx'
 import ResultsPage from './pages/ResultsPage.jsx'
 import AssessmentFormPage from './pages/AssessmentFormPage.jsx'
+import WarningSignsPage from './pages/WarningSignsPage.jsx'
+import MammographyPage from './pages/MammographyPage.jsx'
+import HelpPage from './pages/HelpPage.jsx'
+import FaqPage from './pages/FaqPage.jsx'
+import NewsPage from './pages/NewsPage.jsx'
 import Navbar from './components/Navbar.jsx'
 import Footer from './components/Footer.jsx'
 import AccessibilityControls from './components/accessibility/AccessibilityControls.jsx'
@@ -15,6 +20,33 @@ import SkipLink from './components/SkipLink.jsx'
 import SmoothScrollProvider from './components/smooth-scroll/SmoothScrollProvider.jsx'
 import RouteLoadingPage from './components/RouteLoadingPage.jsx'
 import { useAuth } from './contexts/AuthContext.jsx'
+
+// Abertura do site: logo sendo desenhada com "Carregando…" e, ao terminar, o nome RiskCare surgindo.
+// Em produção roda só na primeira visita da sessão; em desenvolvimento roda sempre, com um tempo mínimo
+// (TEMPORÁRIO, para visualizar a animação; remover quando não for mais útil — FR-28).
+const INTRO_MIN_MS = import.meta.env.DEV ? 3500 : 0
+const INTRO_REVEAL_MS = 1100
+const INTRO_SEEN_KEY = 'riskcare:intro-seen'
+
+function shouldPlayIntro() {
+  if (import.meta.env.DEV) {
+    return true
+  }
+
+  try {
+    return window.sessionStorage.getItem(INTRO_SEEN_KEY) !== '1'
+  } catch {
+    return false
+  }
+}
+
+function markIntroSeen() {
+  try {
+    window.sessionStorage.setItem(INTRO_SEEN_KEY, '1')
+  } catch {
+    // Sem armazenamento disponível: a abertura pode repetir, o que não quebra nada.
+  }
+}
 
 const AUTH_ROUTES = new Set(['/login', '/cadastro'])
 const PROTECTED_ROUTES = new Set(['/formulario', '/resultados'])
@@ -52,6 +84,35 @@ function App() {
   const [route, setRoute] = useState(parseLocation)
   const previousPathRef = useRef(route.path)
   const { latestAssessmentLoading, session, loading: authLoading } = useAuth()
+  // 'loading' → 'reveal' (nome aparece) → 'done'
+  const [introPhase, setIntroPhase] = useState(() => (shouldPlayIntro() ? 'loading' : 'done'))
+  const [introMinElapsed, setIntroMinElapsed] = useState(INTRO_MIN_MS === 0)
+
+  useEffect(() => {
+    if (introMinElapsed) {
+      return undefined
+    }
+
+    const timer = window.setTimeout(() => setIntroMinElapsed(true), INTRO_MIN_MS)
+    return () => window.clearTimeout(timer)
+  }, [introMinElapsed])
+
+  useEffect(() => {
+    if (introPhase === 'loading' && introMinElapsed && !authLoading) {
+      setIntroPhase('reveal')
+      return undefined
+    }
+
+    if (introPhase !== 'reveal') {
+      return undefined
+    }
+
+    const timer = window.setTimeout(() => {
+      markIntroSeen()
+      setIntroPhase('done')
+    }, INTRO_REVEAL_MS)
+    return () => window.clearTimeout(timer)
+  }, [authLoading, introMinElapsed, introPhase])
 
   const navigate = useCallback(
     (href) => {
@@ -168,6 +229,16 @@ function App() {
     showFooter = false
   } else if (route.path === '/sobre-projeto' || route.path === '/cover') {
     page = <CoverPage />
+  } else if (route.path === '/sinais-de-alerta') {
+    page = <WarningSignsPage />
+  } else if (route.path === '/mamografia') {
+    page = <MammographyPage />
+  } else if (route.path === '/onde-buscar-ajuda') {
+    page = <HelpPage />
+  } else if (route.path === '/perguntas-frequentes') {
+    page = <FaqPage />
+  } else if (route.path === '/noticias') {
+    page = <NewsPage />
   } else if (route.path === '/resultados') {
     page = <ResultsPage />
     showNavbar = false
@@ -183,7 +254,11 @@ function App() {
     (AUTH_ROUTES.has(route.path) && Boolean(session))
   const pageTransitionKey = route.path
 
-  if (shouldShowAuthLoader) {
+  if (introPhase !== 'done') {
+    page = <RouteLoadingPage label="Carregando" revealed={introPhase === 'reveal'} />
+    showNavbar = false
+    showFooter = false
+  } else if (shouldShowAuthLoader) {
     page = <RouteLoadingPage label="Verificando acesso" />
     showNavbar = false
     showFooter = false

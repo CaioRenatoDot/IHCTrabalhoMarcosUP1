@@ -1,16 +1,16 @@
 
 @import './base.css';
 @import './accessibility.css';
-@import './layout.css';
 @import './cover.css';
 @import './legal.css';
 @import './results.css';
+@import './logo.css';
+@import './loading.css';
 @import './navbar.css';
-@import './hero-actions.css';
-@import './awareness.css';
-@import './how.css';
-@import './banner.css';
 @import './footer.css';
+@import './home.css';
+@import './portal.css';
+@import './content.css';
 @import './toast.css';
 @import './vlibras.css';
 @import './responsive.css';

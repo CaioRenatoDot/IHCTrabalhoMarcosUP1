@@ -131,65 +131,88 @@ Navbar: **Avaliação · Aprenda · Números · Onde buscar ajuda · Metodologia
 
 ## 3. Funcionalidades
 
-Legenda: **P0** = essencial · **P1** = alto impacto · **P2** = desejável
+Legenda de prioridade: **Alta** = essencial · **Média** = alto impacto · **Baixa** = desejável
 
 ### 3.1 Avaliação
 
 > A especificação do formulário (fontes, etapas, perguntas e versões v1/v2/v3) está em [docs/formulario.md](docs/formulario.md).
 > Decisão de 28/10/2026: a v2 classifica por **critérios de risco elevado** (consenso do INCA); o modelo de Gail fica para a v3.
 
-- [ ] **P0** Avaliação **sem login**: o cálculo pode rodar no cliente ou num endpoint público com rate limit. A conta passa a servir só para salvar.
-- [ ] **P0** Separar o resultado em três blocos independentes:
+- [ ] **Alta** Avaliação **sem login**: o cálculo pode rodar no cliente ou num endpoint público com rate limit. A conta passa a servir só para salvar.
+- [ ] **Alta** Separar o resultado em três blocos independentes:
   - **Sinais de alerta** → banner "procure atendimento", independente do score.
   - **Rastreamento** → "seus exames estão em dia?", seguindo a diretriz vigente do Ministério da Saúde.
   - **Risco estimado** → modelo de risco (abaixo).
-- [ ] **P0** Remover "Nome completo" e outros campos que o cálculo não usa.
-- [ ] **P1** Implementar o **modelo de Gail (NCI BCRAT)**: risco em 5 anos e ao longo da vida, comparado com a média da idade. Novas perguntas necessárias: idade no primeiro parto, número de biópsias, hiperplasia atípica e raça/etnia.
+- [ ] **Alta** Remover "Nome completo" e outros campos que o cálculo não usa.
+- [ ] **Média** Implementar o **modelo de Gail (NCI BCRAT)**: risco em 5 anos e ao longo da vida, comparado com a média da idade. Novas perguntas necessárias: idade no primeiro parto, número de biópsias, hiperplasia atípica e raça/etnia.
   - Documentar as limitações: vale para mulheres com 35 anos ou mais, não se aplica a quem já teve câncer de mama, carcinoma in situ ou mutação BRCA conhecida, e foi calibrado na população dos EUA.
   - Quando o Gail não se aplica, mostrar uma orientação no lugar do número (por exemplo: "com BRCA positivo, o acompanhamento é especializado").
-- [ ] **P1** Manter o score atual renomeado para **"Índice de hábitos de proteção"**: só fatores modificáveis, de 0 a 100, sem chamá-lo de risco.
-- [ ] **P1** Payload com **códigos estáveis** (`"first_degree"`, `"never"`) em vez de rótulos de texto.
-- [ ] **P1** Salvar o progresso do formulário localmente e mostrar o tempo restante estimado.
-- [ ] **P2** Explicação curta ("por que perguntamos isso?") em cada pergunta, com link para o artigo correspondente.
+- [ ] **Média** Manter o score atual renomeado para **"Índice de hábitos de proteção"**: só fatores modificáveis, de 0 a 100, sem chamá-lo de risco.
+- [ ] **Média** Payload com **códigos estáveis** (`"first_degree"`, `"never"`) em vez de rótulos de texto.
+- [ ] **Média** Salvar o progresso do formulário localmente e mostrar o tempo restante estimado.
+- [ ] **Baixa** Explicação curta ("por que perguntamos isso?") em cada pergunta, com link para o artigo correspondente.
 
 ### 3.2 Resultado
 
-- [ ] **P0** Remover os gráficos com dados inventados (C1) e as notas internas (C5).
-- [ ] **P0** **Plano de ação personalizado**: de 3 a 5 recomendações concretas a partir das respostas (por exemplo, "converse com seu médico sobre aconselhamento genético", "agende sua mamografia", "reduza o álcool"), cada uma com fonte.
-- [ ] **P0** **Relatório em PDF**: resumo, respostas, resultado, plano de ação, perguntas para levar ao médico, fontes e aviso. Sugestão: `@react-pdf/renderer` no cliente, para funcionar sem login e sem enviar dados ao servidor.
-- [ ] **P1** Gráfico comparando o risco em 5 anos da pessoa com a média da idade (dados do próprio modelo).
-- [ ] **P1** Botão "Imprimir" com CSS `@media print`.
-- [ ] **P1** "Perguntas para levar à consulta", geradas a partir das respostas.
-- [ ] **P2** Lembrete de mamografia exportável para o calendário (arquivo `.ics`).
-- [ ] **P2** Compartilhar um card sem dados pessoais ("Fiz minha avaliação no RiskCare").
+- [ ] **Alta** Remover os gráficos com dados inventados (C1) e as notas internas (C5).
+- [ ] **Alta** **Plano de ação personalizado**: de 3 a 5 recomendações concretas a partir das respostas (por exemplo, "converse com seu médico sobre aconselhamento genético", "agende sua mamografia", "reduza o álcool"), cada uma com fonte.
+- [ ] **Alta** **Relatório em PDF**: resumo, respostas, resultado, plano de ação, perguntas para levar ao médico, fontes e aviso. Sugestão: `@react-pdf/renderer` no cliente, para funcionar sem login e sem enviar dados ao servidor.
+- [ ] **Média** Gráfico comparando o risco em 5 anos da pessoa com a média da idade (dados do próprio modelo).
+- [ ] **Média** Botão "Imprimir" com CSS `@media print`.
+- [ ] **Média** "Perguntas para levar à consulta", geradas a partir das respostas.
+- [ ] **Baixa** Lembrete de mamografia exportável para o calendário (arquivo `.ics`).
+- [ ] **Baixa** Compartilhar um card sem dados pessoais ("Fiz minha avaliação no RiskCare").
 
 ### 3.3 Conteúdo
 
-- [ ] **P0** Componente de **citação de fonte**: nota numerada no texto e lista de referências no fim, com link e data de acesso.
-- [ ] **P0** Registro central de fontes (`src/content/sources.js`), usado por todas as páginas, pelo resultado e pelo PDF.
-- [ ] **P1** Artigos do hub `/aprenda` em **MDX**, com "Última revisão em …" e "Fontes".
-- [ ] **P1** Página de **Metodologia**: fluxo do cálculo, fórmula, limitações e changelog das versões do modelo.
-- [ ] **P1** **Onde buscar ajuda**: Disque Saúde 136, como pedir mamografia no SUS, ONGs de apoio (por exemplo, FEMAMA e Instituto Oncoguia) e filtro por UF.
-- [ ] **P1** **Seus direitos**: Lei 12.732/2012 (início do tratamento em até 60 dias), Lei 13.896/2019 (diagnóstico em até 30 dias), reconstrução mamária pelo SUS e outros.
-- [ ] **P2** Mitos e verdades em formato de quiz.
-- [ ] **P2** Glossário com tooltips nos termos técnicos dos artigos.
-- [ ] **P2** Busca no conteúdo.
+- [ ] **Alta** Componente de **citação de fonte**: nota numerada no texto e lista de referências no fim, com link e data de acesso.
+- [ ] **Alta** Registro central de fontes (`src/content/sources.js`), usado por todas as páginas, pelo resultado e pelo PDF.
+- [ ] **Média** Artigos do hub `/aprenda` em **MDX**, com "Última revisão em …" e "Fontes".
+- [ ] **Média** Página de **Metodologia**: fluxo do cálculo, fórmula, limitações e changelog das versões do modelo.
+- [ ] **Média** **Onde buscar ajuda**: Disque Saúde 136, como pedir mamografia no SUS, ONGs de apoio (por exemplo, FEMAMA e Instituto Oncoguia) e filtro por UF.
+- [ ] **Média** **Seus direitos**: Lei 12.732/2012 (início do tratamento em até 60 dias), Lei 13.896/2019 (diagnóstico em até 30 dias), reconstrução mamária pelo SUS e outros.
+- [ ] **Baixa** Mitos e verdades em formato de quiz.
+- [ ] **Baixa** Glossário com tooltips nos termos técnicos dos artigos.
+- [ ] **Baixa** Busca no conteúdo.
 
 ### 3.4 Painel "Números do Brasil"
 
-- [ ] **P1** Estimativa de casos novos por UF (INCA), num mapa ou ranking. A UF que a pessoa informou ganha destaque.
-- [ ] **P1** Incidência por faixa etária (INCA/SEER), mostrando por que a idade importa.
-- [ ] **P2** Mortalidade por UF ao longo do tempo (Atlas de Mortalidade do INCA).
-- [ ] **P2** Cobertura de mamografia no SUS (SISCAN/DATASUS).
+- [ ] **Média** Estimativa de casos novos por UF (INCA), num mapa ou ranking. A UF que a pessoa informou ganha destaque.
+- [ ] **Média** Incidência por faixa etária (INCA/SEER), mostrando por que a idade importa.
+- [ ] **Baixa** Mortalidade por UF ao longo do tempo (Atlas de Mortalidade do INCA).
+- [ ] **Baixa** Cobertura de mamografia no SUS (SISCAN/DATASUS).
 - Todos os gráficos com fonte, ano e link logo abaixo.
 
 ### 3.5 Conta (opcional)
 
-- [ ] **P1** Histórico de avaliações (endpoint `GET /api/risk-assessment`) com uma linha do tempo.
-- [ ] **P1** Comparar duas avaliações: o que mudou e por quê.
-- [ ] **P2** Lembretes por e-mail (precisa do SMTP, pendente desde a fase acadêmica).
-- [ ] **P2** Exportar e excluir os próprios dados (direitos do titular na LGPD).
-- [ ] **P2** Login social (os botões já existem na interface).
+- [ ] **Média** Histórico de avaliações (endpoint `GET /api/risk-assessment`) com uma linha do tempo.
+- [ ] **Média** Comparar duas avaliações: o que mudou e por quê.
+- [ ] **Baixa** Lembretes por e-mail (precisa do SMTP, pendente desde a fase acadêmica).
+- [ ] **Baixa** Exportar e excluir os próprios dados (direitos do titular na LGPD).
+- [ ] **Baixa** Login social (os botões já existem na interface).
+
+### 3.6 Notícias
+
+**Hoje (implementado):** curadoria manual em [src/content/news.js](src/content/news.js). Só entram fontes
+oficiais (INCA, Ministério da Saúde, Ministério das Mulheres), com data, resumo e link conferidos. A home mostra
+as 3 mais recentes, e a seção some sozinha se a mais recente tiver mais de 12 meses.
+
+**Próximo passo: busca automática no back.**
+- [ ] **Baixa** Endpoint `GET /api/news` no Express, devolvendo as notícias mais recentes já filtradas, com cache.
+- [ ] **Baixa** Coleta a partir de **fontes oficiais em lista fechada** (allowlist de domínios gov.br: INCA, Ministério da
+      Saúde, Ministério das Mulheres). Verificar quais páginas de notícias oferecem RSS; se não houver, ler a listagem
+      da página de notícias.
+- [ ] **Baixa** Filtro por assunto: "câncer de mama", "mamografia", "Outubro Rosa", "rastreamento".
+- [ ] **Baixa** Tabela `NewsItem` (Prisma): URL única, título, resumo, data, fonte e **status** (`pending`,
+      `approved`, `hidden`). Itens novos entram como `pending`; só os aprovados aparecem no site.
+- [ ] **Baixa** Atualização diária por **Vercel Cron**, chamando uma rota protegida por segredo
+      (`POST /api/news/refresh`).
+- [ ] **Baixa** Se a coleta falhar ou não houver itens aprovados, o front usa a lista manual de `news.js`.
+- [ ] **Baixa** Página `/noticias` com todas as notícias aprovadas.
+
+Por que com aprovação: notícias aparecem como conteúdo endossado por um site de saúde. A coleta automática
+economiza o trabalho de procurar; a aprovação garante que nada impreciso ou fora do tema seja publicado.
+Decisão em aberto: como aprovar (painel simples, campo no banco ou aprovação automática só para o INCA).
 
 ---
 
@@ -206,15 +229,10 @@ Legenda: **P0** = essencial · **P1** = alto impacto · **P2** = desejável
 
 ### 4.2 Home nova
 
-1. **Hero**: título forte, subtítulo, CTA "Fazer avaliação (5 min, sem cadastro)" e uma ilustração no lugar do card falso.
-2. **Faixa de números reais** com fonte (por exemplo, casos novos por ano segundo o INCA).
-3. **"O que você encontra aqui"**: Avaliação, Aprenda, Números e Onde buscar ajuda, em cards que levam a páginas reais.
-4. **Sinais de alerta**: um bloco visual curto ("procure atendimento se notar…").
-5. **Como funciona** (3 passos, sem "crie seu perfil").
-6. **Artigos em destaque** do hub.
-7. **Metodologia e fontes**: "Como calculamos" e logos ou nomes das fontes.
-8. **FAQ** curto.
-9. **Rodapé completo**: mapa do site, fontes, aviso médico, privacidade e repositório.
+**Atualizado em 28/10/2026:** a home deixa de ser uma landing page e passa a ser um **portal** (abertura curta,
+grade de atalhos, notícias em lista, coluna com números e apoio), com o conteúdo informativo em páginas próprias.
+Especificação completa em [docs/design/home-portal.md](docs/design/home-portal.md). A lista anterior desta seção
+(hero grande, faixa de números, FAQ na home) foi substituída por esse documento.
 
 ### 4.3 Resultado novo
 
@@ -272,21 +290,35 @@ Legenda: **P0** = essencial · **P1** = alto impacto · **P2** = desejável
 
 ---
 
-## 7. Roadmap em fases
+## 7. Organização por área
 
-| Fase | Foco | Itens principais |
-|------|------|------------------|
-| **0. Credibilidade** | Tirar do ar o que está errado | C1–C9, hero sem card falso, indicadores com fonte, textos acadêmicos |
-| **1. Fundação** | Base para crescer | React Router, códigos estáveis no payload, Vitest + CI, registro de fontes, SEO básico |
-| **2. Design system** | Deixar de ser "cru" | Tokens, componentes base, ícones, ilustrações, nova home e rodapé |
-| **3. Avaliação v2** | O coração do produto | Sem login, sinais de alerta e rastreamento separados, Gail, novo resultado, plano de ação, **PDF** |
-| **4. Conteúdo** | Virar site de consulta | Hub `/aprenda` em MDX, Metodologia, Fontes, Onde buscar ajuda, Direitos, FAQ |
-| **5. Números do Brasil** | Diferencial visual | Painel com dados do INCA/DATASUS por UF |
-| **6. Conta** | Retenção | Histórico, comparação, lembretes, exportar e excluir dados |
-| **7. Portfólio** | Apresentação | README como estudo de caso, prints e GIF, página Sobre, Lighthouse |
+O trabalho é organizado por **área**, não por fases. Cada área tem um prefixo de ID no CHECKLIST e um nome
+usado nas branches (`tipo/area-descricao`).
 
-Sugestão de ordem: **0 → 1 → 3 → 2 → 4**, depois 5, 6 e 7 conforme o tempo. A fase 3 vem
-antes do redesign porque muda a estrutura do resultado, e não vale desenhar duas vezes.
+| Área | ID no checklist | Nome na branch | O que cobre |
+|------|-----------------|----------------|-------------|
+| **Front** | `FR` | `front` | Design system, cabeçalho, rodapé, home, navegação, SEO, base técnica do React |
+| **Back** | `BK` | `back` | API, motor de risco, banco, notícias automáticas, LGPD |
+| **Formulário e resultado** | `FM` | `form` | Questionário, tela de resultado, PDF |
+| **Conteúdo e fontes** | `CT` | `content` | Páginas informativas, registro de fontes, notícias, números |
+| **Infra e qualidade** | `IN` | `infra` | CI, testes, ambiente local, Docker, textos legais, README |
+
+**Decisão de produto (29/10/2026):** o fluxo principal passa a ser uma **verificação educativa de sinais e
+encaminhamento** ([docs/formulario-simplificado-v2.md](docs/formulario-simplificado-v2.md) e
+[docs/funcionalidades-propostas.md](docs/funcionalidades-propostas.md)): 5 perguntas, sem login, sem score, com
+orientação de próximo passo e, depois, um localizador de atendimento. A avaliação de risco detalhada
+([docs/formulario.md](docs/formulario.md)) vira a **avaliação ampliada**, opcional e posterior.
+
+**Prioridade atual (29/10/2026):**
+1. **Front:** fechar a home com o Caio e abrir o PR da branch `feat/front-home-redesign` (portal, páginas de conteúdo,
+   logo animada e carrossel já implementados; falta a aprovação final).
+2. **Formulário e resultado + Back:** formulário simplificado e resultado por prioridade (FM-40, FM-41, BK-14), com o
+   botão "Verificar sinais" (FR-29). Substitui a tela de resultado atual (score e gráficos), em vez de só limpá-la.
+3. **Conteúdo:** página "O que é câncer de mama?" (CT-23) e localizador em duas etapas (CT-24, CT-25).
+4. **Depois:** avaliação ampliada (itens marcados como "avaliação ampliada" no checklist).
+4. **Conteúdo, conta e apresentação:** demais itens de prioridade Baixa.
+
+O resultado novo só deve ser desenhado depois do motor de risco da v2, para não fazer o trabalho duas vezes.
 
 ---
 
@@ -294,14 +326,13 @@ antes do redesign porque muda a estrutura do resultado, e não vale desenhar dua
 
 A execução é acompanhada no [CHECKLIST.md](CHECKLIST.md), organizado em cinco frentes
 (Front, Back, Formulário e resultado, Conteúdo e fontes, Infra e qualidade), com itens
-numerados e a fase de cada um. Este documento guarda a visão, o diagnóstico e o roadmap;
+numerados e a prioridade de cada um. Este documento guarda a visão, o diagnóstico e o roadmap;
 o checklist guarda o andamento.
 
 Dependências entre as frentes:
 - O **resultado novo** só deve ser desenhado depois do **motor** (Gail) no back; senão o trabalho é feito duas vezes.
 - A página de **números** e os **artigos** dependem do **registro de fontes**, então ele sai primeiro.
-- O que faz parte da Fase 0 no front (retirar dados falsos e textos acadêmicos) não depende de nada e pode começar já.
-- O **redesenho das telas** precisa da direção visual definida antes; a Fase 0 só remove o que é falso e não depende dele.
+- O **redesenho das telas** segue a direção visual de [docs/design/design-system.md](docs/design/design-system.md).
 
 ---
 

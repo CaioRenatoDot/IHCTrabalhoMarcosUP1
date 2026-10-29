@@ -1,0 +1,206 @@
+/* Logo em SVG (src/components/RiskCareLogo.jsx). Documentação: docs/design/logo.md */
+.rc-logo {
+  --rc-logo-ribbon: #d4527b;
+  --rc-logo-tail: #e46b98;
+  --rc-logo-hand: #f3c6d6;
+  /* Cor do fio entre as partes do laço: deve ser igual ao fundo onde a logo está. */
+  --rc-logo-gap: #fff;
+
+  display: block;
+  overflow: visible;
+}
+
+.rc-logo__hand {
+  fill: var(--rc-logo-hand);
+}
+
+.rc-logo__tail {
+  fill: var(--rc-logo-tail);
+}
+
+.rc-logo__fold,
+.rc-logo__gap,
+.rc-logo__ribbon {
+  fill: none;
+}
+
+.rc-logo__fold {
+  stroke: var(--rc-logo-ribbon);
+  stroke-width: 2.2;
+}
+
+.rc-logo__gap {
+  stroke: var(--rc-logo-gap);
+  stroke-width: 8.2;
+}
+
+.rc-logo__ribbon {
+  stroke: var(--rc-logo-ribbon);
+  stroke-width: 6.4;
+}
+
+/* Animação: roda ao montar o componente (o cabeçalho remonta a logo no hover/foco para repetir).
+   A ponta clara aparece, o laço é desenhado de baixo até o coração, a dobra acompanha e a mão
+   surge por último. Os caminhos usam pathLength="1", então o traço vai de 1 (oculto) a 0. */
+.rc-logo--animated .rc-logo__ribbon,
+.rc-logo--animated .rc-logo__gap {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: rc-logo-draw 1.3s cubic-bezier(0.65, 0, 0.35, 1) 0.25s forwards;
+}
+
+.rc-logo--animated .rc-logo__fold {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: rc-logo-draw 0.6s ease-out 0.75s forwards;
+}
+
+.rc-logo--animated .rc-logo__tail {
+  opacity: 0;
+  animation: rc-logo-fade 0.45s ease-out 0.15s forwards;
+}
+
+.rc-logo--animated .rc-logo__hand {
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: rc-logo-hand 0.6s ease-out 1.3s forwards;
+}
+
+@keyframes rc-logo-draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes rc-logo-fade {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes rc-logo-hand {
+  from {
+    opacity: 0;
+    transform: translateY(12%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Loop lento (cabeçalho): a cada 9 s o laço é redesenhado; na maior parte do tempo a logo fica completa.
+   Etapas do ciclo: ponta clara 0–5%, laço 2–17%, dobra 7–14%, mão 14–21%, logo completa até 93%,
+   esmaece 93–98% e recomeça. */
+.rc-logo--loop-slow {
+  animation: rc-logo-slow-fade 9s ease-in-out infinite;
+}
+
+.rc-logo--loop-slow .rc-logo__ribbon,
+.rc-logo--loop-slow .rc-logo__gap {
+  animation: rc-logo-slow-draw 9s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+
+.rc-logo--loop-slow .rc-logo__fold {
+  animation: rc-logo-slow-fold 9s ease-out infinite;
+}
+
+.rc-logo--loop-slow .rc-logo__tail {
+  animation: rc-logo-slow-tail 9s ease-out infinite;
+}
+
+.rc-logo--loop-slow .rc-logo__hand {
+  animation: rc-logo-slow-hand 9s ease-out infinite;
+}
+
+@keyframes rc-logo-slow-fade {
+  0%,
+  93% {
+    opacity: 1;
+  }
+
+  98%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes rc-logo-slow-draw {
+  0%,
+  2% {
+    stroke-dashoffset: 1;
+  }
+
+  17%,
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes rc-logo-slow-fold {
+  0%,
+  7% {
+    stroke-dashoffset: 1;
+  }
+
+  14%,
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes rc-logo-slow-tail {
+  0% {
+    opacity: 0;
+  }
+
+  5%,
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes rc-logo-slow-hand {
+  0%,
+  14% {
+    opacity: 0;
+    transform: translateY(12%);
+  }
+
+  21%,
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Quem pediu menos movimento vê a logo pronta, sem animação. */
+@media (prefers-reduced-motion: reduce) {
+  .rc-logo--animated .rc-logo__ribbon,
+  .rc-logo--animated .rc-logo__gap,
+  .rc-logo--animated .rc-logo__fold,
+  .rc-logo--animated .rc-logo__tail,
+  .rc-logo--animated .rc-logo__hand,
+  .rc-logo--loop-slow,
+  .rc-logo--loop-slow * {
+    animation: none;
+    opacity: 1;
+    stroke-dashoffset: 0;
+    transform: none;
+  }
+}
+
+/* No alto contraste o fundo do cabeçalho e do rodapé fica quase preto. */
+.accessibility-root.is-high-contrast .rc-logo {
+  --rc-logo-gap: #0d0d0d;
+}

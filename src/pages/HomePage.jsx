@@ -1,131 +1,128 @@
-import FeatureCard from '../components/FeatureCard.jsx'
-import ObservationBanner from '../components/ObservationBanner.jsx'
-import ConscientizacaoPrevencaoSection from '../components/ConscientizacaoPrevencaoSection.jsx'
-import HowItWorksSection from '../components/HowItWorksSection.jsx'
+import { useAuth } from '../contexts/AuthContext.jsx'
+import RouteLoadingPage from '../components/RouteLoadingPage.jsx'
+import {
+  AssessmentCard,
+  FactsCard,
+  NewsList,
+  ScreeningCard,
+  ShortcutsCard,
+  SupportCard,
+  TipBox,
+} from '../components/home/HomeBlocks.jsx'
+import {
+  FeaturedNews,
+  HelpCard,
+  NextSteps,
+  NumbersPanel,
+  PortalHero,
+  StartHereBand,
+} from '../components/home/PortalSections.jsx'
+import { getAssessmentStorageKey, readStoredAssessment } from '../lib/riskAssessmentStorage.js'
 
-const ClipboardCheckIcon = () => (
-  <svg
-    width="30"
-    height="30"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth={2}
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2" />
-    <rect x="9" y="3" width="6" height="4" rx="1" />
-    <path d="M9 14l2 2 4-4" />
-  </svg>
-)
+function getFirstName(user) {
+  const fullName = typeof user?.fullName === 'string' ? user.fullName.trim() : ''
+  if (fullName) {
+    return fullName.split(/\s+/)[0]
+  }
 
-const QuestionIcon = () => (
-  <svg
-    width="30"
-    height="30"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth={2}
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <circle cx="12" cy="12" r="10" />
-    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
-    <line x1="12" y1="17" x2="12.01" y2="17" />
-  </svg>
-)
+  const email = typeof user?.email === 'string' ? user.email.trim() : ''
+  return email ? email.split('@')[0] : ''
+}
 
-const TrendLineIcon = () => (
-  <svg
-    width="30"
-    height="30"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth={2}
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M3 3v18h18" />
-    <path d="M7 16l4-8 4 4 4-6" />
-  </svg>
-)
+function getAssessmentDate(assessment) {
+  const rawDate = assessment?.meta?.createdAt ?? assessment?.meta?.submittedAt
+  if (!rawDate) {
+    return null
+  }
 
-function HomePage() {
-  const stagger = (index) => ({ '--stagger-index': index })
+  const date = new Date(rawDate)
+  return Number.isNaN(date.getTime())
+    ? null
+    : new Intl.DateTimeFormat('pt-BR', { day: 'numeric', month: 'long', year: 'numeric' }).format(date)
+}
 
+// A idade informada na avaliação vem no detalhamento por fator (campo "age").
+function getAssessmentAge(assessment) {
+  const ageFactor = assessment?.factorBreakdown?.find?.((factor) => factor.key === 'age')
+  const age = Number.parseInt(String(ageFactor?.originalValue ?? ''), 10)
+  return Number.isFinite(age) ? age : null
+}
+
+// Home de quem não entrou: portal público (docs/design/home-v2/referencia.png).
+function PortalHome() {
   return (
-    <main id="main-content" className="wireframe-page" tabIndex={-1}>
-      <section
-        id="avaliacao"
-        className="home-section home-section--hero stagger-fade"
-        tabIndex={-1}
-        style={stagger(0)}
-      >
-        <div className="home-section__inner">
-          <ConscientizacaoPrevencaoSection />
-        </div>
-      </section>
+    <main id="main-content" className="home-page home-page--portal" tabIndex={-1}>
+      <PortalHero />
 
-      <section className="home-section home-section--cards stagger-fade" style={stagger(1)}>
-        <div className="home-section__inner">
-          <section className="cards-block">
-            <div className="cards-block__grid">
-              <div>
-                <FeatureCard
-                  icon={<ClipboardCheckIcon />}
-                  title={'An\u00E1lise r\u00E1pida'}
-                  description={
-                    'Responda um breve question\u00E1rio e receba uma estimativa preliminar sobre seus fatores de risco.'
-                  }
-                />
-              </div>
-              <div>
-                <FeatureCard
-                  icon={<QuestionIcon />}
-                  title={'Question\u00E1rio detalhado'}
-                  description={
-                    'An\u00E1lise aprofundada considerando hist\u00F3rico familiar, h\u00E1bitos e caracter\u00EDsticas pessoais.'
-                  }
-                />
-              </div>
-              <div>
-                <FeatureCard
-                  icon={<TrendLineIcon />}
-                  title={'Estat\u00EDsticas de risco'}
-                  description={
-                    'Visualize seus resultados com gr\u00E1ficos claros e orienta\u00E7\u00F5es personalizadas para cada perfil.'
-                  }
-                />
-              </div>
-            </div>
-          </section>
+      <div className="portal-container portal-stack">
+        <StartHereBand />
+        <TipBox />
+        <div className="portal-columns">
+          <FeaturedNews />
+          <aside className="portal-aside" aria-label="Números e ajuda">
+            <NumbersPanel />
+            <HelpCard />
+          </aside>
         </div>
-      </section>
+      </div>
 
-      <section
-        id="como-funciona"
-        className="home-section home-section--how stagger-fade"
-        style={stagger(2)}
-      >
-        <div className="home-section__inner">
-          <HowItWorksSection />
-        </div>
-      </section>
-
-      <section
-        id="sobre"
-        className="home-section home-section--notice stagger-fade"
-        style={stagger(3)}
-      >
-        <div className="home-section__inner">
-          <ObservationBanner />
-        </div>
-      </section>
+      <NextSteps />
     </main>
   )
+}
+
+// Home de quem entrou: painel com dados da própria conta.
+function DashboardHome({ user, assessment }) {
+  const firstName = getFirstName(user)
+  const hasAssessment = Boolean(assessment)
+
+  return (
+    <main id="main-content" className="home-page" tabIndex={-1}>
+      <div className="home-container">
+        <header className="home-intro">
+          <h1 className="home-intro__title">{firstName ? `Olá, ${firstName}!` : 'Olá!'}</h1>
+          <p className="home-intro__lead">
+            {hasAssessment
+              ? 'Aqui está um resumo para você acompanhar seus cuidados.'
+              : 'Que bom ter você aqui. Comece pela avaliação para receber orientações personalizadas.'}
+          </p>
+        </header>
+
+        <div className="home-grid">
+          <AssessmentCard hasAssessment={hasAssessment} assessmentDate={getAssessmentDate(assessment)} />
+          <ScreeningCard age={getAssessmentAge(assessment)} />
+          <ShortcutsCard />
+        </div>
+
+        <TipBox />
+
+        <div className="home-columns">
+          <NewsList />
+          <aside className="home-aside" aria-label="Apoio e números">
+            <SupportCard />
+            <FactsCard />
+          </aside>
+        </div>
+      </div>
+    </main>
+  )
+}
+
+function HomePage() {
+  const { latestAssessment, loading, session } = useAuth()
+
+  if (loading) {
+    return <RouteLoadingPage label="Carregando" />
+  }
+
+  if (!session?.user) {
+    return <PortalHome />
+  }
+
+  const storageKey = getAssessmentStorageKey(session.user.id)
+  const assessment = latestAssessment ?? readStoredAssessment(storageKey)
+
+  return <DashboardHome user={session.user} assessment={assessment} />
 }
 
 export default HomePage
