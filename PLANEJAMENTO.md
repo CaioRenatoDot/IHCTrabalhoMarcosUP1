@@ -303,11 +303,19 @@ usado nas branches (`tipo/area-descricao`).
 | **Conteúdo e fontes** | `CT` | `content` | Páginas informativas, registro de fontes, notícias, números |
 | **Infra e qualidade** | `IN` | `infra` | CI, testes, ambiente local, Docker, textos legais, README |
 
+**Decisão de produto (29/10/2026):** o fluxo principal passa a ser uma **verificação educativa de sinais e
+encaminhamento** ([docs/formulario-simplificado-v2.md](docs/formulario-simplificado-v2.md) e
+[docs/funcionalidades-propostas.md](docs/funcionalidades-propostas.md)): 5 perguntas, sem login, sem score, com
+orientação de próximo passo e, depois, um localizador de atendimento. A avaliação de risco detalhada
+([docs/formulario.md](docs/formulario.md)) vira a **avaliação ampliada**, opcional e posterior.
+
 **Prioridade atual (29/10/2026):**
 1. **Front:** fechar a home com o Caio e abrir o PR da branch `feat/front-home-redesign` (portal, páginas de conteúdo,
    logo animada e carrossel já implementados; falta a aprovação final).
-2. **Formulário e resultado:** remover gráficos fictícios e reforçar a segurança do resultado (FM-01 a FM-05, BK-01).
-3. **Formulário e resultado + Back:** avaliação v2, conforme [docs/formulario.md](docs/formulario.md).
+2. **Formulário e resultado + Back:** formulário simplificado e resultado por prioridade (FM-40, FM-41, BK-14), com o
+   botão "Verificar sinais" (FR-29). Substitui a tela de resultado atual (score e gráficos), em vez de só limpá-la.
+3. **Conteúdo:** página "O que é câncer de mama?" (CT-23) e localizador em duas etapas (CT-24, CT-25).
+4. **Depois:** avaliação ampliada (itens marcados como "avaliação ampliada" no checklist).
 4. **Conteúdo, conta e apresentação:** demais itens de prioridade Baixa.
 
 O resultado novo só deve ser desenhado depois do motor de risco da v2, para não fazer o trabalho duas vezes.
