@@ -303,8 +303,9 @@ usado nas branches (`tipo/area-descricao`).
 | **Conteúdo e fontes** | `CT` | `content` | Páginas informativas, registro de fontes, notícias, números |
 | **Infra e qualidade** | `IN` | `infra` | CI, testes, ambiente local, Docker, textos legais, README |
 
-**Prioridade atual (28/10/2026):**
-1. **Front:** home como portal e páginas de conteúdo (FR-17, CT-15 a CT-18).
+**Prioridade atual (29/10/2026):**
+1. **Front:** fechar a home com o Caio e abrir o PR da branch `feat/front-home-redesign` (portal, páginas de conteúdo,
+   logo animada e carrossel já implementados; falta a aprovação final).
 2. **Formulário e resultado:** remover gráficos fictícios e reforçar a segurança do resultado (FM-01 a FM-05, BK-01).
 3. **Formulário e resultado + Back:** avaliação v2, conforme [docs/formulario.md](docs/formulario.md).
 4. **Conteúdo, conta e apresentação:** demais itens de prioridade Baixa.
